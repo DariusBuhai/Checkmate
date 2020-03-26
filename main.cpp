@@ -7,7 +7,7 @@
 
 int main()
 {
-    std::srand(static_cast<unsigned int>(std::time(NULL)));
+    std::srand(static_cast<unsigned int>(std::time(NULL).));
 
     // Define some constants
     const float pi = 3.14159f;
