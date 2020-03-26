@@ -1,3 +1,0 @@
-/Users/dariusbuhai/Desktop/Programs/C++/Checkmate/SFML/CMakeFiles/rebuild_cache.dir
-/Users/dariusbuhai/Desktop/Programs/C++/Checkmate/SFML/CMakeFiles/edit_cache.dir
-/Users/dariusbuhai/Desktop/Programs/C++/Checkmate/SFML/CMakeFiles/Checkmate.dir
