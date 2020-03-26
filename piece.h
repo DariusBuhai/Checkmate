@@ -8,7 +8,6 @@
 class Piece{
 private:
     int x_position, y_position;
-    int x;
 };
 
 #endif //CHECKMATE_PIECE_H
