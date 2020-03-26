@@ -5,19 +5,10 @@
 #include <ctime>
 #include <cstdlib>
 #include <iostream>
+#include "../include/draw.h"
 
-////////////////////////////////////////////////////////////
-/// Entry point of application
-///
-/// \return Application exit code
-///
-////////////////////////////////////////////////////////////
-int main()
-{
-
-
-
-    /*std::srand(static_cast<unsigned int>(std::time(NULL)));
+int Draw::draw() {
+    std::srand(static_cast<unsigned int>(std::time(NULL)));
 
     // Define some constants
     const float pi = 3.14159f;
@@ -239,7 +230,4 @@ int main()
         // Display things on screen
         window.display();
     }
-
-    return EXIT_SUCCESS;*/
-    return 0;
 }
