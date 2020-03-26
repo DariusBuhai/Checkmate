@@ -1,13 +1,24 @@
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
 
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <cmath>
 #include <ctime>
 #include <cstdlib>
+#include <iostream>
 
+
+////////////////////////////////////////////////////////////
+/// Entry point of application
+///
+/// \return Application exit code
+///
+////////////////////////////////////////////////////////////
 int main()
 {
-    std::srand(static_cast<unsigned int>(std::time(NULL).));
+    std::srand(static_cast<unsigned int>(std::time(NULL)));
 
     // Define some constants
     const float pi = 3.14159f;
@@ -17,10 +28,17 @@ int main()
     float ballRadius = 10.f;
 
     // Create the window of the application
-    sf::RenderWindow window(sf::VideoMode(gameWidth, gameHeight, 32), "SFML Pong",sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(gameWidth, gameHeight, 32), "SFML Pong",
+                            sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
 
     // Load the sounds used in the game
+    sf::SoundBuffer ballSoundBuffer;
+    if (!ballSoundBuffer.loadFromFile("resources/ball.wav")){
+        std::cout<<"Error";
+        return EXIT_FAILURE;
+    }
+    sf::Sound ballSound(ballSoundBuffer);
 
     // Create the left paddle
     sf::RectangleShape leftPaddle;
@@ -46,8 +64,14 @@ int main()
     ball.setFillColor(sf::Color::White);
     ball.setOrigin(ballRadius / 2, ballRadius / 2);
 
+    // Load the text font
+    sf::Font font;
+    if (!font.loadFromFile("resources/sansation.ttf"))
+        return EXIT_FAILURE;
+
     // Initialize the pause message
     sf::Text pauseMessage;
+    pauseMessage.setFont(font);
     pauseMessage.setCharacterSize(40);
     pauseMessage.setPosition(170.f, 150.f);
     pauseMessage.setFillColor(sf::Color::White);
@@ -154,13 +178,13 @@ int main()
             }
             if (ball.getPosition().y - ballRadius < 0.f)
             {
-
+                ballSound.play();
                 ballAngle = -ballAngle;
                 ball.setPosition(ball.getPosition().x, ballRadius + 0.1f);
             }
             if (ball.getPosition().y + ballRadius > gameHeight)
             {
-
+                ballSound.play();
                 ballAngle = -ballAngle;
                 ball.setPosition(ball.getPosition().x, gameHeight - ballRadius - 0.1f);
             }
@@ -177,7 +201,7 @@ int main()
                 else
                     ballAngle = pi - ballAngle - (std::rand() % 20) * pi / 180;
 
-
+                ballSound.play();
                 ball.setPosition(leftPaddle.getPosition().x + ballRadius + paddleSize.x / 2 + 0.1f, ball.getPosition().y);
             }
 
@@ -192,7 +216,7 @@ int main()
                 else
                     ballAngle = pi - ballAngle - (std::rand() % 20) * pi / 180;
 
-
+                ballSound.play();
                 ball.setPosition(rightPaddle.getPosition().x - ballRadius - paddleSize.x / 2 - 0.1f, ball.getPosition().y);
             }
         }
