@@ -79,6 +79,9 @@ MyProject_EXTERNAL_OBJECTS =
 
 MyProject: CMakeFiles/MyProject.dir/main.cpp.o
 MyProject: CMakeFiles/MyProject.dir/build.make
+MyProject: /usr/local/lib/libsfml-graphics.2.5.1.dylib
+MyProject: /usr/local/lib/libsfml-window.2.5.1.dylib
+MyProject: /usr/local/lib/libsfml-system.2.5.1.dylib
 MyProject: CMakeFiles/MyProject.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/dariusbuhai/Desktop/Programs/C++/Checkmate/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable MyProject"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MyProject.dir/link.txt --verbose=$(VERBOSE)

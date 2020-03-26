@@ -218,11 +218,26 @@ Checkmate_BINARY_DIR:STATIC=/Users/dariusbuhai/Desktop/Programs/C++/Checkmate/cm
 //Value Computed by CMake
 Checkmate_SOURCE_DIR:STATIC=/Users/dariusbuhai/Desktop/Programs/C++/Checkmate
 
+//Value Computed by CMake
+Checkmater_BINARY_DIR:STATIC=/Users/dariusbuhai/Desktop/Programs/C++/Checkmate/cmake-build-debug
+
+//Value Computed by CMake
+Checkmater_SOURCE_DIR:STATIC=/Users/dariusbuhai/Desktop/Programs/C++/Checkmate
+
+//Value Computed by CMake
+MyProject_BINARY_DIR:STATIC=/Users/dariusbuhai/Desktop/Programs/C++/Checkmate/cmake-build-debug
+
+//Value Computed by CMake
+MyProject_SOURCE_DIR:STATIC=/Users/dariusbuhai/Desktop/Programs/C++/Checkmate
+
 //Path to a program.
 ProcessorCount_cmd_sysctl:FILEPATH=/usr/sbin/sysctl
 
 //The directory containing a CMake configuration file for SFML.
-SFML_DIR:PATH=SFML_DIR-NOTFOUND
+SFML_DIR:PATH=/usr/local/lib/cmake/SFML
+
+//Path to a file.
+SFML_DOC_DIR:PATH=SFML_DOC_DIR-NOTFOUND
 
 //The directory containing a CMake configuration file for SFML_mac.
 SFML_mac_DIR:PATH=SFML_mac_DIR-NOTFOUND

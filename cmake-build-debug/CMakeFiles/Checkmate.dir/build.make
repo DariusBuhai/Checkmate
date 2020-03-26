@@ -79,6 +79,9 @@ Checkmate_EXTERNAL_OBJECTS =
 
 Checkmate: CMakeFiles/Checkmate.dir/main.cpp.o
 Checkmate: CMakeFiles/Checkmate.dir/build.make
+Checkmate: /usr/local/lib/libsfml-graphics.2.5.1.dylib
+Checkmate: /usr/local/lib/libsfml-window.2.5.1.dylib
+Checkmate: /usr/local/lib/libsfml-system.2.5.1.dylib
 Checkmate: CMakeFiles/Checkmate.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/dariusbuhai/Desktop/Programs/C++/Checkmate/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Checkmate"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Checkmate.dir/link.txt --verbose=$(VERBOSE)

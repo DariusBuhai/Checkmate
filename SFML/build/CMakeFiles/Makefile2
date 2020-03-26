@@ -52,10 +52,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/Cellar/cmake/3.17.0/bin/cmake
+CMAKE_COMMAND = /usr/local/Cellar/cmake/3.17.0_1/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/Cellar/cmake/3.17.0/bin/cmake -E rm -f
+RM = /usr/local/Cellar/cmake/3.17.0_1/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -289,8 +289,8 @@ src/SFML/Network/CMakeFiles/sfml-network.dir/clean:
 # Target rules for target src/SFML/Graphics/CMakeFiles/sfml-graphics.dir
 
 # All Build rule for target.
-src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/all: src/SFML/System/CMakeFiles/sfml-system.dir/all
 src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/all: src/SFML/Window/CMakeFiles/sfml-window.dir/all
+src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/all: src/SFML/System/CMakeFiles/sfml-system.dir/all
 	$(MAKE) -f src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build.make src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/depend
 	$(MAKE) -f src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build.make src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/dariusbuhai/Desktop/Programs/C++/Checkmate/SFML/build/CMakeFiles --progress-num=18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43 "Built target sfml-graphics"
