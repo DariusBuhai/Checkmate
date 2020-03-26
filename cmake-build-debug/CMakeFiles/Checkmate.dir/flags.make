@@ -6,5 +6,5 @@ CXX_FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/Ma
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/dariusbuhai/Desktop/Programs/C++/Checkmate/SFML_INCLUDE_DIR -isystem /usr/local/include 
+CXX_INCLUDES = -isystem /usr/local/include 
 
