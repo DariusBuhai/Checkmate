@@ -12,7 +12,7 @@ private:
 
 public:
     void add_piece();
-    sf::RectangleShape draw();
+    sf::RectangleShape getVisual();
 };
 
 #endif //CHECKMATE_TABLE_H
