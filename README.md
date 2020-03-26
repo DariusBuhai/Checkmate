@@ -1,3 +1,3 @@
-## Checkmate
-# Machine learningn project
+# Checkmate
+## Machine learning project with cpp
 
