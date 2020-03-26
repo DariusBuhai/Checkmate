@@ -22,7 +22,6 @@ int main()
 
     // Load the sounds used in the game
 
-
     // Create the left paddle
     sf::RectangleShape leftPaddle;
     leftPaddle.setSize(paddleSize - sf::Vector2f(3, 3));
