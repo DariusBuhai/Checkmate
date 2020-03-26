@@ -1,14 +1,10 @@
-
-////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+
 #include <cmath>
 #include <ctime>
 #include <cstdlib>
 #include <iostream>
-
 
 ////////////////////////////////////////////////////////////
 /// Entry point of application
@@ -18,7 +14,10 @@
 ////////////////////////////////////////////////////////////
 int main()
 {
-    std::srand(static_cast<unsigned int>(std::time(NULL)));
+
+
+
+    /*std::srand(static_cast<unsigned int>(std::time(NULL)));
 
     // Define some constants
     const float pi = 3.14159f;
@@ -241,5 +240,6 @@ int main()
         window.display();
     }
 
-    return EXIT_SUCCESS;
+    return EXIT_SUCCESS;*/
+    return 0;
 }
