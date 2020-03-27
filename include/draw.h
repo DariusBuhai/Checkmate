@@ -7,12 +7,11 @@
 
 class Draw{
 private:
-    static const int screen_width = 800;
-    static const int screen_height = 600;
+    const double screen_width = 1300;
+    const double screen_height = 1300;
 public:
-    int draw();
+    void draw();
 };
-
 
 
 #endif //CHECKMATE_DRAW_H

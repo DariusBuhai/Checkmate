@@ -9,6 +9,7 @@
 
 class Piece{
 protected:
+    int hashcode;
     int x_position, y_position;
     bool has_moved;
     bool color;
