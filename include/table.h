@@ -16,7 +16,8 @@ private:
     size_type size;
     position_type position;
 
-    void draw_grid(size_type, position_type);
+    void draw_grid(sf::RenderWindow*, size_type, position_type);
+    void draw_outline(sf::RenderWindow*, size_type, position_type);
 public:
     std::pair<size_type, position_type> get_piece_position(int i, int j);
 

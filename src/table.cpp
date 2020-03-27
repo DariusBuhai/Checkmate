@@ -22,24 +22,30 @@ void Table::setPosition(position_type p) {
 
 void Table::draw(sf::RenderWindow *window) {
 
-    RectangleShape fill(Vector2f(size.width - 2*border_width, size.height - 2*border_width));
-    fill.setOutlineThickness(border_width);
+    draw_outline(window, size, position);
+    draw_grid(window, size_type(size.width-2*padding, size.height-2*padding), position_type(position.x + padding, position.y + padding));
+}
+
+void Table::draw_outline(sf::RenderWindow *window, size_type s, position_type p){
+
+    RectangleShape fill(Vector2f(s.width - 2*border_width, s.height - 2*border_width));
+    fill.setOutlineThickness((float)border_width);
     fill.setOutlineColor(Color::Black);
-    fill.setPosition(position.x + border_width, position.y + border_width);
+    fill.setPosition(p.x + border_width, p.y + border_width);
     window->draw(fill);
 
-    /// Determine exterior margin
-    double ext = padding;
-    double squareWidth = (size.width - 2*ext) / 8;
-    double squareHeight = (size.height - 2*ext) / 8;
+}
 
-    cout<<squareWidth<<' '<<squareHeight;
+void Table::draw_grid(sf::RenderWindow *window, size_type s, position_type p){
+
+    double squareWidth = (s.width) / 8;
+    double squareHeight = (s.height) / 8;
 
     for(int i=0;i<8;++i)
         for(int j=0;j<8;++j){
             RectangleShape square;
             square.setSize(Vector2f(squareWidth, squareHeight));
-            square.setPosition(squareWidth*i+ext+position.x, squareHeight*j+ext+position.y);
+            square.setPosition(p.x +squareWidth*i, p.y + squareHeight*j);
             if((i+j)%2==0)
                 square.setFillColor(Color::Black);
             else

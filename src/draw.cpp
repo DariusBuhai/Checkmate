@@ -39,3 +39,4 @@ void Draw::draw() {
                 window.close();
     }
 }
+
