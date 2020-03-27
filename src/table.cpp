@@ -108,6 +108,4 @@ void Table::draw_piece(sf::RenderWindow* window, int i, int j){
     
 
     window->draw(piece);
-
-
 }
