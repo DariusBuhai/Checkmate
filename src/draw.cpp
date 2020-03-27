@@ -30,7 +30,6 @@ void Draw::draw() {
     table.draw(&window);
 
     table.draw_piece(&window, 3, 3);
-    table.draw_piece(&window, 3, 5);
 
     /// Display
     window.display();
