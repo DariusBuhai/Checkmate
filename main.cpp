@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "include/draw.h"
+#include "draw.cpp"
 
 int main()
 {

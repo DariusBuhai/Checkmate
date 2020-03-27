@@ -92,18 +92,209 @@ void Table::draw_grid(sf::RenderWindow *window, size_type s, position_type p){
         }
 }
 
-void Table::draw_piece(sf::RenderWindow* window, int i, int j){
+void Table::draw_pawn_black(sf::RenderWindow* window, int i, int j){
 
     size_type s(this->size.width - this->border_width - this->indicator_spacing, this->size.height - this->border_width - this->indicator_spacing);
     position_type p(this->position.x + i * (s.width/8), this->position.y + j * (s.height/8));
 
     sf::Texture piece_img;
-    if (!piece_img.loadFromFile("resources/pieces/bishop_black.png")) throw EXIT_FAILURE;
+    if (!piece_img.loadFromFile("resources/pieces/pawn_black.png")) throw EXIT_FAILURE;
 
     sf::Sprite piece;
     piece.setTexture(piece_img);
     piece.setPosition(Vector2f(p.x, p.y));
+    piece.setScale(1.3, 1.3);
+    piece.setOrigin(-15, -25);
 
     window->draw(piece);
-
 }
+
+void Table::draw_pawn_white(sf::RenderWindow* window, int i, int j){
+
+    size_type s(this->size.width - this->border_width - this->indicator_spacing, this->size.height - this->border_width - this->indicator_spacing);
+    position_type p(this->position.x + i * (s.width/8), this->position.y + j * (s.height/8));
+
+    sf::Texture piece_img;
+    if (!piece_img.loadFromFile("resources/pieces/pawn_white.png")) throw EXIT_FAILURE;
+
+    sf::Sprite piece;
+    piece.setTexture(piece_img);
+    piece.setPosition(Vector2f(p.x, p.y));
+    piece.setScale(1.3, 1.3);
+    piece.setOrigin(-15, -25);
+
+    window->draw(piece);
+}
+
+void Table::draw_horse_white(sf::RenderWindow* window, int i, int j){
+
+    size_type s(this->size.width - this->border_width - this->indicator_spacing, this->size.height - this->border_width - this->indicator_spacing);
+    position_type p(this->position.x + i * (s.width/8), this->position.y + j * (s.height/8));
+
+    sf::Texture piece_img;
+    if (!piece_img.loadFromFile("resources/pieces/horse_white.png")) throw EXIT_FAILURE;
+
+    sf::Sprite piece;
+    piece.setTexture(piece_img);
+    piece.setPosition(Vector2f(p.x, p.y));
+    piece.setScale(1.3, 1.3);
+    piece.setOrigin(-15, -25);
+
+    window->draw(piece);
+}
+
+void Table::draw_horse_black(sf::RenderWindow* window, int i, int j){
+
+    size_type s(this->size.width - this->border_width - this->indicator_spacing, this->size.height - this->border_width - this->indicator_spacing);
+    position_type p(this->position.x + i * (s.width/8), this->position.y + j * (s.height/8));
+
+    sf::Texture piece_img;
+    if (!piece_img.loadFromFile("resources/pieces/horse_black.png")) throw EXIT_FAILURE;
+
+    sf::Sprite piece;
+    piece.setTexture(piece_img);
+    piece.setPosition(Vector2f(p.x, p.y));
+    piece.setScale(1.3, 1.3);
+    piece.setOrigin(-15, -25);
+
+    window->draw(piece);
+}
+
+void Table::draw_bishop_white(sf::RenderWindow* window, int i, int j){
+
+    size_type s(this->size.width - this->border_width - this->indicator_spacing, this->size.height - this->border_width - this->indicator_spacing);
+    position_type p(this->position.x + i * (s.width/8), this->position.y + j * (s.height/8));
+
+    sf::Texture piece_img;
+    if (!piece_img.loadFromFile("resources/pieces/bishop_white.png")) throw EXIT_FAILURE;
+
+    sf::Sprite piece;
+    piece.setTexture(piece_img);
+    piece.setPosition(Vector2f(p.x, p.y));
+    piece.setScale(1.3, 1.3);
+    piece.setOrigin(-15, -25);
+
+    window->draw(piece);
+}
+
+void Table::draw_bishop_black(sf::RenderWindow* window, int i, int j){
+
+    size_type s(this->size.width - this->border_width - this->indicator_spacing, this->size.height - this->border_width - this->indicator_spacing);
+    position_type p(this->position.x + i * (s.width/8), this->position.y + j * (s.height/8));
+
+    sf::Texture piece_img;
+    if (!piece_img.loadFromFile("resources/pieces/pawn_black.png")) throw EXIT_FAILURE;
+
+    sf::Sprite piece;
+    piece.setTexture(piece_img);
+    piece.setPosition(Vector2f(p.x, p.y));
+    piece.setScale(1.3, 1.3);
+    piece.setOrigin(-15, -25);
+
+    window->draw(piece);
+}
+
+void Table::draw_king_white(sf::RenderWindow* window, int i, int j){
+
+    size_type s(this->size.width - this->border_width - this->indicator_spacing, this->size.height - this->border_width - this->indicator_spacing);
+    position_type p(this->position.x + i * (s.width/8), this->position.y + j * (s.height/8));
+
+    sf::Texture piece_img;
+    if (!piece_img.loadFromFile("resources/pieces/king_white.png")) throw EXIT_FAILURE;
+
+    sf::Sprite piece;
+    piece.setTexture(piece_img);
+    piece.setPosition(Vector2f(p.x, p.y));
+    piece.setScale(1.3, 1.3);
+    piece.setOrigin(-15, -25);
+
+    window->draw(piece);
+}
+
+void Table::draw_king_black(sf::RenderWindow* window, int i, int j){
+
+    size_type s(this->size.width - this->border_width - this->indicator_spacing, this->size.height - this->border_width - this->indicator_spacing);
+    position_type p(this->position.x + i * (s.width/8), this->position.y + j * (s.height/8));
+
+    sf::Texture piece_img;
+    if (!piece_img.loadFromFile("resources/pieces/king_black.png")) throw EXIT_FAILURE;
+
+    sf::Sprite piece;
+    piece.setTexture(piece_img);
+    piece.setPosition(Vector2f(p.x, p.y));
+    piece.setScale(1.3, 1.3);
+    piece.setOrigin(-15, -25);
+
+    window->draw(piece);
+}
+
+void Table::draw_queen_white(sf::RenderWindow* window, int i, int j){
+
+    size_type s(this->size.width - this->border_width - this->indicator_spacing, this->size.height - this->border_width - this->indicator_spacing);
+    position_type p(this->position.x + i * (s.width/8), this->position.y + j * (s.height/8));
+
+    sf::Texture piece_img;
+    if (!piece_img.loadFromFile("resources/pieces/queen_white.png")) throw EXIT_FAILURE;
+
+    sf::Sprite piece;
+    piece.setTexture(piece_img);
+    piece.setPosition(Vector2f(p.x, p.y));
+    piece.setScale(1.3, 1.3);
+    piece.setOrigin(-15, -25);
+
+    window->draw(piece);
+}
+
+void Table::draw_queen_black(sf::RenderWindow* window, int i, int j){
+
+    size_type s(this->size.width - this->border_width - this->indicator_spacing, this->size.height - this->border_width - this->indicator_spacing);
+    position_type p(this->position.x + i * (s.width/8), this->position.y + j * (s.height/8));
+
+    sf::Texture piece_img;
+    if (!piece_img.loadFromFile("resources/pieces/queen_black.png")) throw EXIT_FAILURE;
+
+    sf::Sprite piece;
+    piece.setTexture(piece_img);
+    piece.setPosition(Vector2f(p.x, p.y));
+    piece.setScale(1.3, 1.3);
+    piece.setOrigin(-15, -25);
+
+    window->draw(piece);
+}
+
+void Table::draw_rook_white(sf::RenderWindow* window, int i, int j){
+
+    size_type s(this->size.width - this->border_width - this->indicator_spacing, this->size.height - this->border_width - this->indicator_spacing);
+    position_type p(this->position.x + i * (s.width/8), this->position.y + j * (s.height/8));
+
+    sf::Texture piece_img;
+    if (!piece_img.loadFromFile("resources/pieces/rook_white.png")) throw EXIT_FAILURE;
+
+    sf::Sprite piece;
+    piece.setTexture(piece_img);
+    piece.setPosition(Vector2f(p.x, p.y));
+    piece.setScale(1.3, 1.3);
+    piece.setOrigin(-15, -25);
+
+    window->draw(piece);
+}
+
+void Table::draw_rook_black(sf::RenderWindow* window, int i, int j){
+
+    size_type s(this->size.width - this->border_width - this->indicator_spacing, this->size.height - this->border_width - this->indicator_spacing);
+    position_type p(this->position.x + i * (s.width/8), this->position.y + j * (s.height/8));
+
+    sf::Texture piece_img;
+    if (!piece_img.loadFromFile("resources/pieces/rook_black.png")) throw EXIT_FAILURE;
+
+    sf::Sprite piece;
+    piece.setTexture(piece_img);
+    piece.setPosition(Vector2f(p.x, p.y));
+    piece.setScale(1.3, 1.3);
+    piece.setOrigin(-15, -25);
+
+    window->draw(piece);
+}
+
+
+
