@@ -30,7 +30,6 @@ void Draw::draw() {
 
     table.draw(&window);
 
-
     table.draw_rook_white(&window, 1, 7);
     table.draw_rook_white(&window, 8, 7);
     table.draw_horse_white(&window, 2, 7);

@@ -124,6 +124,7 @@ void Table::draw_pawn_white(sf::RenderWindow* window, int i, int j){
     piece.setOrigin(-15, -25);
 
     window->draw(piece);
+
 }
 
 void Table::draw_horse_white(sf::RenderWindow* window, int i, int j){
