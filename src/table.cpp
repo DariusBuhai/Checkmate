@@ -103,7 +103,11 @@ void Table::draw_piece(sf::RenderWindow* window, int i, int j){
     sf::Sprite piece;
     piece.setTexture(piece_img);
     piece.setPosition(Vector2f(p.x, p.y));
+    piece.setScale(1.3, 1.3);
+    piece.setOrigin(-15, -25);
+    
 
     window->draw(piece);
+
 
 }
