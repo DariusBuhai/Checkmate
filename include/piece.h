@@ -33,7 +33,6 @@ public:
     //first we check if we can get there
     bool isValidPosition(int, int);
 
-
 };
 /*
 class Rook : public Piece

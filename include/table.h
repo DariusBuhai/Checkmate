@@ -10,13 +10,20 @@
 
 class Table{
 private:
-    const double margin = 14;
-    const double padding = 5;
-    const double border_width = 2;
+    const double padding = 10;
+    const double border_width = 10;
+
+    size_type size;
+    position_type position;
+
+    void draw_grid(size_type, position_type);
 public:
-    void add_piece();
-    void remove_piece(int hashcode);
-    void draw(sf::RenderWindow*, encapsulation);
+    std::pair<size_type, position_type> get_piece_position(int i, int j);
+
+    void draw(sf::RenderWindow*);
+
+    void setSize(size_type s);
+    void setPosition(position_type p);
 };
 
 #endif //CHECKMATE_TABLE_H

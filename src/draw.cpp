@@ -16,6 +16,8 @@ void Draw::draw() {
 
     /// Initialize items
     Table table;
+    table.setSize(size_type(screen_width-50, screen_height-50));
+    table.setPosition(position_type(25, 25));
 
     /// Create the window of the application
     RenderWindow window(VideoMode(this->screen_width, this->screen_height, 32), "Checkmate AI",Style::Titlebar | Style::Close);
@@ -23,7 +25,9 @@ void Draw::draw() {
     window.setActive(true);
 
     /// Draw contents
-    table.draw(&window, encapsulation(screen_width, screen_height));
+    window.draw(RectangleShape(Vector2f(screen_width, screen_height)));
+
+    table.draw(&window);
 
     /// Display
     window.display();

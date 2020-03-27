@@ -5,15 +5,20 @@
 #ifndef CHECKMATE_TYPES_H
 #define CHECKMATE_TYPES_H
 
-struct encapsulation{
-    double width, height;
+struct position_type{
     double x, y;
 
-    encapsulation(double width, double height, double x = 0, double y = 0){
-        this->width = width;
-        this->height = height;
+    position_type(double x = 0, double y = 0){
         this->x = x;
         this->y = y;
+    }
+};
+
+struct size_type{
+    double width, height;
+    size_type(double width = 0, double height = 0){
+        this->width = width;
+        this->height = height;
     }
 };
 
