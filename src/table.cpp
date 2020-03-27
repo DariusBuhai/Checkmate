@@ -22,8 +22,46 @@ void Table::setPosition(position_type p) {
 
 void Table::draw(sf::RenderWindow *window) {
 
-    draw_outline(window, size, position);
-    draw_grid(window, size_type(size.width-2*padding, size.height-2*padding), position_type(position.x + padding, position.y + padding));
+    draw_indicators(window, size, position);
+    draw_outline(window, size_type(size.width-indicator_spacing, size.height-indicator_spacing), position_type(position.x+indicator_spacing, position.y));
+    draw_grid(window, size_type(size.width-2*padding-indicator_spacing, size.height-2*padding-indicator_spacing), position_type(position.x + indicator_spacing + padding, position.y + padding));
+
+}
+
+void Table::draw_indicators(sf::RenderWindow *window, size_type s, position_type p){
+
+    double indicatorHeight = (s.height-indicator_spacing) / 8;
+    double indicatorWidth = (s.width-indicator_spacing) / 8;
+
+    /// Ok, hai sa ti explic ca sa nu iti incingi creierul
+    /// Deci,
+    /// p si s sunt pozitiile si dimensiunile in care trebuie sa se incadreze in total
+    /// la astea adaugam dimensiunea permisa pentru indicator (indicator_spacing)
+    /// dupa aia trebuie sa ii mai adaugam si 1/2 din inaltime si lungime pentru a-l pozitiona pe mijloc
+    /// dar ... mai trebuie scazut si 1/2 din dimensiunea fontului
+
+    for(int i=0;i<8;i++){
+        Text l;
+        sf::Font font;
+        if (!font.loadFromFile("resources/sansation.ttf")) throw EXIT_FAILURE;
+        l.setString(string(1, '1'+(7-i)));
+        l.setFont(font);
+        l.setCharacterSize(40);
+        l.setFillColor(sf::Color::Black);
+        l.setPosition(p.x + indicator_spacing / 2 -20, p.y +indicatorHeight*i + indicatorHeight/2 - 20);
+        window->draw(l);
+    }
+    for(int j=0;j<8;j++){
+        Text l;
+        sf::Font font;
+        if (!font.loadFromFile("resources/sansation.ttf")) throw EXIT_FAILURE;
+        l.setString(string(1, 'A'+j));
+        l.setFont(font);
+        l.setCharacterSize(40);
+        l.setFillColor(sf::Color::Black);
+        l.setPosition(p.x + indicatorWidth * j + indicator_spacing + indicatorWidth / 2 - 20, s.height - indicatorHeight / 2 + 20);
+        window->draw(l);
+    }
 }
 
 void Table::draw_outline(sf::RenderWindow *window, size_type s, position_type p){

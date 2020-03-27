@@ -12,12 +12,14 @@ class Table{
 private:
     const double padding = 10;
     const double border_width = 10;
+    const double indicator_spacing = 100;
 
     size_type size;
     position_type position;
 
     void draw_grid(sf::RenderWindow*, size_type, position_type);
     void draw_outline(sf::RenderWindow*, size_type, position_type);
+    void draw_indicators(sf::RenderWindow*, size_type, position_type);
 public:
     std::pair<size_type, position_type> get_piece_position(int i, int j);
 
