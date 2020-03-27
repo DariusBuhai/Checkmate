@@ -1,4 +1,7 @@
-
+.idea
+TestSFML.cbp
+CMakeLists.txt
+cmake-build-debug
 bin
 obj
 TestSFML.cbp
