@@ -21,7 +21,19 @@ private:
     void draw_outline(sf::RenderWindow*, size_type, position_type);
     void draw_indicators(sf::RenderWindow*, size_type, position_type);
 public:
-    void draw_piece(sf::RenderWindow*, int i, int j);
+    void draw_pawn_white(sf::RenderWindow*, int i, int j);
+    void draw_horse_white(sf::RenderWindow*, int i, int j);
+    void draw_queen_white(sf::RenderWindow*, int i, int j);
+    void draw_rook_white(sf::RenderWindow*, int i, int j);
+    void draw_king_white(sf::RenderWindow*, int i, int j);
+    void draw_bishop_white(sf::RenderWindow*, int i, int j);
+    void draw_pawn_black(sf::RenderWindow*, int i, int j);
+    void draw_horse_black(sf::RenderWindow*, int i, int j);
+    void draw_queen_black(sf::RenderWindow*, int i, int j);
+    void draw_rook_black(sf::RenderWindow*, int i, int j);
+    void draw_king_black(sf::RenderWindow*, int i, int j);
+    void draw_bishop_black(sf::RenderWindow*, int i, int j);
+
 
     void draw(sf::RenderWindow*);
 

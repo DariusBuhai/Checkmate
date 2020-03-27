@@ -1,7 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <utility>
-#include "piece.h"
+
+#include "../include/piece.h"
 
 
 // --------- piece methods ----------
