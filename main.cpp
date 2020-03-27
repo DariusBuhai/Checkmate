@@ -7,8 +7,8 @@ int main()
 {
 
 	Draw d;
-	d.draw();
-	Rook P(1, 1, 0);
+	//d.draw();
+	King P(1, 1, 0);
 	std::vector<std::vector< std::pair<int, int >>> p;
 	p = P.path();
 	for (auto way : p)

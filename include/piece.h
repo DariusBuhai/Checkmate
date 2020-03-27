@@ -47,31 +47,48 @@ public:
 	void move(int, int);
 
 };
-/*
+
 class Knight : public Piece
 {
+private:
+	std::string name;
 public:
-    void move(int, int, int);
+	Knight(int, int, bool);
+	std::vector<std::vector<std::pair<int, int>>> path();
+    void move(int, int);
 };
 
 class Bishop : public Piece
 {
+private:
+	std::string name;
 public:
-    void move(int, int, int);
+	Bishop(int, int, bool);
+	std::vector<std::vector<std::pair<int, int>>> path();
+	void move(int, int);
 };
 
 class Queen : public Piece
 {
+private:
+	std::string name;
 public:
-    void move(int, int, int);
+	Queen(int, int, bool);
+	std::vector<std::vector<std::pair<int, int>>> path();
+	void move(int, int);
 };
+
 
 class King : public Piece
 {
+private:
+	std::string name;
 public:
-    void move(int, int, int);
+	King(int, int, bool);
+	std::vector<std::vector<std::pair<int, int>>> path();
+	void move(int, int);
 };
 
-*/
+
 
 #endif //CHECKMATE_PIECE_H
