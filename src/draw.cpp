@@ -29,6 +29,8 @@ void Draw::draw() {
 
     table.draw(&window);
 
+    table.draw_piece(&window, 3, 3);
+
     /// Display
     window.display();
 

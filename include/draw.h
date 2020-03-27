@@ -7,8 +7,8 @@
 
 class Draw{
 private:
-    const double screen_width = 1300;
-    const double screen_height = 1300;
+    const double screen_width = 1100;
+    const double screen_height = 1100;
 public:
     void draw();
 };

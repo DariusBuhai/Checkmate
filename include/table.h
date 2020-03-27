@@ -21,7 +21,7 @@ private:
     void draw_outline(sf::RenderWindow*, size_type, position_type);
     void draw_indicators(sf::RenderWindow*, size_type, position_type);
 public:
-    std::pair<size_type, position_type> get_piece_position(int i, int j);
+    void draw_piece(sf::RenderWindow*, int i, int j);
 
     void draw(sf::RenderWindow*);
 

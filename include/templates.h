@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <cmath>
+#include <iostream>
 
 
 #ifndef CHECKMATE_TEMPLATES_H
