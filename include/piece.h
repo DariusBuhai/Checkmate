@@ -9,39 +9,45 @@
 
 class Piece{
 protected:
-    int hashcode;
+    //int hashcode;
     int x_position, y_position;
     bool has_moved;
     bool color;
-    std::string name;
+
     //0 is for white, 1 is for black;
 protected:
     static bool isInTable(int, int);
     Piece(int, int, bool);
     void set_position(int, int);
+	
     
 };
 
 class Pawn : public Piece
 {
-
+private:
+	std::string name;
 public:
     Pawn(int, int, bool);
-    //we are going to return a path of the piece to check later on the board if 
-    //that position is reachable by the path  
-    std::vector<std::pair<int, int>> path(int, int);
-    //first we check if we can get there
-    bool isValidPosition(int, int);
+	//for every piece we can have more ways path to take (for example the queen)
+	//and for every path there are more squares that it can land on
+    std::vector<std::vector<std::pair<int, int>>> path();
+	void move(int, int);
+
+
+};
+
+class Rook : public Piece
+{
+private:
+	std::string name;
+public:	
+	Rook(int, int, bool);
+	std::vector<std::vector<std::pair<int, int>>> path();
+	void move(int, int);
 
 };
 /*
-class Rook : public Piece
-{
-public:
-    void move(int, int, int);
-
-};
-
 class Knight : public Piece
 {
 public:
