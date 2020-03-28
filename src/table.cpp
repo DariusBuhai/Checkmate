@@ -85,7 +85,7 @@ void Table::draw_grid(sf::RenderWindow *window, size_type s, position_type p){
             square.setSize(Vector2f(squareWidth, squareHeight));
             square.setPosition(p.x +squareWidth*i, p.y + squareHeight*j);
             if((i+j)%2==0)
-                square.setFillColor(Color::Black);
+                square.setFillColor(Color::Blue);
             else
                 square.setFillColor(Color::White);
             window->draw(square);
@@ -115,7 +115,7 @@ void Table::draw_pawn_white(sf::RenderWindow* window, int i, int j){
     position_type p(this->position.x + i * (s.width/8), this->position.y + j * (s.height/8));
 
     sf::Texture piece_img;
-    if (!piece_img.loadFromFile("resources/pieces/pawn_white.png")) throw EXIT_FAILURE;
+    if (!piece_img.loadFromFile("resources/pieces/White_pawn.png")) throw EXIT_FAILURE;
 
     sf::Sprite piece;
     piece.setTexture(piece_img);
@@ -184,7 +184,7 @@ void Table::draw_bishop_black(sf::RenderWindow* window, int i, int j){
     position_type p(this->position.x + i * (s.width/8), this->position.y + j * (s.height/8));
 
     sf::Texture piece_img;
-    if (!piece_img.loadFromFile("resources/pieces/pawn_black.png")) throw EXIT_FAILURE;
+    if (!piece_img.loadFromFile("resources/pieces/bishop_black.png")) throw EXIT_FAILURE;
 
     sf::Sprite piece;
     piece.setTexture(piece_img);
