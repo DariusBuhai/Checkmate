@@ -36,10 +36,11 @@ void Pawn::move(int x_next, int y_next)
 }
 
 
-std::vector<std::vector<std::pair<int, int>>> Pawn::path()
+std::vector<std::vector<std::pair<int, int> > > Pawn::path()
 {
-    std::vector<std::vector< std::pair<int,int >>> p;
-    p.resize(1);
+
+    std::vector<std::vector< std::pair<int,int > > > p;
+	p.resize(1);
     int posx, posy;
     posx = x_position;
     posy = y_position;
@@ -72,7 +73,7 @@ Rook::Rook(int x_position, int y_position, bool color) : Piece(x_position, y_pos
     name = "Rook";
 }
 
-std::vector<std::vector<std::pair<int, int>>> Rook::path()
+std::vector<std::vector<std::pair<int, int> > > Rook::path()
 {
     std::vector<std::vector< std::pair<int, int >>> p;
     p.resize(4);
@@ -114,7 +115,7 @@ Knight::Knight(int x_position, int y_position, bool color) : Piece(x_position, y
     name = "Rook";
 }
 
-std::vector<std::vector<std::pair<int, int>>> Knight::path()
+std::vector<std::vector<std::pair<int, int> > > Knight::path()
 {
     std::vector<std::vector< std::pair<int, int >>> p;
     p.resize(8);
@@ -144,7 +145,7 @@ Bishop::Bishop(int x_position, int y_position, bool color) : Piece(x_position, y
 }
 
 
-std::vector<std::vector<std::pair<int, int>>> Bishop::path()
+std::vector<std::vector<std::pair<int, int> > > Bishop::path()
 {
     std::vector<std::vector< std::pair<int, int >>> p;
     p.resize(4);
@@ -193,7 +194,7 @@ Queen::Queen(int x_position, int y_position, bool color) : Piece(x_position, y_p
 }
 
 
-std::vector<std::vector<std::pair<int, int>>> Queen::path()
+std::vector<std::vector<std::pair<int, int> > > Queen::path()
 {
     std::vector<std::vector< std::pair<int, int >>> p;
     p.resize(8);
@@ -260,7 +261,7 @@ King::King(int x_position, int y_position, bool color) : Piece(x_position, y_pos
     name = "King";
 }
 
-std::vector<std::vector<std::pair<int, int>>> King::path()
+std::vector<std::vector<std::pair<int, int> > > King::path()
 {
     std::vector<std::vector< std::pair<int, int >>> p;
     p.resize(9);

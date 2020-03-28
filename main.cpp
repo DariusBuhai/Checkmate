@@ -12,12 +12,14 @@ int main()
 {
 
 	Draw d;
-	d.draw();
 	Pieces All;
 	All.init_pieces_positions();
 	All.get_pieces_positions();
-	/*King P(1, 1, 0);
+	/*
+	King P(1, 1, 0);
 	std::vector<std::vector< std::pair<int, int >>> p;
+	King P(1, 1, false);
+	std::vector<std::vector< std::pair<int, int > > > p;
 	p = P.path();
 	for (auto way : p)
 	{
@@ -27,6 +29,6 @@ int main()
 		}
 		std::cout << "\n";
 	}
-	*/
+    */
     return 0;
 }
