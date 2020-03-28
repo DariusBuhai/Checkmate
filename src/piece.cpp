@@ -124,7 +124,7 @@ void Rook::move(int x_next, int y_next)
 
 Knight::Knight(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack)
 {
-    type = "Rook";
+    type = "Knight";
 }
 
 std::vector<std::vector<std::pair<int, int> > > Knight::path()
@@ -275,7 +275,7 @@ King::King(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack)
 
 std::vector<std::vector<std::pair<int, int> > > King::path()
 {
-    std::vector<std::vector< std::pair<int, int > > > p;
+    std::vector<std::vector< std::pair<int, int >>> p;
     p.resize(9);
     int dist_x[] = { 1, 1, 1, 0, -1, -1, -1, 0};
     int dist_y[] = { -1, 0, 1, 1, 1, 0, -1, -1 };
