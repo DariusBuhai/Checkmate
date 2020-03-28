@@ -16,11 +16,11 @@ protected:
 
     //0 is for white, 1 is for black;
 protected:
-    static bool isInTable(int, int);
+    bool isInTable(int, int);
     Piece(int, int, bool);
     void set_position(int, int);
-	
-    
+
+
 };
 
 class Pawn : public Piece
@@ -41,7 +41,7 @@ class Rook : public Piece
 {
 private:
 	std::string name;
-public:	
+public:
 	Rook(int, int, bool);
 	std::vector<std::vector<std::pair<int, int> > > path();
 	void move(int, int);

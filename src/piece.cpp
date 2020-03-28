@@ -6,7 +6,7 @@
 
 
 // ------------- piece methods ----------------
-Piece::Piece(int x_position, int y_position, bool color) : x_position(x_position), 
+Piece::Piece(int x_position, int y_position, bool color) : x_position(x_position),
 y_position(y_position), has_moved(false), color(color){}
 
 void Piece::set_position(int x_next, int y_next)
@@ -14,6 +14,7 @@ void Piece::set_position(int x_next, int y_next)
     x_position = x_next;
     y_position = y_next;
 }
+
 bool Piece::isInTable(int x, int y)
 {
     return ((x>= 0 && x<= 7) && (y>= 0 && y <= 7));
@@ -121,7 +122,7 @@ std::vector<std::vector<std::pair<int, int> > > Knight::path()
 	for (int i = 0; i < 8; i++)
 	{
 
-		if (Pawn::isInTable(x_position + dist_x[i], y_position + dist_y[i]))
+		if (Piece::isInTable(x_position + dist_x[i], y_position + dist_y[i]))
 			p[i].push_back(std::make_pair(x_position + dist_x[i], y_position + dist_y[i]));
 	}
 	return p;
@@ -149,25 +150,25 @@ std::vector<std::vector<std::pair<int, int> > > Bishop::path()
 	int posx, posy;
 	posx = x_position,posy = y_position;
 	// up left
-	while (Pawn::isInTable(posx - 1, posy - 1))
+	while (Piece::isInTable(posx - 1, posy - 1))
 	{
 		posx--, posy--, p[0].push_back(std::make_pair(posx, posy));
 	}
 	posx = x_position, posy = y_position;
 	// up right
-	while (Pawn::isInTable(posx + 1, posy - 1))
+	while (Piece::isInTable(posx + 1, posy - 1))
 	{
 		posx++, posy--, p[1].push_back(std::make_pair(posx, posy));
 	}
 	posx = x_position, posy = y_position;
 	// down right
-	while (Pawn::isInTable(posx + 1, posy + 1))
+	while (Piece::isInTable(posx + 1, posy + 1))
 	{
 		posx++, posy++, p[2].push_back(std::make_pair(posx, posy));
 	}
 	posx = x_position, posy = y_position;
 	// down left
-	while (Pawn::isInTable(posx - 1, posy + 1))
+	while (Piece::isInTable(posx - 1, posy + 1))
 	{
 		posx--, posy++, p[3].push_back(std::make_pair(posx, posy));
 	}
@@ -216,25 +217,25 @@ std::vector<std::vector<std::pair<int, int> > > Queen::path()
 
 	posx = x_position, posy = y_position;
 	// up left
-	while (Pawn::isInTable(posx - 1, posy - 1))
+	while (Piece::isInTable(posx - 1, posy - 1))
 	{
 		posx--, posy--, p[4].push_back(std::make_pair(posx, posy));
 	}
 	posx = x_position, posy = y_position;
 	// up right
-	while (Pawn::isInTable(posx + 1, posy - 1))
+	while (Piece::isInTable(posx + 1, posy - 1))
 	{
 		posx++, posy--, p[5].push_back(std::make_pair(posx, posy));
 	}
 	posx = x_position, posy = y_position;
 	// down right
-	while (Pawn::isInTable(posx + 1, posy + 1))
+	while (Piece::isInTable(posx + 1, posy + 1))
 	{
 		posx++, posy++, p[6].push_back(std::make_pair(posx, posy));
 	}
 	posx = x_position, posy = y_position;
 	// down left
-	while (Pawn::isInTable(posx - 1, posy + 1))
+	while (Piece::isInTable(posx - 1, posy + 1))
 	{
 		posx--, posy++, p[7].push_back(std::make_pair(posx, posy));
 	}
@@ -267,7 +268,7 @@ std::vector<std::vector<std::pair<int, int> > > King::path()
 	int posx, posy;
 	for (int i = 0; i < 8; i++)
 	{
-		if (Pawn::isInTable(x_position + dist_x[i], y_position + dist_y[i]))
+		if (Piece::isInTable(x_position + dist_x[i], y_position + dist_y[i]))
 			 p[i].push_back(std::make_pair(x_position + dist_x[i], y_position + dist_y[i]));
 	}
 	return p;
