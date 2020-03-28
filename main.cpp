@@ -10,9 +10,8 @@ int main()
 {
 
 	Draw d;
-	d.draw();
-	King P(1, 1, false);
-	/*std::vector<std::vector< std::pair<int, int > > > p;
+	/*King P(1, 1, false);
+	std::vector<std::vector< std::pair<int, int > > > p;
 	p = P.path();
 	for (auto way : p)
 	{

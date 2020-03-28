@@ -19,8 +19,6 @@ protected:
     bool isInTable(int, int);
     Piece(int, int, bool);
     void set_position(int, int);
-
-
 };
 
 class Pawn : public Piece
