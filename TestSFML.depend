@@ -584,7 +584,7 @@
 
 1585421760 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\types.h
 
-1585421976 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\piece.cpp
+1585422266 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\piece.cpp
 	<iostream>
 	<vector>
 	<utility>
@@ -603,7 +603,7 @@
 	<string>
 	"piece.h"
 
-1585422094 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\pieces.cpp
+1585422266 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\pieces.cpp
 	<iostream>
 	<vector>
 	<utility>
