@@ -21,11 +21,4 @@ struct size_type{
         this->height = height;
     }
 };
-
-struct pieces_pos_type{
-    int posx,posy;
-    std :: string type;
-    bool color;
-};
-
 #endif //CHECKMATE_TYPES_H

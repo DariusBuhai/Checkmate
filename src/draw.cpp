@@ -8,7 +8,6 @@
 
 #include "../include/draw.h"
 #include "../include/table.h"
-#include "table.cpp"
 
 using namespace std;
 using namespace sf;
@@ -48,25 +47,8 @@ void Draw::draw(sf::RenderWindow* window) {
 
     table.draw(window);
 
-    table.draw_rook_white(window, 1, 7);
-    table.draw_rook_white(window, 8, 7);
-    table.draw_horse_white(window, 2, 7);
-    table.draw_horse_white(window, 7, 7);
-    table.draw_bishop_white(window, 3, 7);
-    table.draw_bishop_white(window, 6, 7);
-    table.draw_queen_white(window, 4, 7);
-    table.draw_king_white(window, 5, 7);
-    for(int i = 1 ; i <= 8 ; i ++ )
-        table.draw_pawn_white(window, i, 6);
-    table.draw_rook_black(window, 1, 0);
-    table.draw_rook_black(window, 8, 0);
-    table.draw_horse_black(window, 2, 0);
-    table.draw_horse_black(window, 7, 0);
-    table.draw_bishop_black(window, 3, 0);
-    table.draw_bishop_black(window, 6, 0);
-    table.draw_queen_black(window, 4, 0);
-    table.draw_king_black(window, 5, 0);
-    for(int i = 1 ; i <= 8 ; i ++ )
-        table.draw_pawn_black(window, i, 1);
+    for(auto piece : pieces.getPieces())
+        table.draw_piece(window, piece);
+
 }
 

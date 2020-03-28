@@ -7,6 +7,8 @@
 
 #include <SFML/Graphics.hpp>
 #include "../include/table.h"
+#include "../include/pieces.h"
+#include "../include/piece.h"
 
 class Draw{
 private:
@@ -15,6 +17,7 @@ private:
     const double screen_height = 1000;
 
     Table table;
+    Pieces pieces;
 
     void draw(sf::RenderWindow*);
 

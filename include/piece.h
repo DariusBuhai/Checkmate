@@ -11,15 +11,20 @@
 class Piece{
 protected:
     //int hashcode;
-    int x_position, y_position;
+    std::pair<int, int> pos;
+    std::string type;
     bool has_moved;
-    std :: string type;
-    bool color;
+    bool is_black;
     //0 is for white, 1 is for black;
 protected:
     bool isInTable(int, int);
-    Piece(int, int, bool);
+    Piece(std::pair<int, int>, bool);
     void set_position(int, int);
+
+public:
+    std::string getType();
+    std::pair<int,int> getPos();
+    bool getIsBlack();
 };
 
 class Pawn : public Piece
@@ -27,21 +32,17 @@ class Pawn : public Piece
 private:
 	std::string name;
 public:
-    Pawn(int, int, bool);
+    Pawn(std::pair<int, int>, bool);
 	//for every piece we can have more ways path to take (for example the queen)
 	//and for every path there are more squares that it can land on
     std::vector<std::vector<std::pair<int, int> > > path();
 	void move(int, int);
-
-
 };
 
 class Rook : public Piece
 {
-private:
-	std::string name;
 public:
-	Rook(int, int, bool);
+	Rook(std::pair<int, int>, bool);
 	std::vector<std::vector<std::pair<int, int> > > path();
 	void move(int, int);
 
@@ -49,30 +50,24 @@ public:
 
 class Knight : public Piece
 {
-private:
-	std::string name;
 public:
-	Knight(int, int, bool);
+	Knight(std::pair<int, int>, bool);
 	std::vector<std::vector<std::pair<int, int> > > path();
     void move(int, int);
 };
 
 class Bishop : public Piece
 {
-private:
-	std::string name;
 public:
-	Bishop(int, int, bool);
+	Bishop(std::pair<int, int>, bool);
 	std::vector<std::vector<std::pair<int, int> > > path();
 	void move(int, int);
 };
 
 class Queen : public Piece
 {
-private:
-	std::string name;
 public:
-	Queen(int, int, bool);
+	Queen(std::pair<int, int>, bool);
 	std::vector<std::vector<std::pair<int, int> > > path();
 	void move(int, int);
 };
@@ -80,10 +75,8 @@ public:
 
 class King : public Piece
 {
-private:
-	std::string name;
 public:
-	King(int, int, bool);
+	King(std::pair<int, int>, bool);
 	std::vector<std::vector<std::pair<int, int> > > path();
 	void move(int, int);
 };

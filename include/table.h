@@ -38,20 +38,7 @@ public:
 
     void digest_action(position_type);
 
-    void draw_piece(sf::RenderWindow*, std::pair<int, int>, Piece);
-
-    void draw_pawn_white(sf::RenderWindow*, int i, int j);
-    void draw_horse_white(sf::RenderWindow*, int i, int j);
-    void draw_queen_white(sf::RenderWindow*, int i, int j);
-    void draw_rook_white(sf::RenderWindow*, int i, int j);
-    void draw_king_white(sf::RenderWindow*, int i, int j);
-    void draw_bishop_white(sf::RenderWindow*, int i, int j);
-    void draw_pawn_black(sf::RenderWindow*, int i, int j);
-    void draw_horse_black(sf::RenderWindow*, int i, int j);
-    void draw_queen_black(sf::RenderWindow*, int i, int j);
-    void draw_rook_black(sf::RenderWindow*, int i, int j);
-    void draw_king_black(sf::RenderWindow*, int i, int j);
-    void draw_bishop_black(sf::RenderWindow*, int i, int j);
+    void draw_piece(sf::RenderWindow*, Piece);
 
     void draw(sf::RenderWindow*);
 
