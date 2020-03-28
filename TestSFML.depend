@@ -1,13 +1,12 @@
 # depslib dependency file v1.0
-1585405999 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\main.cpp
+1585422128 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\main.cpp
 	<iostream>
 	"include/draw.h"
 	"include/piece.h"
-	"include/table.h"
 	"include/pieces.h"
-	"draw.cpp"
-	"piece.cpp"
 	"pieces.cpp"
+	"draw.cpp"
+	"table.cpp"
 
 1525812018 c:\facultate\anul 1 semestrul 2\poo\sfml-2.5.1\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -556,16 +555,18 @@
 	<iostream>
 	"table.h"
 
-1585405599 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\piece.h
+1585421982 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\piece.h
 	<vector>
 	<string>
 	"types.h"
 
-1585405610 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\draw.h
+1585421760 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\draw.h
 	<SFML/Graphics.hpp>
 	"../include/table.h"
+	"../include/pieces.h"
+	"../include/piece.h"
 
-1585405521 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\draw.cpp
+1585421760 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\draw.cpp
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 	<cmath>
@@ -574,39 +575,41 @@
 	<iostream>
 	"../include/draw.h"
 	"../include/table.h"
-	"table.cpp"
 
-1585405521 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\table.h
+1585421760 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\table.h
 	<SFML/Graphics.hpp>
 	<vector>
 	"types.h"
 	"piece.h"
 
-1585402830 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\types.h
+1585421760 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\types.h
 
-1585405807 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\piece.cpp
+1585421976 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\piece.cpp
 	<iostream>
 	<vector>
 	<utility>
 	"../include/piece.h"
 	"../include/types.h"
 
-1585405521 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\table.cpp
+1585421760 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\table.cpp
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 	<iostream>
 	"../include/table.h"
 	"../include/types.h"
 
-1585405366 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\pieces.h
+1585421760 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\pieces.h
 	<vector>
 	<string>
-	"types.h"
+	"piece.h"
 
-1585404152 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\pieces.cpp
+1585422094 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\pieces.cpp
 	<iostream>
 	<vector>
 	<utility>
+	<vector>
 	"../include/pieces.h"
+	"../include/piece.h"
 	"../include/types.h"
+	"piece.cpp"
 
