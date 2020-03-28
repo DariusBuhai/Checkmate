@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1585405855 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\main.cpp
+1585405999 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\main.cpp
 	<iostream>
 	"include/draw.h"
 	"include/piece.h"
