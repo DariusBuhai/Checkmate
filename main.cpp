@@ -7,9 +7,9 @@ int main()
 {
 
 	Draw d;
-	//d.draw();
+	d.draw();
 	King P(1, 1, 0);
-	std::vector<std::vector< std::pair<int, int >>> p;
+	/*std::vector<std::vector< std::pair<int, int > > > p;
 	p = P.path();
 	for (auto way : p)
 	{
@@ -18,7 +18,7 @@ int main()
 			std::cout << pos.first << " " << pos.second << "\n";
 		}
 		std::cout << "\n";
-	}
+	}*/
 
     return 0;
 }

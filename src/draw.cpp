@@ -38,9 +38,7 @@ void Draw::draw() {
     table.draw_queen_white(&window, 4, 7);
     table.draw_king_white(&window, 5, 7);
     for(int i = 1 ; i <= 8 ; i ++ )
-    {
         table.draw_pawn_white(&window, i, 6);
-    }
     table.draw_rook_black(&window, 1, 0);
     table.draw_rook_black(&window, 8, 0);
     table.draw_horse_black(&window, 2, 0);
@@ -50,9 +48,7 @@ void Draw::draw() {
     table.draw_queen_black(&window, 4, 0);
     table.draw_king_black(&window, 5, 0);
     for(int i = 1 ; i <= 8 ; i ++ )
-    {
         table.draw_pawn_black(&window, i, 1);
-    }
     /// Display
     window.display();
 
@@ -61,6 +57,8 @@ void Draw::draw() {
         while (window.pollEvent(event))
             if (event.type == Event::Closed)
                 window.close();
+            if(event.type == sf::Event::MouseButtonPressed)
+                event.mouseButton.x;
     }
 }
 

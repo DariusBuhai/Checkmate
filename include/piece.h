@@ -31,7 +31,7 @@ public:
     Pawn(int, int, bool);
 	//for every piece we can have more ways path to take (for example the queen)
 	//and for every path there are more squares that it can land on
-    std::vector<std::vector<std::pair<int, int>>> path();
+    std::vector<std::vector<std::pair<int, int> > > path();
 	void move(int, int);
 
 
@@ -43,7 +43,7 @@ private:
 	std::string name;
 public:	
 	Rook(int, int, bool);
-	std::vector<std::vector<std::pair<int, int>>> path();
+	std::vector<std::vector<std::pair<int, int> > > path();
 	void move(int, int);
 
 };
@@ -54,7 +54,7 @@ private:
 	std::string name;
 public:
 	Knight(int, int, bool);
-	std::vector<std::vector<std::pair<int, int>>> path();
+	std::vector<std::vector<std::pair<int, int> > > path();
     void move(int, int);
 };
 
@@ -64,7 +64,7 @@ private:
 	std::string name;
 public:
 	Bishop(int, int, bool);
-	std::vector<std::vector<std::pair<int, int>>> path();
+	std::vector<std::vector<std::pair<int, int> > > path();
 	void move(int, int);
 };
 
@@ -74,7 +74,7 @@ private:
 	std::string name;
 public:
 	Queen(int, int, bool);
-	std::vector<std::vector<std::pair<int, int>>> path();
+	std::vector<std::vector<std::pair<int, int> > > path();
 	void move(int, int);
 };
 
@@ -85,7 +85,7 @@ private:
 	std::string name;
 public:
 	King(int, int, bool);
-	std::vector<std::vector<std::pair<int, int>>> path();
+	std::vector<std::vector<std::pair<int, int> > > path();
 	void move(int, int);
 };
 

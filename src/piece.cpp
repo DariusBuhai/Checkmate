@@ -34,9 +34,9 @@ void Pawn::move(int x_next, int y_next)
 }
 
 
-std::vector<std::vector<std::pair<int, int>>> Pawn::path()
+std::vector<std::vector<std::pair<int, int> > > Pawn::path()
 {
-    std::vector<std::vector< std::pair<int,int >>> p;
+    std::vector<std::vector< std::pair<int,int > > > p;
 	p.resize(1);
     int posx, posy;
     posx = x_position;
@@ -70,9 +70,9 @@ Rook::Rook(int x_position, int y_position, bool color) : Piece(x_position, y_pos
 	name = "Rook";
 }
 
-std::vector<std::vector<std::pair<int, int>>> Rook::path()
+std::vector<std::vector<std::pair<int, int> > > Rook::path()
 {
-	std::vector<std::vector< std::pair<int, int >>> p;
+	std::vector<std::vector< std::pair<int, int > > > p;
 	p.resize(4);
 	//it can go up, down, left, right;
 	//---- first we go up
@@ -112,9 +112,9 @@ Knight::Knight(int x_position, int y_position, bool color) : Piece(x_position, y
 	name = "Rook";
 }
 
-std::vector<std::vector<std::pair<int, int>>> Knight::path()
+std::vector<std::vector<std::pair<int, int> > > Knight::path()
 {
-	std::vector<std::vector< std::pair<int, int >>> p;
+	std::vector<std::vector< std::pair<int, int > > > p;
 	p.resize(8);
 	int dist_x[] = { -2, -1, 2, 1, -2, -1, 2, 1 };
 	int dist_y[] = { -1, -2, -1, -2, 1, 2, 1, 2 };
@@ -142,9 +142,9 @@ Bishop::Bishop(int x_position, int y_position, bool color) : Piece(x_position, y
 }
 
 
-std::vector<std::vector<std::pair<int, int>>> Bishop::path()
+std::vector<std::vector<std::pair<int, int> > > Bishop::path()
 {
-	std::vector<std::vector< std::pair<int, int >>> p;
+	std::vector<std::vector< std::pair<int, int > > > p;
 	p.resize(4);
 	int posx, posy;
 	posx = x_position,posy = y_position;
@@ -191,9 +191,9 @@ Queen::Queen(int x_position, int y_position, bool color) : Piece(x_position, y_p
 }
 
 
-std::vector<std::vector<std::pair<int, int>>> Queen::path()
+std::vector<std::vector<std::pair<int, int> > > Queen::path()
 {
-	std::vector<std::vector< std::pair<int, int >>> p;
+	std::vector<std::vector< std::pair<int, int > > > p;
 	p.resize(8);
 	int posx, posy;
 	posx = x_position, posy = y_position;
@@ -258,9 +258,9 @@ King::King(int x_position, int y_position, bool color) : Piece(x_position, y_pos
 	name = "King";
 }
 
-std::vector<std::vector<std::pair<int, int>>> King::path()
+std::vector<std::vector<std::pair<int, int> > > King::path()
 {
-	std::vector<std::vector< std::pair<int, int >>> p;
+	std::vector<std::vector< std::pair<int, int > > > p;
 	p.resize(9);
 	int dist_x[] = { 1, 1, 1, 0, -1, -1, -1, 0};
 	int dist_y[] = { -1, 0, 1, 1, 1, 0, -1, -1 };
