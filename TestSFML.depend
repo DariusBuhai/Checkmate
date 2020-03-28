@@ -1,8 +1,11 @@
 # depslib dependency file v1.0
-1585320702 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\main.cpp
+1585397715 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\main.cpp
 	<iostream>
 	"include/draw.h"
+	"include/piece.h"
+	"include/table.h"
 	"draw.cpp"
+	"piece.cpp"
 
 1525812018 c:\facultate\anul 1 semestrul 2\poo\sfml-2.5.1\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -551,37 +554,36 @@
 	<iostream>
 	"table.h"
 
-1585314839 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\piece.h
+1585398023 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\piece.h
 	<vector>
 	<string>
 
 1585316943 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\draw.h
 
-1585322702 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\draw.cpp
+1585397168 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\draw.cpp
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 	<cmath>
 	<ctime>
 	<cstdlib>
 	<iostream>
-	"draw.h"
-	"table.h"
-	"types.h"
+	"../include/draw.h"
+	"../include/table.h"
 	"table.cpp"
 
-1585321955 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\table.h
+1585396879 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\table.h
 	<SFML/Graphics.hpp>
 	"types.h"
 
 1585316943 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\types.h
 
-1585314454 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\piece.cpp
+1585398019 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\piece.cpp
 	<iostream>
 	<vector>
 	<utility>
-	"piece.h"
+	"../include/piece.h"
 
-1585325298 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\table.cpp
+1585396879 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\table.cpp
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 	<iostream>

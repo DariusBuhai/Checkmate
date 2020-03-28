@@ -1,12 +1,13 @@
 #include <iostream>
 #include <vector>
 #include <utility>
-#include "piece.h"
+
+#include "../include/piece.h"
 
 
-// --------- piece methods ----------
-Piece::Piece(int x_position, int y_position, bool color) : x_position(x_position), 
-y_position(y_position), has_moved(false){}
+// ------------- piece methods ----------------
+Piece::Piece(int x_position, int y_position, bool color) : x_position(x_position),
+y_position(y_position), has_moved(false), color(color){}
 
 void Piece::set_position(int x_next, int y_next)
 {
@@ -16,59 +17,267 @@ void Piece::set_position(int x_next, int y_next)
 
 bool Piece::isInTable(int x, int y)
 {
-    return ((x>= 1 && x<= 8) && (y>= 1 && y <= 8));
+    return ((x>= 0 && x<= 7) && (y>= 0 && y <= 7));
 }
 
-//---------- Pawn methods -----------
+//--------------- Pawn methods -------------------
 
 Pawn::Pawn(int x_position, int y_position, bool color) : Piece(x_position, y_position, color)
 {
     name = "Pawn";
 }
 
-
-bool Pawn::isValidPosition(int x_next,int y_next)
+void Pawn::move(int x_next, int y_next)
 {
-    int dist = 1; //maximum distance it can move 
-    if (!Piece::isInTable(x_next, y_next))
-        return 0;
-    if (has_moved == false)
-        dist = 2;
-    if (color == 0) //if it's white, it has to go up
-        {
-            if (x_next == x_position)
-                if (y_next - y_position <= dist && y_next > y_position)
-                    return 1;
-        }
-    if (color == 1) // it has to go down
-        if (x_next == x_position)
-            if (y_position - y_next <= dist && y_position > y_next)
-                return 1;
-    return 0;
+	has_moved = true;
+	x_position = x_next;
+	y_position = y_next;
 }
 
-std::vector<std::pair<int, int>> Pawn::path(int x_next, int y_next)
+
+std::vector<std::vector<std::pair<int, int>>> Pawn::path()
 {
-    std::vector< std::pair<int,int >> p;
+    std::vector<std::vector< std::pair<int,int >>> p;
+	p.resize(1);
     int posx, posy;
     posx = x_position;
     posy = y_position;
-    // we go up
-    if (y_next > y_position)
-        while (posy < y_next)
+	int dist = 1;
+	if (has_moved == 1)
+		dist = 2;
+    // we go down, we are white
+    if (color == 1)
+        while (posy < y_position + dist)
         {
             posy ++ ;
-            p.push_back(std::make_pair(posx, posy));
+            p[0].push_back(std::make_pair(posx, posy));
         }
-    // we go down
+    // we go up, we are black
     else
     {
-        while (posy > y_next)
+        while (posy > y_position - dist)
         {
             posy -- ;
-            p.push_back(std::make_pair(posx, posy));
+            p[0].push_back(std::make_pair(posx, posy));
         }
     }
-    p.clear();
-    
+	return p;
+}
+
+//-------------- Rook Methods ----------------
+
+Rook::Rook(int x_position, int y_position, bool color) : Piece(x_position, y_position, color)
+{
+	name = "Rook";
+}
+
+std::vector<std::vector<std::pair<int, int>>> Rook::path()
+{
+	std::vector<std::vector< std::pair<int, int >>> p;
+	p.resize(4);
+	//it can go up, down, left, right;
+	//---- first we go up
+	int posx, posy;
+	posx = x_position, posy = y_position;
+	//left
+	while (posx > 0)
+		posx--, p[0].push_back(std::make_pair(posx, posy));
+	posx = x_position, posy = y_position;
+	//right
+	while (posx < 7)
+		posx++, p[1].push_back(std::make_pair(posx, posy));
+	//up
+	posx = x_position, posy = y_position;
+	while (posy > 0)
+		posy--, p[2].push_back(std::make_pair(posx, posy));
+	posx = x_position, posy = y_position;
+	//down
+	while (posy < 7)
+		posy++, p[3].push_back(std::make_pair(posx, posy));
+	return p;
+
+}
+
+void Rook::move(int x_next, int y_next)
+{
+	x_position = x_next;
+	y_position = y_next;
+	has_moved = true;
+}
+
+
+// -------------- Knight Methods ------------------
+
+Knight::Knight(int x_position, int y_position, bool color) : Piece(x_position, y_position, color)
+{
+	name = "Rook";
+}
+
+std::vector<std::vector<std::pair<int, int>>> Knight::path()
+{
+	std::vector<std::vector< std::pair<int, int >>> p;
+	p.resize(8);
+	int dist_x[] = { -2, -1, 2, 1, -2, -1, 2, 1 };
+	int dist_y[] = { -1, -2, -1, -2, 1, 2, 1, 2 };
+	for (int i = 0; i < 8; i++)
+	{
+
+		if (Piece::isInTable(x_position + dist_x[i], y_position + dist_y[i]))
+			p[i].push_back(std::make_pair(x_position + dist_x[i], y_position + dist_y[i]));
+	}
+	return p;
+
+}
+void Knight::move(int x_next, int y_next)
+{
+	has_moved = true;
+	x_position = x_next;
+	y_position = y_next;
+}
+
+// ------------ Bishop Methods ---------------
+
+Bishop::Bishop(int x_position, int y_position, bool color) : Piece(x_position, y_position, color)
+{
+	name = "Bishop";
+}
+
+
+std::vector<std::vector<std::pair<int, int>>> Bishop::path()
+{
+	std::vector<std::vector< std::pair<int, int >>> p;
+	p.resize(4);
+	int posx, posy;
+	posx = x_position,posy = y_position;
+	// up left
+	while (Piece::isInTable(posx - 1, posy - 1))
+	{
+		posx--, posy--, p[0].push_back(std::make_pair(posx, posy));
+	}
+	posx = x_position, posy = y_position;
+	// up right
+	while (Piece::isInTable(posx + 1, posy - 1))
+	{
+		posx++, posy--, p[1].push_back(std::make_pair(posx, posy));
+	}
+	posx = x_position, posy = y_position;
+	// down right
+	while (Piece::isInTable(posx + 1, posy + 1))
+	{
+		posx++, posy++, p[2].push_back(std::make_pair(posx, posy));
+	}
+	posx = x_position, posy = y_position;
+	// down left
+	while (Piece::isInTable(posx - 1, posy + 1))
+	{
+		posx--, posy++, p[3].push_back(std::make_pair(posx, posy));
+	}
+
+	return p;
+
+}
+
+void Bishop::move(int x_next, int y_next)
+{
+	has_moved = true;
+	x_position = x_next;
+	y_position = y_next;
+}
+
+// ---------------- Queen Methods ----------------
+
+Queen::Queen(int x_position, int y_position, bool color) : Piece(x_position, y_position, color)
+{
+	name = "Queen";
+}
+
+
+std::vector<std::vector<std::pair<int, int>>> Queen::path()
+{
+	std::vector<std::vector< std::pair<int, int >>> p;
+	p.resize(8);
+	int posx, posy;
+	posx = x_position, posy = y_position;
+	//left
+	while (posx > 0)
+		posx--, p[0].push_back(std::make_pair(posx, posy));
+	posx = x_position, posy = y_position;
+	//right
+	while (posx < 7)
+		posx++, p[1].push_back(std::make_pair(posx, posy));
+	//up
+	posx = x_position, posy = y_position;
+	while (posy > 0)
+		posy--, p[2].push_back(std::make_pair(posx, posy));
+	posx = x_position, posy = y_position;
+	//down
+	while (posy < 7)
+		posy++, p[3].push_back(std::make_pair(posx, posy));
+
+
+	posx = x_position, posy = y_position;
+	// up left
+	while (Piece::isInTable(posx - 1, posy - 1))
+	{
+		posx--, posy--, p[4].push_back(std::make_pair(posx, posy));
+	}
+	posx = x_position, posy = y_position;
+	// up right
+	while (Piece::isInTable(posx + 1, posy - 1))
+	{
+		posx++, posy--, p[5].push_back(std::make_pair(posx, posy));
+	}
+	posx = x_position, posy = y_position;
+	// down right
+	while (Piece::isInTable(posx + 1, posy + 1))
+	{
+		posx++, posy++, p[6].push_back(std::make_pair(posx, posy));
+	}
+	posx = x_position, posy = y_position;
+	// down left
+	while (Piece::isInTable(posx - 1, posy + 1))
+	{
+		posx--, posy++, p[7].push_back(std::make_pair(posx, posy));
+	}
+
+	return p;
+}
+
+void Queen::move(int x_next, int y_next)
+{
+	has_moved = true;
+	x_position = x_next;
+	y_position = y_next;
+}
+
+
+// ---------- King Methods -------------
+
+
+King::King(int x_position, int y_position, bool color) : Piece(x_position, y_position, color)
+{
+	name = "King";
+}
+
+std::vector<std::vector<std::pair<int, int>>> King::path()
+{
+	std::vector<std::vector< std::pair<int, int >>> p;
+	p.resize(9);
+	int dist_x[] = { 1, 1, 1, 0, -1, -1, -1, 0};
+	int dist_y[] = { -1, 0, 1, 1, 1, 0, -1, -1 };
+	int posx, posy;
+	for (int i = 0; i < 8; i++)
+	{
+		if (Piece::isInTable(x_position + dist_x[i], y_position + dist_y[i]))
+			 p[i].push_back(std::make_pair(x_position + dist_x[i], y_position + dist_y[i]));
+	}
+	return p;
+}
+
+
+void King::move(int x_next, int y_next)
+{
+	has_moved = true;
+	x_position = x_next;
+	y_position = y_next;
 }

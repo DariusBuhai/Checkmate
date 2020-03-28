@@ -5,10 +5,10 @@
 #include <ctime>
 #include <cstdlib>
 #include <iostream>
-#include "draw.h"
-#include "table.h"
-#include "types.h"
-#include "table.cpp"
+
+#include "../include/draw.h"
+#include "../include/table.h"
+//#include "table.cpp"
 
 using namespace std;
 using namespace sf;
