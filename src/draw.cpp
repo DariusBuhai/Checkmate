@@ -8,7 +8,7 @@
 
 #include "../include/draw.h"
 #include "../include/table.h"
-//#include "table.cpp"
+#include "table.cpp"
 
 using namespace std;
 using namespace sf;

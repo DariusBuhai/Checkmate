@@ -6,20 +6,20 @@
 #define CHECKMATE_PIECE_H
 #include <vector>
 #include <string>
+#include "types.h"
 
 class Piece{
 protected:
     //int hashcode;
     int x_position, y_position;
     bool has_moved;
+    std :: string type;
     bool color;
-
     //0 is for white, 1 is for black;
 protected:
     bool isInTable(int, int);
     Piece(int, int, bool);
     void set_position(int, int);
-
 
 };
 

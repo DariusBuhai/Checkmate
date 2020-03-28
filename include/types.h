@@ -22,4 +22,10 @@ struct size_type{
     }
 };
 
+struct pieces_pos_type{
+    int posx,posy;
+    std :: string type;
+    bool color;
+};
+
 #endif //CHECKMATE_TYPES_H
