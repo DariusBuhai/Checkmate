@@ -121,16 +121,26 @@ pair<int, int> Table::determine_grid_position(position_type pos){
 
 }
 
-void Table::digest_action(position_type position){
+void Table::digest_action(sf::Event event){
 
-    this->resetSelectedSquares();
-    try{
-        pair<int, int> grid_position = this->determine_grid_position(position);
-        this->selected_squares[grid_position.first][grid_position.second] = true;
-
-    }catch (int e){
-        cout<<"Pressed outside the table"<<'\n';
+    if(event.type==sf::Event::MouseButtonPressed){
+        this->resetSelectedSquares();
+        try{
+            pair<int, int> grid_position = this->determine_grid_position(position_type(event.mouseButton.x, event.mouseButton.y));
+            this->selected_squares[grid_position.first][grid_position.second] = true;
+        }catch (int e){
+            cout<<"Pressed outside the table"<<'\n';
+        }
+    }else if(event.type==sf::Event::KeyPressed){
+        this->resetSelectedSquares();
+        try{
+            //pair<int, int> grid_position = this->determine_grid_position(position_type(event.mouseButton.x, event.mouseButton.y));
+            //this->selected_squares[grid_position.first][grid_position.second] = true;
+        }catch (int e){
+            cout<<"Pressed outside the table"<<'\n';
+        }
     }
+
 }
 
 void Table::draw_piece(sf::RenderWindow* window, Piece piece){
@@ -149,8 +159,8 @@ void Table::draw_piece(sf::RenderWindow* window, Piece piece){
     sf::Sprite item;
     item.setTexture(piece_img);
     item.setPosition(Vector2f(p.x, p.y));
-    item.setScale(1.5, 1.4);
-    item.setOrigin(-15, -15);
+    item.setScale(0.3, .3);
+    item.setOrigin(-110, -50);
 
     window->draw(item);
 }

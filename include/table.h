@@ -36,7 +36,7 @@ public:
 
     Table();
 
-    void digest_action(position_type);
+    void digest_action(sf::Event);
 
     void draw_piece(sf::RenderWindow*, Piece);
 

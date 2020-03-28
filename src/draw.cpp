@@ -27,11 +27,10 @@ void Draw::init(){
         Event event;
         window.clear();
         this->draw(&window);
-        while (window.pollEvent(event))
+        while (window.pollEvent(event)){
             if (event.type == Event::Closed)
                 window.close();
-        if(event.type == sf::Event::MouseButtonPressed){
-            table.digest_action(position_type(event.mouseButton.x, event.mouseButton.y));
+            table.digest_action(event);
         }
         window.display();
     }
