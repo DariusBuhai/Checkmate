@@ -35,7 +35,7 @@ bool Piece::isInTable(int x, int y)
 
 //--------------- Pawn methods -------------------
 
-Pawn::Pawn(std::pair<int,int> pos, bool isBlack) : Piece(pos, is_black)
+Pawn::Pawn(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack)
 {
     type = "Pawn";
 }
@@ -50,7 +50,6 @@ void Pawn::move(int x_next, int y_next)
 
 std::vector<std::vector<std::pair<int, int> > > Pawn::path()
 {
-
     std::vector<std::vector< std::pair<int,int > > > p;
 	p.resize(1);
     int posx, posy;

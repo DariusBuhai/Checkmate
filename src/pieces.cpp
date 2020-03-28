@@ -32,7 +32,7 @@ void Pieces::initPositions()
     pieces.push_back(Knight({7,0},1));
     pieces.push_back(Rook({8,0},1));
     for(int i = 1 ; i <= 8 ; i ++ )
-        pieces.push_back(Pawn({i, 1},1));
+        pieces.push_back(Pawn({i, 1}, 1));
 }
 
 void Pieces::displayPieces()
