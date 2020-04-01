@@ -51,7 +51,7 @@ void Pawn::move(int x_next, int y_next)
 std::vector<std::vector<std::pair<int, int> > > Pawn::path()
 {
     std::vector<std::vector< std::pair<int,int > > > p;
-	p.resize(1);
+	p.resize(2);
     int posx, posy;
     posx = pos.first;
     posy = pos.second;
@@ -60,19 +60,39 @@ std::vector<std::vector<std::pair<int, int> > > Pawn::path()
         dist = 2;
     // we go down, we are white
     if (is_black == 1)
+    {    
+        posx++;
+        posy++;
+        if (isInTable(posx, posy))
+            p[0].push_back(std::make_pair(posx, posy));
+        posx -= 2;
+        if (isInTable(posx, posy))
+            p[1].push_back(std::make_pair(posx, posy));
+        /*
         while (posy < pos.second + dist)
         {
             posy ++ ;
             p[0].push_back(std::make_pair(posx, posy));
         }
+        */
+    }
     // we go up, we are black
     else
     {
+        posx++;
+        posy--;
+        if (isInTable(posx, posy))
+            p[0].push_back(std::make_pair(posx, posy));
+        posx -= 2;
+        if (isInTable(posx, posy))
+            p[1].push_back(std::make_pair(posx, posy));
+        /*
         while (posy > pos.second - dist)
         {
             posy -- ;
             p[0].push_back(std::make_pair(posx, posy));
         }
+        */
     }
     return p;
 }

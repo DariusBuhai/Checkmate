@@ -11,6 +11,12 @@ Pieces::Pieces(){
     this->initPositions();
 }
 
+Pieces::~Pieces()
+{
+    pieces.clear();
+
+}
+
 void Pieces::initPositions()
 {
     pieces.push_back(Rook({1, 7}, 0));
@@ -33,7 +39,16 @@ void Pieces::initPositions()
     pieces.push_back(Rook({8,0},1));
     for(int i = 1 ; i <= 8 ; i ++ )
         pieces.push_back(Pawn({i, 1}, 1));
+
 }
+
+void Pieces::setPieces(std::vector<Piece> new_pieces)
+{
+    pieces.clear();
+    for (auto it: new_pieces)
+        pieces.push_back(it);
+}
+
 
 void Pieces::displayPieces()
 {

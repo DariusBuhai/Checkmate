@@ -9,6 +9,8 @@
 #include "types.h"
 
 class Piece{
+public:
+	bool isInTable(int, int);
 protected:
     //int hashcode;
     std::pair<int, int> pos;
@@ -17,7 +19,6 @@ protected:
     bool is_black;
     //0 is for white, 1 is for black;
 protected:
-    bool isInTable(int, int);
     Piece(std::pair<int, int>, bool);
     void set_position(int, int);
 

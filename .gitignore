@@ -5,6 +5,8 @@ cmake-build-debug
 # CodeBlocks
 bin
 obj
+bin\debug
+obj\debug
 TestSFML.cbp
 TestSFML.depend
 TestSFML.layout
@@ -12,3 +14,4 @@ TestSFML.layout
 clear_workspace.command
 makefile
 CheckMate.out
+.vscode/settings.json

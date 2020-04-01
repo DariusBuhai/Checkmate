@@ -11,11 +11,12 @@ private:
 public:
 
     Pieces();
-
     void displayPieces();
     void initPositions();
-
-    std::vector <Piece> getPieces();
+    std::vector<Piece> getPieces();
+    void setPieces(std::vector<Piece>);
+    ~Pieces();
 };
+
 
 #endif // PIECES_H_INCLUDED
