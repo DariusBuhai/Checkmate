@@ -20,6 +20,9 @@ bool Piece::getIsBlack(){
     return this->is_black;
 }
 
+bool Piece::getHasMoved(){
+    return has_moved;
+}
 
 void Piece::set_position(int x_next, int y_next)
 {
@@ -55,7 +58,7 @@ std::vector<std::vector<std::pair<int, int> > > Pawn::path()
     int posx, posy;
     posx = pos.first;
     posy = pos.second;
-    
+
     // we go down, we are white
     if (is_black == 1)
     {    

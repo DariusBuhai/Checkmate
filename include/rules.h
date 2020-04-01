@@ -19,7 +19,9 @@ private:
 
     //board[i][j][0] keeps the pieces of the white player, 1 is for black
     std::string board[9][9][2];
-    std::vector <Piece> pieces;
+    std::vector <Piece> piece_list;
+    inline void save_board(std::string[9][9][2]);
+    inline void get_board(std::string[9][9][2]);
 
 public:
     //a list of position the piece attacks
@@ -27,7 +29,7 @@ public:
     //tells you what piece is on the field
     std::vector <std::pair<int, int> > canAttackPos(std::pair<int, int>, bool); 
     bool isInCheck(bool);
-    std::vector<std::pair<int, int> > getPositions(std::pair<int, int>, bool);
+    std::vector<std::pair<int, int> > getPositions(Piece, bool);
 
 };
 

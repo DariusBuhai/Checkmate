@@ -26,6 +26,7 @@ public:
     std::string getType();
     std::pair<int,int> getPos();
     bool getIsBlack();
+	bool getHasMoved();
 };
 
 class Pawn : public Piece
