@@ -55,9 +55,7 @@ std::vector<std::vector<std::pair<int, int> > > Pawn::path()
     int posx, posy;
     posx = pos.first;
     posy = pos.second;
-    int dist = 1;
-    if (has_moved == 1)
-        dist = 2;
+    
     // we go down, we are white
     if (is_black == 1)
     {    

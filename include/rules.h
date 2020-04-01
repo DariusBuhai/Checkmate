@@ -26,7 +26,8 @@ public:
     Rules(std::vector <Piece>);
     //tells you what piece is on the field
     std::vector <std::pair<int, int> > canAttackPos(std::pair<int, int>, bool); 
-
+    bool isInCheck(bool);
+    std::vector<std::pair<int, int> > getPositions(std::pair<int, int>, bool);
 
 };
 
