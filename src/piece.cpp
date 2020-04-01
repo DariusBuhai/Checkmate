@@ -278,7 +278,6 @@ std::vector<std::vector<std::pair<int, int> > > King::path()
     p.resize(9);
     int dist_x[] = { 1, 1, 1, 0, -1, -1, -1, 0};
     int dist_y[] = { -1, 0, 1, 1, 1, 0, -1, -1 };
-    int posx, posy;
     for (int i = 0; i < 8; i++)
     {
         if (Piece::isInTable(pos.first + dist_x[i], pos.second + dist_y[i]))

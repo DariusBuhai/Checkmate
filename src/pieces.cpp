@@ -6,7 +6,6 @@
 #include "../include/pieces.h"
 #include "../include/piece.h"
 #include "../include/types.h"
-#include "piece.cpp"
 
 Pieces::Pieces(){
     this->initPositions();

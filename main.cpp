@@ -3,9 +3,7 @@
 #include "include/draw.h"
 #include "include/piece.h"
 #include "include/pieces.h"
-#include "pieces.cpp"
-#include "draw.cpp"
-#include "table.cpp"
+
 
 int main()
 {
