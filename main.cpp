@@ -9,9 +9,7 @@
 int main()
 {
 	
-	//Draw d;
-	
-	
+	Draw d;
 	
 	Pieces All;
 	All.initPositions();

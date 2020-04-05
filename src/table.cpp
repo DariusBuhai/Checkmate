@@ -146,7 +146,7 @@ void Table::digest_action(sf::Event event){
 void Table::draw_piece(sf::RenderWindow* window, Piece piece){
 
     size_type s(this->size.width - this->border_width - this->indicator_spacing, this->size.height - this->border_width - this->indicator_spacing);
-    position_type p(this->position.x + piece.getPos().first * (s.width/8), this->position.y + piece.getPos().second * (s.height/8));
+    position_type p(this->position.x + this->indicator_spacing + piece.getPos().first * (s.width/8), this->position.y + piece.getPos().second * (s.height/8));
 
     sf::Texture piece_img;
 

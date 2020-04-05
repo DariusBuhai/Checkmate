@@ -127,48 +127,44 @@ std::vector<std::pair<int, int>> Rules::getPositions(Piece pcs, bool type)
     std::vector<std::pair<int, int>> location;
 
     save_board(aux_board);
-    if (board[pos.first][pos.second][type] == "Pawn")
-    {
-    //pawn can move back and front, but can only attack sideways, so we are gonna check 
-    //if we can move up and down first
+    if (board[pos.first][pos.second][type] == "Pawn") {
+        //pawn can move back and front, but can only attack sideways, so we are gonna check
+        //if we can move up and down first
 
-    int dst = 1;
-    //to keep track where we going
-    if (type == 0)
-    {
-        dst = -1;
-    }
-    if (!board[pos.first][pos.second + dst][0].size() and !board[pos.first][pos.second + dst][1].size())
-    {
-        board[pos.first][pos.second + dst][type] = "Pawn";
-        board[pos.first][pos.second + dst][!type] = "";
-        board[pos.first][pos.second + dst][type] = "";
-        if (!isInCheck(type))
-            ans.push_back(std::make_pair(pos.first, pos.second + dst));
-        get_board(aux_board);
-        if (!pcs.getHasMoved()){
-            dst *= 2;
-            if (!board[pos.first][pos.second + dst][0].size() and !board[pos.first][pos.second + dst][1].size())
-            {
-                save_board(aux_board);
+        int dst = 1;
+        //to keep track where we going
+        if (type == 0) {
+            dst = -1;
+        }
+        if (!board[pos.first][pos.second + dst][0].size() and !board[pos.first][pos.second + dst][1].size()) {
             board[pos.first][pos.second + dst][type] = "Pawn";
             board[pos.first][pos.second + dst][!type] = "";
             board[pos.first][pos.second + dst][type] = "";
-            if (!isInCheck(0))
+            if (!isInCheck(type))
                 ans.push_back(std::make_pair(pos.first, pos.second + dst));
+            get_board(aux_board);
+            if (!pcs.getHasMoved()) {
+                dst *= 2;
+                if (!board[pos.first][pos.second + dst][0].size() and !board[pos.first][pos.second + dst][1].size()) {
+                    save_board(aux_board);
+                    board[pos.first][pos.second + dst][type] = "Pawn";
+                    board[pos.first][pos.second + dst][!type] = "";
+                    board[pos.first][pos.second + dst][type] = "";
+                    if (!isInCheck(0))
+                        ans.push_back(std::make_pair(pos.first, pos.second + dst));
+                }
+                get_board(aux_board);
             }
-        get_board(aux_board);
-    }
-    }
-    location = this->canAttackPos(pos, type);
-    for (auto it:location)
-    {
-        board[it.first][it.second][type] = board[pos.first][pos.second][type];
-        board[it.first][it.second][!type] = "";
-        board[pos.first][pos.second][type] = "";
-        if (!isInCheck(type))
-            ans.push_back(it);
-        get_board(aux_board);
+        }
+        location = this->canAttackPos(pos, type);
+        for (auto it:location) {
+            board[it.first][it.second][type] = board[pos.first][pos.second][type];
+            board[it.first][it.second][!type] = "";
+            board[pos.first][pos.second][type] = "";
+            if (!isInCheck(type))
+                ans.push_back(it);
+            get_board(aux_board);
+        }
     }
     // we are  going to check all the positions we can attack
 }
