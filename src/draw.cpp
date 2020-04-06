@@ -46,8 +46,5 @@ void Draw::draw(sf::RenderWindow* window) {
 
     table.draw(window);
 
-    for(auto piece : pieces.getPieces())
-        table.draw_piece(window, piece);
-
 }
 

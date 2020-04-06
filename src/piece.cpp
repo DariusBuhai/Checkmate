@@ -48,8 +48,7 @@ bool Piece::isInTable(std::pair<int, int> position)
 
 //--------------- Pawn methods -------------------
 
-Pawn::Pawn(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack)
-{
+Pawn::Pawn(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){
     type = "Pawn";
 }
 

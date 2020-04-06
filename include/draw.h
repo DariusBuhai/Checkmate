@@ -17,7 +17,6 @@ private:
     const double screen_height = 1000;
 
     Table table;
-    Pieces pieces;
 
     void draw(sf::RenderWindow*);
 

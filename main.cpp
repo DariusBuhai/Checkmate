@@ -9,9 +9,9 @@
 using namespace std;
 
 int main(){
-	//Draw d;
+	Draw d;
 
-	Pieces All;
+	/*Pieces All;
 	//All.displayPieces();
     Rules R;
     //cout << "Este sah "<< R.isInCheck(0) <<"\n";
@@ -31,6 +31,6 @@ int main(){
 		}
 		std::cout << "\n";
 	}
-	
+	*/
     return 0;
 }

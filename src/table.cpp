@@ -38,6 +38,9 @@ void Table::draw(sf::RenderWindow *window) {
     draw_outline(window, size_type(size.width-indicator_spacing, size.height-indicator_spacing), position_type(position.x+indicator_spacing, position.y));
     draw_grid(window, size_type(size.width-2*padding-indicator_spacing, size.height-2*padding-indicator_spacing), position_type(position.x + indicator_spacing + padding, position.y + padding));
 
+    for(auto piece : pieces.getPieces())
+        draw_piece(window, piece);
+
 }
 
 void Table::draw_indicators(sf::RenderWindow *window, size_type s, position_type p){
@@ -116,8 +119,6 @@ pair<int, int> Table::determine_grid_position(position_type pos){
         throw EXIT_FAILURE;
     }
 
-    cout<<r.first<<" "<<r.second<<'\n';
-
     return r;
 
 }
@@ -129,10 +130,11 @@ void Table::digest_action(sf::Event event){
         try{
             pair<int, int> grid_position = this->determine_grid_position(position_type(event.mouseButton.x, event.mouseButton.y));
             this->selected_squares[grid_position.first][grid_position.second] = true;
-
             Piece* current = pieces.getPiece(grid_position);
-            if(current!=NULL){
-
+            if(current != nullptr){
+                //cout<<current->getPos().first;
+                /// Nu afiseaza tipul
+                cout<<current->getType();
             }
 
         }catch (int e){
