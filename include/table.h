@@ -8,6 +8,8 @@
 
 #include "types.h"
 #include "piece.h"
+#include "pieces.h"
+#include "rules.h"
 
 #ifndef CHECKMATE_TABLE_H
 #define CHECKMATE_TABLE_H
@@ -23,6 +25,8 @@ private:
 
     size_type size;
     position_type position;
+
+    Pieces pieces;
 
     void resetSelectedSquares();
 

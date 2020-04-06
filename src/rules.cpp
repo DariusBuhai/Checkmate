@@ -4,81 +4,22 @@
 #include <vector>
 #include <iostream>
 
-Rules::Rules(std::vector<Piece> items)
-{
-    piece_list.clear();
-    for (int i = 0; i < 9; i++)
-        for (int j = 0; j < 9; j++)
-            board[i][j][0] = "", board[i][j][1] = "";
-
-    for (auto it : items)
-        board[it.getPos().first][it.getPos().second][it.getIsBlack()] =
-        it.getType(), piece_list.push_back(it);
-    
-/*
-    std::cout<<"culoarea alba\n";
-    for (int i = 0; i < 9; i++)
-        for (int j = 0; j < 9; j++)
-            std::cout<< i<<" "<<j<<" "<<board[j][i][0]<<"\n";
-
-
-    std::cout<<"culoare neagra\n";
-    for (int i = 0; i < 9; i++)
-        for (int j = 0; j < 9; j++)
-            std::cout<< i<<" "<<j<<" "<<board[j][i][1]<<"\n";
-*/
-
-}
-
-
-std::vector <std::pair<int, int> > Rules::canAttackPos(std::pair<int, int> pos, bool type)
+std::vector <std::pair<int, int> > Rules::canAttackPos(std::pair<int, int> pos, int type)
 {
     std::vector<std::pair<int, int> > ans;
-    std::vector<std::vector<std::pair<int, int> > > path;
-    //if (board[pos.first][pos.second][type] == "Pawn")
-    if (board[pos.first][pos.second][type] == "Pawn")
-    {
-        Pawn temp(std::make_pair(pos.first, pos.second), type);
-        path = temp.path();
-    }
-    if (board[pos.first][pos.second][type] == "Rook")
-    {
-        Rook temp(std::make_pair(pos.first, pos.second), type);
-        path = temp.path();
-    }
-    if (board[pos.first][pos.second][type] == "Knight")
-    {
-        Knight temp(std::make_pair(pos.first, pos.second), type);
-        path = temp.path();
-    }
-    if (board[pos.first][pos.second][type] == "Queen")
-    {
-        Queen temp(std::make_pair(pos.first, pos.second), type);
-        path = temp.path();
-    }
-    if (board[pos.first][pos.second][type] == "Bishop")
-    {
-        Bishop temp(std::make_pair(pos.first, pos.second), type);
-        path = temp.path();
-    }
-    if (board[pos.first][pos.second][type] == "King")
-    {
-        King temp(std::make_pair(pos.first, pos.second), type);
-        path = temp.path();
-    }
-    for (auto way : path)
-        for (auto p : way)
-        {
-            if (board[p.first][p.second][type].size())
+    if(board[type][pos.first][pos.second] == nullptr) return ans;
+    for (auto way : board[type][pos.first][pos.second]->path())
+        for (auto p : way){
+            if (board[type][p.first][p.second] == nullptr)
                 break;
             ans.push_back(std::make_pair(p.first, p.second));
-            if (board[p.first][p.second][!type].size())
+            if (board[type][p.first][p.second] == nullptr)
                 break;
         }
     return ans;
 }
 
-bool Rules::isInCheck(bool color)
+bool Rules::isInCheck(int type)
 {
     bool mat[9][9];
     std::vector<std::pair<int, int>> pos;
@@ -87,47 +28,45 @@ bool Rules::isInCheck(bool color)
             mat[i][j] = 0;
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++)
-            if (board[i][j][!color].size())
+            if (board[!type][i][j]!=nullptr)
                 {
-                    pos = canAttackPos(std::make_pair(i,j), !color);
+                    pos = canAttackPos(std::make_pair(i,j), !type);
                     for (auto it:pos)
                         mat[it.first][it.second] = 1;
                     pos.clear();
                 }
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++)
-            if (board[i][j][color] == "King")
+            if (board[type][i][j]->getType() == "King")
                 return mat[i][j];
     return 0;
 }
 
-inline void Rules:: save_board(std::string aux_board[9][9][2])
-{
+inline void Rules::save_board(Piece aux_board[2][9][9]){
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++)
             for (int k = 0; k < 2; k++)
-                aux_board[i][j][k] = board[i][j][k];
+                aux_board[i][j][k] = *board[i][j][k];
 }
 
 
-inline void Rules:: get_board(std::string aux_board[9][9][2])
-{
+inline void Rules::get_board(Piece aux_board[2][9][9]){
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++)
             for (int k = 0; k < 2; k++)
-                board[i][j][k] = aux_board[i][j][k];
+                board[i][j][k] = &aux_board[i][j][k];
 }
 
 
-std::vector<std::pair<int, int>> Rules::getPositions(Piece pcs, bool type)
+std::vector<std::pair<int, int>> Rules::getPositions(Piece pcs, int type)
 {
-    std::string aux_board[9][9][2];
+    Piece aux_board[2][9][9];
     std::pair<int, int> pos = pcs.getPos();
     std::vector<std::pair<int, int>> ans;
     std::vector<std::pair<int, int>> location;
 
     save_board(aux_board);
-    if (board[pos.first][pos.second][type] == "Pawn") {
+    if (board[pos.first][pos.second][type]->getType() == "Pawn") {
         //pawn can move back and front, but can only attack sideways, so we are gonna check
         //if we can move up and down first
 
@@ -136,20 +75,20 @@ std::vector<std::pair<int, int>> Rules::getPositions(Piece pcs, bool type)
         if (type == 0) {
             dst = -1;
         }
-        if (!board[pos.first][pos.second + dst][0].size() and !board[pos.first][pos.second + dst][1].size()) {
-            board[pos.first][pos.second + dst][type] = "Pawn";
-            board[pos.first][pos.second + dst][!type] = "";
-            board[pos.first][pos.second + dst][type] = "";
+        if (board[0][pos.first][pos.second + dst] != nullptr and board[1][pos.first][pos.second + dst] != nullptr) {
+            board[pos.first][pos.second + dst][type]->getType() = "Pawn";
+            board[pos.first][pos.second + dst][!type] = nullptr;
+            board[pos.first][pos.second + dst][type] = nullptr;
             if (!isInCheck(type))
                 ans.push_back(std::make_pair(pos.first, pos.second + dst));
             get_board(aux_board);
             if (!pcs.getHasMoved()) {
                 dst *= 2;
-                if (!board[pos.first][pos.second + dst][0].size() and !board[pos.first][pos.second + dst][1].size()) {
+                if (board[pos.first][pos.second + dst][0]!=nullptr and board[pos.first][pos.second + dst][1]!=nullptr) {
                     save_board(aux_board);
-                    board[pos.first][pos.second + dst][type] = "Pawn";
-                    board[pos.first][pos.second + dst][!type] = "";
-                    board[pos.first][pos.second + dst][type] = "";
+                    board[pos.first][pos.second + dst][type]->getType() = "Pawn";
+                    board[pos.first][pos.second + dst][!type]->getType() = "";
+                    board[pos.first][pos.second + dst][type]->getType() = "";
                     if (!isInCheck(0))
                         ans.push_back(std::make_pair(pos.first, pos.second + dst));
                 }
@@ -159,8 +98,8 @@ std::vector<std::pair<int, int>> Rules::getPositions(Piece pcs, bool type)
         location = this->canAttackPos(pos, type);
         for (auto it:location) {
             board[it.first][it.second][type] = board[pos.first][pos.second][type];
-            board[it.first][it.second][!type] = "";
-            board[pos.first][pos.second][type] = "";
+            board[it.first][it.second][!type]->getType() = "";
+            board[pos.first][pos.second][type]->getType() = "";
             if (!isInCheck(type))
                 ans.push_back(it);
             get_board(aux_board);

@@ -8,6 +8,7 @@
 
 #include "../include/table.h"
 #include "../include/types.h"
+#include "../include/rules.h"
 
 using namespace std;
 using namespace sf;
@@ -128,6 +129,12 @@ void Table::digest_action(sf::Event event){
         try{
             pair<int, int> grid_position = this->determine_grid_position(position_type(event.mouseButton.x, event.mouseButton.y));
             this->selected_squares[grid_position.first][grid_position.second] = true;
+
+            Piece* current = pieces.getPiece(grid_position);
+            if(current!=NULL){
+
+            }
+
         }catch (int e){
             cout<<"Pressed outside the table"<<'\n';
         }

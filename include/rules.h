@@ -13,23 +13,20 @@ a function that determines where can you move a piece based on the upper functio
 a function that gets a list of all possible moves for you 
 */
 
-class Rules
+#include "pieces.h"
+
+class Rules: public Pieces
 {
 private:
 
-    //board[i][j][0] keeps the pieces of the white player, 1 is for black
-    std::string board[9][9][2];
-    std::vector <Piece> piece_list;
-    inline void save_board(std::string[9][9][2]);
-    inline void get_board(std::string[9][9][2]);
+    inline void save_board(Piece[2][9][9]);
+    inline void get_board(Piece[2][9][9]);
 
 public:
-    //a list of position the piece attacks
-    Rules(std::vector <Piece>);
     //tells you what piece is on the field
-    std::vector <std::pair<int, int> > canAttackPos(std::pair<int, int>, bool); 
-    bool isInCheck(bool);
-    std::vector<std::pair<int, int> > getPositions(Piece, bool);
+    std::vector <std::pair<int, int>> canAttackPos(std::pair<int, int>, int);
+    bool isInCheck(int);
+    std::vector<std::pair<int, int> > getPositions(Piece, int);
 
 };
 

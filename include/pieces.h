@@ -7,13 +7,17 @@
 
 class Pieces{
 private:
-    std::vector <Piece> pieces;
+    void initPieces();
+    void initBoard();
+protected:
+    Piece *board[2][8][8];
+    std::vector<Piece> pieces;
 public:
 
     Pieces();
     void displayPieces();
-    void initPositions();
     std::vector<Piece> getPieces();
+    Piece* getPiece(std::pair<int, int>);
     void setPieces(std::vector<Piece>);
     ~Pieces();
 };

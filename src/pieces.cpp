@@ -5,20 +5,21 @@
 
 #include "../include/pieces.h"
 #include "../include/piece.h"
-#include "../include/types.h"
+#include "../include/rules.h"
 
 Pieces::Pieces(){
-    this->initPositions();
+    this->initPieces();
+    this->initBoard();
 }
 
 Pieces::~Pieces()
 {
+    for(auto piece: pieces)
+            piece.~Piece();
     pieces.clear();
-
 }
 
-void Pieces::initPositions()
-{
+void Pieces::initPieces(){
     pieces.push_back(Rook({0, 7}, 0));
     pieces.push_back(Knight({1,7},0));
     pieces.push_back(Bishop({2,7},0));
@@ -39,25 +40,29 @@ void Pieces::initPositions()
     pieces.push_back(Rook({7,0},1));
     for(int i = 0 ; i < 8 ; i ++ )
         pieces.push_back(Pawn({i, 1}, 1));
-
 }
 
-void Pieces::setPieces(std::vector<Piece> new_pieces)
-{
+void Pieces::initBoard() {
+    for(auto piece:pieces)
+        board[piece.getIsBlack()][piece.getPos().first][piece.getPos().second] = &piece;
+}
+
+void Pieces::setPieces(std::vector<Piece> new_pieces){
     pieces.clear();
     for (auto it: new_pieces)
         pieces.push_back(it);
 }
 
 
-void Pieces::displayPieces()
-{
+void Pieces::displayPieces(){
     for(auto x : pieces)
         std::cout<<"Piesa " << x.getType() << " " << x.getIsBlack() << " se afla pe pozitia " << x.getPos().first<< " " << x.getPos().second << '\n';
 }
 
-std::vector<Piece> Pieces::getPieces()
-{
-    //this->displayPieces();
+std::vector<Piece> Pieces::getPieces(){
     return pieces;
+}
+
+Piece* Pieces::getPiece(std::pair<int, int> position) {
+    return board[1][position.first][position.second];
 }
