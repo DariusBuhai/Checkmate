@@ -9,7 +9,7 @@
 
 Pieces::Pieces(){
     this->initPieces();
-    this->initBoard();
+    this->updateBoard();
 }
 
 Pieces::~Pieces(){
@@ -41,7 +41,7 @@ void Pieces::initPieces(){
         pieces.push_back(Pawn({i, 1}, 1));
 }
 
-void Pieces::initBoard() {
+void Pieces::updateBoard() {
     for(int i=0;i<2;i++)
         for(int j=0;j<8;j++)
             for(int k=0;k<8;k++)
@@ -54,6 +54,7 @@ void Pieces::setPieces(std::vector<Piece> new_pieces){
     pieces.clear();
     for (auto it: new_pieces)
         pieces.push_back(it);
+    this->updateBoard();
 }
 
 
@@ -70,4 +71,15 @@ Piece* Pieces::getPiece(std::pair<int, int> position) {
     if(board[1][position.first][position.second]!= nullptr)
         return board[1][position.first][position.second];
     return board[0][position.first][position.second];
+}
+
+void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
+    piece->move(new_position);
+    updateBoard();
+}
+
+void Pieces::movePiece(std::pair<int, int> old_position, std::pair<int, int> new_position){
+    Piece* piece = getPiece(old_position);
+    if(piece!= nullptr)
+        this->movePiece(piece, new_position);
 }

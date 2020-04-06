@@ -6,6 +6,7 @@
 #define CHECKMATE_PIECE_H
 #include <vector>
 #include <string>
+
 #include "types.h"
 
 class Piece{
@@ -29,7 +30,7 @@ public:
 	bool getHasMoved();
 
     virtual std::vector<std::vector<std::pair<int, int>>> path();
-    virtual void move(std::pair<int, int>);
+    void move(std::pair<int, int>);
 };
 
 class Pawn : public Piece

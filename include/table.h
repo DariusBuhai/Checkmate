@@ -23,11 +23,11 @@ private:
 
     std::pair<int, int> selected_square;
     std::vector<std::pair<int, int>> future_positions;
+    Piece* last_selected_piece = nullptr;
 
     size_type size;
     position_type position;
 
-    Pieces pieces;
     Rules rules;
 
     void resetSelectedSquares();

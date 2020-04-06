@@ -15,7 +15,6 @@ using namespace sf;
 
 void Table::resetSelectedSquares(){
     this->selected_square = {-1,-1};
-    this->future_positions.clear();
 }
 
 Table::Table(){
@@ -36,7 +35,7 @@ void Table::draw(sf::RenderWindow *window) {
     draw_outline(window, size_type(size.width-indicator_spacing, size.height-indicator_spacing), position_type(position.x+indicator_spacing, position.y));
     draw_grid(window, size_type(size.width-2*padding-indicator_spacing, size.height-2*padding-indicator_spacing), position_type(position.x + indicator_spacing + padding, position.y + padding));
 
-    for(auto piece : pieces.getPieces())
+    for(auto piece : rules.getPieces())
         draw_piece(window, piece);
 
 }
@@ -134,16 +133,18 @@ void Table::digest_action(sf::Event event){
         try{
             pair<int, int> grid_position = this->determine_grid_position(position_type(event.mouseButton.x, event.mouseButton.y));
             this->selected_square = {grid_position.first, grid_position.second};
-            Piece* current = pieces.getPiece(grid_position);
+            Piece* current = rules.getPiece(grid_position);
             if(find(future_positions.begin(), future_positions.end(), grid_position)!=future_positions.end()){
-                //current->move()
+                rules.movePiece(last_selected_piece, grid_position);
             }
+            future_positions.clear();
             if(current != nullptr){
+                last_selected_piece = current;
                 try{
                     vector<pair<int, int>> future_positions = rules.getPositions(*current, current->getIsBlack());
                     this->future_positions = future_positions;
-                }catch (...){
-
+                }catch (int e){
+                    cout<<e;
                 }
             }
 

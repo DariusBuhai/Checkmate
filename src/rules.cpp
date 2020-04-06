@@ -1,5 +1,6 @@
 #include "../include/rules.h"
 #include "../include/piece.h"
+
 #include <string>
 #include <vector>
 #include <iostream>
