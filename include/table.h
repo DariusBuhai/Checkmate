@@ -21,12 +21,14 @@ private:
     const double border_width = 10;
     const double indicator_spacing = 100;
 
-    std::vector<std::vector<bool> > selected_squares;
+    std::pair<int, int> selected_square;
+    std::vector<std::pair<int, int>> future_positions;
 
     size_type size;
     position_type position;
 
     Pieces pieces;
+    Rules rules;
 
     void resetSelectedSquares();
 

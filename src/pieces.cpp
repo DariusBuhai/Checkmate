@@ -14,12 +14,11 @@ Pieces::Pieces(){
 
 Pieces::~Pieces(){
     for(auto piece: pieces)
-            piece.~Piece();
+        piece.~Piece();
     pieces.clear();
 }
 
 void Pieces::initPieces(){
-    std::cout<<"a";
     pieces.push_back(Rook({0, 7}, 0));
     pieces.push_back(Knight({1,7},0));
     pieces.push_back(Bishop({2,7},0));
@@ -43,13 +42,12 @@ void Pieces::initPieces(){
 }
 
 void Pieces::initBoard() {
-    std::cout<<"b";
     for(int i=0;i<2;i++)
         for(int j=0;j<8;j++)
             for(int k=0;k<8;k++)
                 board[i][j][k] = nullptr;
-    for(auto piece:pieces)
-        board[piece.getIsBlack()][piece.getPos().first][piece.getPos().second] = &piece;
+    for(int i=0;i<pieces.size();i++)
+        board[pieces[i].getIsBlack()][pieces[i].getPos().first][pieces[i].getPos().second] = &pieces[i];
 }
 
 void Pieces::setPieces(std::vector<Piece> new_pieces){

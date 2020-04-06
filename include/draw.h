@@ -6,9 +6,8 @@
 #define CHECKMATE_DRAW_H
 
 #include <SFML/Graphics.hpp>
+
 #include "../include/table.h"
-#include "../include/pieces.h"
-#include "../include/piece.h"
 
 class Draw{
 private:

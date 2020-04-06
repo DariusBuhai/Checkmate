@@ -18,11 +18,11 @@ Draw::Draw() {
 
 void Draw::init(){
 
-    /// Create the window of the application
-    RenderWindow window(VideoMode(this->screen_width, this->screen_height, 32), "Checkmate AI",Style::Titlebar | Style::Close);
+    /** Create the window of the application */
+    RenderWindow window(VideoMode((unsigned int)screen_width, (unsigned int)screen_height, 32), "Checkmate AI",Style::Titlebar | Style::Close);
     window.setVerticalSyncEnabled(true);
     window.setActive(true);
-    
+
     while(window.isOpen()){
         Event event;
         window.clear();

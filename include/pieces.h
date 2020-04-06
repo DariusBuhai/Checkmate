@@ -10,7 +10,9 @@ private:
     void initPieces();
     void initBoard();
 protected:
+    /** Board pieces address */
     Piece* board[2][8][8];
+    /** Pieces */
     std::vector<Piece> pieces;
 public:
 

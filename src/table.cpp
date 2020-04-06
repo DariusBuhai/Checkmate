@@ -14,10 +14,8 @@ using namespace std;
 using namespace sf;
 
 void Table::resetSelectedSquares(){
-    this->selected_squares.clear();
-    this->selected_squares.resize(8);
-    for(int i=0;i<8;++i)
-        this->selected_squares[i].resize(9, false);
+    this->selected_square = {-1,-1};
+    this->future_positions.clear();
 }
 
 Table::Table(){
@@ -96,8 +94,14 @@ void Table::draw_grid(sf::RenderWindow *window, size_type s, position_type p){
             if((i+j)%2==0) square.setFillColor(Color(140, 140, 140));
             else square.setFillColor(Color::White);
 
-            if(selected_squares[i][j]){
+            pair<int, int> current_pos = {i, j};
+            if(selected_square==current_pos){
                 square.setOutlineColor(Color::Red);
+                square.setSize(Vector2f(squareWidth-4, squareHeight-4));
+                square.setOutlineThickness(4);
+            }
+            if(find(future_positions.begin(), future_positions.end(), current_pos)!=future_positions.end()){
+                square.setOutlineColor(Color::Black);
                 square.setSize(Vector2f(squareWidth-4, squareHeight-4));
                 square.setOutlineThickness(4);
             }
@@ -129,12 +133,18 @@ void Table::digest_action(sf::Event event){
         this->resetSelectedSquares();
         try{
             pair<int, int> grid_position = this->determine_grid_position(position_type(event.mouseButton.x, event.mouseButton.y));
-            this->selected_squares[grid_position.first][grid_position.second] = true;
+            this->selected_square = {grid_position.first, grid_position.second};
             Piece* current = pieces.getPiece(grid_position);
+            if(find(future_positions.begin(), future_positions.end(), grid_position)!=future_positions.end()){
+                //current->move()
+            }
             if(current != nullptr){
-                //cout<<current->getPos().first;
-                /// Nu afiseaza tipul
-                cout<<current->getType();
+                try{
+                    vector<pair<int, int>> future_positions = rules.getPositions(*current, current->getIsBlack());
+                    this->future_positions = future_positions;
+                }catch (...){
+
+                }
             }
 
         }catch (int e){
