@@ -14,19 +14,19 @@ protected:
     std::pair<int, int> pos;
     std::string type;
     bool has_moved;
-    bool is_black;
+    int player;
 
     void set_position(int, int);
 public:
 
-    Piece(std::pair<int, int>, bool);
+    Piece(std::pair<int, int>, int);
     Piece();
 
     bool isInTable(std::pair<int, int>);
 
     std::string getType();
     std::pair<int,int> getPos();
-    bool getIsBlack();
+    int getPlayer();
 	bool getHasMoved();
 
     virtual std::vector<std::vector<std::pair<int, int>>> path();

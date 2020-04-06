@@ -18,7 +18,7 @@ private:
 protected:
     Piece* board[2][8][8];
     std::vector<Piece> pieces;
-
+    int current_player = 0;
 public:
     Pieces();
     ~Pieces();
@@ -31,6 +31,10 @@ public:
 
     void setPieces(std::vector<Piece>);
     void displayPieces();
+
+    int getCurrentPlayer();
+    void setCurrentPlayer(int);
+    void switchPlayer();
 };
 
 

@@ -13,13 +13,8 @@
 using namespace std;
 using namespace sf;
 
-void Table::resetSelectedSquares(){
-    this->selected_square = {-1,-1};
-}
-
-Table::Table(){
-    this->resetSelectedSquares();
-}
+Table::Table(){}
+Table::~Table(){}
 
 void Table::setSize(size_type s) {
     this->size = s;
@@ -31,16 +26,16 @@ void Table::setPosition(position_type p) {
 
 void Table::draw(sf::RenderWindow *window) {
 
-    draw_indicators(window, size, position);
-    draw_outline(window, size_type(size.width-indicator_spacing, size.height-indicator_spacing), position_type(position.x+indicator_spacing, position.y));
-    draw_grid(window, size_type(size.width-2*padding-indicator_spacing, size.height-2*padding-indicator_spacing), position_type(position.x + indicator_spacing + padding, position.y + padding));
+    drawIndicators(window, size, position);
+    drawOutline(window, size_type(size.width-indicator_spacing, size.height-indicator_spacing), position_type(position.x+indicator_spacing, position.y));
+    drawGrid(window, size_type(size.width-2*padding-indicator_spacing, size.height-2*padding-indicator_spacing), position_type(position.x + indicator_spacing + padding, position.y + padding));
 
     for(auto piece : rules.getPieces())
-        draw_piece(window, piece);
+        drawPiece(window, piece);
 
 }
 
-void Table::draw_indicators(sf::RenderWindow *window, size_type s, position_type p){
+void Table::drawIndicators(sf::RenderWindow *window, size_type s, position_type p){
 
     double indicatorHeight = (s.height-indicator_spacing) / 8;
     double indicatorWidth = (s.width-indicator_spacing) / 8;
@@ -69,7 +64,7 @@ void Table::draw_indicators(sf::RenderWindow *window, size_type s, position_type
     }
 }
 
-void Table::draw_outline(sf::RenderWindow *window, size_type s, position_type p){
+void Table::drawOutline(sf::RenderWindow *window, size_type s, position_type p){
 
     RectangleShape fill(Vector2f(s.width - 2*border_width, s.height - 2*border_width));
     fill.setOutlineThickness((float)border_width);
@@ -79,7 +74,7 @@ void Table::draw_outline(sf::RenderWindow *window, size_type s, position_type p)
 
 }
 
-void Table::draw_grid(sf::RenderWindow *window, size_type s, position_type p){
+void Table::drawGrid(sf::RenderWindow *window, size_type s, position_type p){
 
     double squareWidth = (s.width) / 8;
     double squareHeight = (s.height) / 8;
@@ -126,44 +121,58 @@ pair<int, int> Table::determine_grid_position(position_type pos){
 
 }
 
-void Table::digest_action(sf::Event event){
+void Table::resetFuturePositions(){
+    this->future_positions.clear();
+}
 
+void Table::resetSelectedSquare(){
+    this->selected_square = {-1,-1};
+}
+
+void Table::updateSelectedSquare(pair<int, int> new_position){
+    if(!(new_position.first>=0 && new_position.first<8 && new_position.second>=0 && new_position.second<8)) return;
+    this->selected_square = new_position;
+    Piece* current = rules.getPiece(new_position);
+    if(find(future_positions.begin(), future_positions.end(), new_position)!=future_positions.end()){
+        rules.movePiece(last_selected_piece, new_position);
+    }
+    future_positions.clear();
+    if(current != nullptr){
+        last_selected_piece = current;
+        try{
+            vector<pair<int, int>> future_positions = rules.getFuturePositions(*current);
+            this->future_positions = future_positions;
+        }catch (int e){
+            cout<<"An error occurred trying to find future positions!";
+        }
+    }
+}
+
+void Table::digestAction(sf::Event event){
     if(event.type==sf::Event::MouseButtonPressed){
-        this->resetSelectedSquares();
         try{
             pair<int, int> grid_position = this->determine_grid_position(position_type(event.mouseButton.x, event.mouseButton.y));
-            this->selected_square = {grid_position.first, grid_position.second};
-            Piece* current = rules.getPiece(grid_position);
-            if(find(future_positions.begin(), future_positions.end(), grid_position)!=future_positions.end()){
-                rules.movePiece(last_selected_piece, grid_position);
-            }
-            future_positions.clear();
-            if(current != nullptr){
-                last_selected_piece = current;
-                try{
-                    vector<pair<int, int>> future_positions = rules.getPositions(*current, current->getIsBlack());
-                    this->future_positions = future_positions;
-                }catch (int e){
-                    cout<<e;
-                }
-            }
-
+            if(grid_position==selected_square) return resetSelectedSquare();
+            updateSelectedSquare(grid_position);
         }catch (int e){
             cout<<"Pressed outside the table"<<'\n';
         }
     }else if(event.type==sf::Event::KeyPressed){
-        this->resetSelectedSquares();
-        try{
-            //pair<int, int> grid_position = this->determine_grid_position(position_type(event.mouseButton.x, event.mouseButton.y));
-            //this->selected_squares[grid_position.first][grid_position.second] = true;
-        }catch (int e){
-            cout<<"Pressed outside the table"<<'\n';
+        if(selected_square.first!=-1 && selected_square.second!=-1){
+            if(event.key.code==Keyboard::Right)
+                updateSelectedSquare({selected_square.first+1, selected_square.second});
+            else if(event.key.code==Keyboard::Left)
+                updateSelectedSquare({selected_square.first-1, selected_square.second});
+            else if(event.key.code==Keyboard::Up)
+                updateSelectedSquare({selected_square.first, selected_square.second-1});
+            else if(event.key.code==Keyboard::Down)
+                updateSelectedSquare({selected_square.first, selected_square.second+1});
         }
     }
 
 }
 
-void Table::draw_piece(sf::RenderWindow* window, Piece piece){
+void Table::drawPiece(sf::RenderWindow* window, Piece piece){
 
     size_type s(this->size.width - this->border_width - this->indicator_spacing, this->size.height - this->border_width - this->indicator_spacing);
     position_type p(this->position.x + this->indicator_spacing + piece.getPos().first * (s.width/8), this->position.y + piece.getPos().second * (s.height/8));
@@ -171,7 +180,7 @@ void Table::draw_piece(sf::RenderWindow* window, Piece piece){
     sf::Texture piece_img;
 
     string img_location = "resources/pieces/"+piece.getType()+"_";
-    img_location += (piece.getIsBlack()) ? "black" : "white";
+    img_location += (piece.getPlayer()) ? "black" : "white";
     img_location += ".png";
 
     if (!piece_img.loadFromFile(img_location)) throw EXIT_FAILURE;

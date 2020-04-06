@@ -47,7 +47,7 @@ void Pieces::updateBoard() {
             for(int k=0;k<8;k++)
                 board[i][j][k] = nullptr;
     for(int i=0;i<pieces.size();i++)
-        board[pieces[i].getIsBlack()][pieces[i].getPos().first][pieces[i].getPos().second] = &pieces[i];
+        board[pieces[i].getPlayer()][pieces[i].getPos().first][pieces[i].getPos().second] = &pieces[i];
 }
 
 void Pieces::setPieces(std::vector<Piece> new_pieces){
@@ -60,7 +60,7 @@ void Pieces::setPieces(std::vector<Piece> new_pieces){
 
 void Pieces::displayPieces(){
     for(auto x : pieces)
-        std::cout<<"Piesa " << x.getType() << " " << x.getIsBlack() << " se afla pe pozitia " << x.getPos().first<< " " << x.getPos().second << '\n';
+        std::cout<<"Piesa " << x.getType() << " " << x.getPlayer() << " se afla pe pozitia " << x.getPos().first<< " " << x.getPos().second << '\n';
 }
 
 std::vector<Piece> Pieces::getPieces(){
@@ -75,6 +75,7 @@ Piece* Pieces::getPiece(std::pair<int, int> position) {
 
 void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
     piece->move(new_position);
+    switchPlayer();
     updateBoard();
 }
 
@@ -82,4 +83,16 @@ void Pieces::movePiece(std::pair<int, int> old_position, std::pair<int, int> new
     Piece* piece = getPiece(old_position);
     if(piece!= nullptr)
         this->movePiece(piece, new_position);
+}
+
+int Pieces::getCurrentPlayer() {
+    return current_player;
+}
+
+void Pieces::setCurrentPlayer(int player) {
+    this->current_player = player;
+}
+
+void Pieces::switchPlayer() {
+    this->current_player = !current_player;
 }

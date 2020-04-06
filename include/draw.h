@@ -18,6 +18,7 @@ private:
     Table table;
 
     void draw(sf::RenderWindow*);
+    void digestAction(sf::Event);
 
 public:
     void init();

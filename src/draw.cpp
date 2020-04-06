@@ -30,10 +30,14 @@ void Draw::init(){
         while (window.pollEvent(event)){
             if (event.type == Event::Closed)
                 window.close();
-            table.digest_action(event);
+            digestAction(event);
         }
         window.display();
     }
+}
+
+void Draw::digestAction(sf::Event event){
+    table.digestAction(event);
 }
 
 void Draw::draw(sf::RenderWindow* window) {

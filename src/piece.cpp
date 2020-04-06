@@ -6,8 +6,8 @@
 #include "../include/types.h"
 
 // ------------- piece methods ----------------
-Piece::Piece(std::pair<int, int> pos, bool is_black) : pos(pos), has_moved(false), is_black(is_black) {}
-Piece::Piece() : pos({0,0}), has_moved(false), is_black(false) {}
+Piece::Piece(std::pair<int, int> pos, int player) : pos(pos), has_moved(false), player(player) {}
+Piece::Piece() : pos({0,0}), has_moved(false), player(0) {}
 
 std::vector<std::vector<std::pair<int, int>>> Piece::path(){
     return std::vector<std::vector<std::pair<int,int>>>();
@@ -26,8 +26,8 @@ std::pair<int,int> Piece::getPos(){
     return this->pos;
 }
 
-bool Piece::getIsBlack(){
-    return this->is_black;
+int Piece::getPlayer(){
+    return this->player;
 }
 
 bool Piece::getHasMoved(){
@@ -61,7 +61,7 @@ std::vector<std::vector<std::pair<int, int> > > Pawn::path()
     posy = pos.second;
 
     // we go down, we are white
-    if (is_black == 1)
+    if (player == 1)
     {    
         posx++;
         posy++;
