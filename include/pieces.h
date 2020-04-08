@@ -11,25 +11,24 @@
 #include "piece.h"
 
 class Pieces{
-private:
+protected:
     void initPieces();
     void updateBoard();
-
 protected:
     Piece* board[2][8][8];
-    std::vector<Piece> pieces;
+    std::vector<Piece *> pieces;
     int current_player = 0;
 public:
     Pieces();
     ~Pieces();
 
-    std::vector<Piece> getPieces();
+    std::vector<Piece* > getPieces();
     Piece* getPiece(std::pair<int, int>);
 
     void movePiece(Piece*, std::pair<int, int>);
     void movePiece(std::pair<int, int>, std::pair<int, int>);
 
-    void setPieces(std::vector<Piece>);
+    void setPieces(std::vector<Piece*>);
     void displayPieces();
 
     int getCurrentPlayer();

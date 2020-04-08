@@ -18,13 +18,15 @@ a function that gets a list of all possible moves for you
 
 class Rules: public Pieces{
 private:
-    inline void saveBoard(Piece [2][8][8]);
-    inline void getBoard(Piece[2][8][8]);
+    inline void saveBoard(Piece* [2][8][8]);
+    inline void getBoard(Piece* [2][8][8]);
 public:
     //tells you what piece is on the field
+    void helper();
     std::vector <std::pair<int, int>> canAttackPos(std::pair<int, int>, int);
     bool isInCheck(int);
     std::vector<std::pair<int, int>> getFuturePositions(Piece);
+    ~Rules();
 };
 
 #endif
