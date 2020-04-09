@@ -65,8 +65,8 @@ void Pieces::setPieces(std::vector<Piece*> new_pieces){
 
 
 void Pieces::displayPieces(){
-    for(auto x : pieces)
-        std::cout<<"Piesa " << (*x).getType() << " " << (*x).getPlayer() << " se afla pe pozitia " << (*x).getPos().first<< " " << (*x).getPos().second << '\n';
+    //for(auto x : pieces)
+    //    std::cout<<"Piesa " << (*x).getType() << " " << (*x).getPlayer() << " se afla pe pozitia " << (*x).getPos().first<< " " << (*x).getPos().second << '\n';
 }
 
 std::vector<Piece*> Pieces::getPieces(){
@@ -100,7 +100,7 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
 
     piece->move(new_position);
 
-    if(piece->getType()=="Pawn" && ((piece->getPlayer()==1 && piece->getPos().second==7) || (piece->getPlayer()==0 && piece->getPos().second==0))){
+    if(dynamic_cast<Pawn*>(piece) && ((piece->getPlayer()==1 && piece->getPos().second==7) || (piece->getPlayer()==0 && piece->getPos().second==0))){
         for(int i=0;i<this->pieces.size();i++)
             if(pieces[i]==piece){
                 pieces.push_back(new Queen(piece->getPos(), piece->getPlayer()));

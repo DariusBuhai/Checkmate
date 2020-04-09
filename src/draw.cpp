@@ -59,8 +59,6 @@ void Draw::digestAction(sf::RenderWindow* window, sf::Event event){
     table.digestAction(event);
 
     if(event.type==sf::Event::MouseButtonPressed){
-        //cout<<event.mouseButton.x<<' '<<event.mouseButton.y<<'\n';
-
         if(mouseInsideLimits(event, {80, 320}, {200, 120}, true))
             table.resetGame();
     }
@@ -96,6 +94,8 @@ void Draw::draw(sf::RenderWindow* window) {
     window->draw(RectangleShape(Vector2f(screen_width, screen_height)));
 
     drawButton(window, "Reset Game", hoveringResetButton ? sf::Color::Red : sf::Color::Blue, {100,screen_height-160});
+    drawButton(window, "Undo Move", hoveringPreviousMoveButton ? sf::Color::Red : sf::Color::Blue, {400,screen_height-160});
+    drawButton(window, "Play with AI", hoveringPreviousMoveButton ? sf::Color::Red : sf::Color::Blue, {700,screen_height-160});
 
     table.draw(window);
 

@@ -31,7 +31,7 @@ void Table::draw(sf::RenderWindow *window) {
     drawGrid(window, size_type(size.width-2*padding-indicator_spacing, size.height-2*padding-indicator_spacing), position_type(position.x + indicator_spacing + padding, position.y + padding));
 
     for(auto piece : rules.getPieces())
-        drawPiece(window, *piece);
+        drawPiece(window, piece);
 
 }
 
@@ -177,18 +177,14 @@ void Table::digestAction(sf::Event event){
     }
 }
 
-void Table::drawPiece(sf::RenderWindow* window, Piece piece){
+void Table::drawPiece(sf::RenderWindow* window, Piece* piece){
 
     size_type s(this->size.width - this->border_width - this->indicator_spacing, this->size.height - this->border_width - this->indicator_spacing);
-    position_type p(this->position.x + this->indicator_spacing + piece.getPos().first * (s.width/8), this->position.y + piece.getPos().second * (s.height/8));
+    position_type p(this->position.x + this->indicator_spacing + piece->getPos().first * (s.width/8), this->position.y + piece->getPos().second * (s.height/8));
 
     sf::Texture piece_img;
 
-    string img_location = "resources/pieces/"+piece.getType()+"_";
-    img_location += (piece.getPlayer()) ? "black" : "white";
-    img_location += ".png";
-
-    if (!piece_img.loadFromFile(img_location)) throw EXIT_FAILURE;
+    if (!piece_img.loadFromFile(piece->getImage())) throw EXIT_FAILURE;
 
     sf::Sprite item;
     item.setTexture(piece_img);
