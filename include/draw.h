@@ -20,6 +20,8 @@ private:
     void draw(sf::RenderWindow*);
     void digestAction(sf::Event);
 
+    void drawButton(sf::RenderWindow*, std::string, sf::Color, std::pair<int, int>);
+
 public:
     void init();
     Draw();

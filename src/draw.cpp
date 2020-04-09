@@ -40,6 +40,10 @@ void Draw::digestAction(sf::Event event){
     table.digestAction(event);
 }
 
+void Draw::drawButton(sf::RenderWindow* window, string title, sf::Color color, std::pair<int, int> position){
+
+}
+
 void Draw::draw(sf::RenderWindow* window) {
 
     table.setSize(size_type(screen_width-150, screen_height-150));

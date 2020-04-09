@@ -83,6 +83,11 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
     std::cout<<history.back().from.first<<','<<history.back().from.second<<' ';
     std::cout<<history.back().to.first<<','<<history.back().to.second<<'\n';
 
+    if(board[!piece->getPlayer()][new_position.first][new_position.second]!=nullptr){
+        delete board[!piece->getPlayer()][new_position.first][new_position.second];
+        board[!piece->getPlayer()][new_position.first][new_position.second] = nullptr;
+    }
+
     piece->move(new_position);
     switchPlayer();
     updateBoard();
