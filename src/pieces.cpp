@@ -84,11 +84,26 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
     std::cout<<history.back().to.first<<','<<history.back().to.second<<'\n';
 
     if(board[!piece->getPlayer()][new_position.first][new_position.second]!=nullptr){
-        delete board[!piece->getPlayer()][new_position.first][new_position.second];
+        Piece* piece_to_delete = board[!piece->getPlayer()][new_position.first][new_position.second];
+        int i = 0;
+        for(;i<this->pieces.size();i++)
+            if(pieces[i]==piece_to_delete)
+                break;
+        for(;i<this->pieces.size()-1;i++)
+            pieces[i] = pieces[i+1];
+        pieces.pop_back();
+        delete piece_to_delete;
         board[!piece->getPlayer()][new_position.first][new_position.second] = nullptr;
     }
 
     piece->move(new_position);
+
+    if(piece->getType()=="Pawn" && ((piece->getPlayer()==1 && piece->getPos().second==7) || (piece->getPlayer()==0 && piece->getPos().second==0))){
+        //Piece* new_piece = new Queen(piece->getPos(), piece->getPlayer());
+        //delete piece;
+        //piece = new_piece;
+    }
+
     switchPlayer();
     updateBoard();
 }

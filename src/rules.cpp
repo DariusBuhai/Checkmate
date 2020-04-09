@@ -151,12 +151,10 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
     std::vector<std::pair<int, int>> attack_pos;
     std::pair<int, int> pos = pcs->getPos();
 
-    if (board[player][pos.first][pos.second]->getType() == "Pawn")
-    {
+    if (board[player][pos.first][pos.second]->getType() == "Pawn"){
         return getFuturePawn(pcs);
     }
-    else
-    {
+    else{
         attack_pos = canAttackPos(pcs);
         for (auto& next_pos : attack_pos)
         {

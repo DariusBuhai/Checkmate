@@ -135,8 +135,11 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
     Piece* current = rules.getPiece(new_position);
     if(find(future_positions.begin(), future_positions.end(), new_position)!=future_positions.end()){
         rules.movePiece(last_selected_piece, new_position);
+        resetFuturePositions();
+        resetSelectedSquare();
+        return;
     }
-    future_positions.clear();
+    resetFuturePositions();
     if(current != nullptr){
         last_selected_piece = current;
         try{
