@@ -1,18 +1,22 @@
 #include "../include/rules.h"
-#include "../include/piece.h"
-
+#include "../include/draw.h"
+#include "../include/table.h"
+#include "../include/types.h"
 #include <string>
 #include <vector>
 #include <iostream>
 
 
-Rules::~Rules(){}
+Rules::~Rules() {}
 
-std::vector<std::pair<int, int>> Rules::canAttackPos(Piece* pcs){
+std::vector<std::pair<int, int>> Rules::canAttackPos(Piece* pcs)
+{
     //returns where a position can move without considering check.
     std::vector<std::pair<int, int>> ans;
-    for(auto l: pcs->path()){
-        for (auto p : l){
+    for(auto l: pcs->path())
+    {
+        for (auto p : l)
+        {
             if (board[pcs->getPlayer()][p.first][p.second] != nullptr)
                 break;
             ans.emplace_back(p);
@@ -23,7 +27,8 @@ std::vector<std::pair<int, int>> Rules::canAttackPos(Piece* pcs){
     return ans;
 }
 
-bool Rules::isInCheck(int player){
+bool Rules::isInCheck(int player)
+{
     //checks if the current player is in check
     //also, check if the opponent king piece is not capturated by mistake
     bool mat[9][9];
@@ -34,7 +39,8 @@ bool Rules::isInCheck(int player){
             mat[i][j] = 0;
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++)
-            if (board[!player][i][j] != nullptr){
+            if (board[!player][i][j] != nullptr)
+            {
                 if (board[!player][i][j]->getType() == "King")
                     haveKing = 1;
                 pos = canAttackPos(board[!player][i][j]);
@@ -52,7 +58,8 @@ bool Rules::isInCheck(int player){
     return false;
 }
 
-inline void Rules::saveBoard(Piece* aux_board[2][8][8]){
+inline void Rules::saveBoard(Piece* aux_board[2][8][8])
+{
     //save the curent state of the board.
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 8; j++)
@@ -61,7 +68,8 @@ inline void Rules::saveBoard(Piece* aux_board[2][8][8]){
 }
 
 
-inline void Rules::getBoard(Piece* aux_board[2][8][8]){
+inline void Rules::getBoard(Piece* aux_board[2][8][8])
+{
     //gets the board back to the original state.
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 8; j++)
@@ -79,24 +87,31 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
     std::pair<int, int> pos = pcs->getPos();
     //if we go up or down
     int dst = -1;
-    if (player == 1) 
+    if (player == 1)
         dst = 1;
     if((pos.first >= 0 and pos.first <=7) and (pos.second + dst <=7 and pos.second + dst >= 0))
-        if (board[0][pos.first][pos.second + dst] == nullptr or board[1][pos.first][pos.second + dst] == nullptr) 
-        {   
-    
-            //make a virtual move of the piece and check if valid
-            board[player][pos.first][pos.second + dst] = board[player][pos.first][pos.second];
-            board[player][pos.first][pos.second] = nullptr;
-            if (!isInCheck(player))
-                ans.emplace_back(std::make_pair(pos.first, pos.second + dst));
-            getBoard(aux_board);
+        if (board[0][pos.first][pos.second + dst] == nullptr or board[1][pos.first][pos.second + dst] == nullptr)
+        {
 
+            //make a virtual move of the piece and check if valid
+            if( board[player][pos.first][pos.second + dst] == nullptr && board[!player][pos.first][pos.second + dst] == nullptr)
+            {
+                std::cout<<"e pion"<<'\n';
+                board[player][pos.first][pos.second + dst] = board[player][pos.first][pos.second];
+                board[player][pos.first][pos.second] = nullptr;
+                if (!isInCheck(player))
+                    ans.emplace_back(std::make_pair(pos.first, pos.second + dst));
+            }
+            getBoard(aux_board);
+            if(player!=current_player)
+                return {};
+            //std::cout<<"e pion"<<'\n';
             //if it has never moved, it can move by 2 positions.
-            if (!(pcs->getHasMoved())) {
+            if (!(pcs->getHasMoved()))
+            {
                 dst *= 2;
                 if((pos.first >= 0 and pos.first <=7) and (pos.second + dst <=7 and pos.second + dst >= 0))
-                    if (board[0][pos.first][pos.second + dst] == nullptr and board[1][pos.first][pos.second + dst] == nullptr) 
+                    if (board[0][pos.first][pos.second + dst] == nullptr and board[1][pos.first][pos.second + dst] == nullptr)
                     {
                         board[player][pos.first][pos.second + dst] = board[player][pos.first][pos.second];
                         board[player][pos.first][pos.second] = nullptr;
@@ -104,10 +119,11 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
                             ans.emplace_back(std::make_pair(pos.first, pos.second + dst));
                         getBoard(aux_board);
                     }
-             }
+            }
             //check if it can attack on the sideways.
             dst = -1;
-            if (player == 1) dst = 1;
+            if (player == 1)
+                dst = 1;
             int posx,posy;
             posx = pos.first + 1;
             posy = pos.second + dst;
@@ -138,11 +154,13 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
 }
 
 
+
 std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
     //returns the position that a piece can move.
     int player = pcs->getPlayer();
 
-    if(player!=current_player) return {};
+    if(player!=current_player)
+        return {};
     //to save the board
 
     Piece* aux_board[2][8][8];
@@ -151,14 +169,22 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
     std::vector<std::pair<int, int>> attack_pos;
     std::pair<int, int> pos = pcs->getPos();
 
-    if (board[player][pos.first][pos.second]->getType() == "Pawn"){
+
+    saveBoard(aux_board);
+
+    int dst = -1;
+    if (player == 0)
+        dst = 1;
+
+    if (board[player][pos.first][pos.second]->getType() == "Pawn")
+    {
         return getFuturePawn(pcs);
     }
     else{
         attack_pos = canAttackPos(pcs);
         for (auto& next_pos : attack_pos)
         {
-            board[player][next_pos.first][next_pos.second] = 
+            board[player][next_pos.first][next_pos.second] =
                 board[player][pos.first][pos.second];
             board[!player][next_pos.first][next_pos.second] = nullptr;
             board[player][pos.first][pos.second] = nullptr;

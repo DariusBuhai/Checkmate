@@ -6,9 +6,9 @@
 
 #include <iostream>
 
+#include "../include/piece.h"
 #include "../include/table.h"
 #include "../include/types.h"
-#include "../include/rules.h"
 
 using namespace std;
 using namespace sf;
@@ -48,7 +48,7 @@ void Table::drawIndicators(sf::RenderWindow *window, size_type s, position_type 
         l.setFont(font);
         l.setCharacterSize(40);
         l.setFillColor(sf::Color::Black);
-        l.setPosition(p.x + indicator_spacing / 2 -20, p.y +indicatorHeight*i + indicatorHeight/2 - 20);
+        l.setPosition(p.x + indicator_spacing / 2 + 20, p.y +indicatorHeight*i + indicatorHeight/2 - 20);
         window->draw(l);
     }
     for(int j=0;j<8;j++){
@@ -59,7 +59,7 @@ void Table::drawIndicators(sf::RenderWindow *window, size_type s, position_type 
         l.setFont(font);
         l.setCharacterSize(40);
         l.setFillColor(sf::Color::Black);
-        l.setPosition(p.x + indicatorWidth * j + indicator_spacing + indicatorWidth / 2 - 20, s.height - indicatorHeight / 2 + 20);
+        l.setPosition(p.x + indicatorWidth * j + indicator_spacing + indicatorWidth / 2 - 20, s.height - indicatorHeight / 2 -20);
         window->draw(l);
     }
 }
@@ -175,7 +175,6 @@ void Table::digestAction(sf::Event event){
                 updateSelectedSquare({selected_square.first, selected_square.second+1});
         }
     }
-
 }
 
 void Table::drawPiece(sf::RenderWindow* window, Piece piece){

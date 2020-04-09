@@ -6,8 +6,9 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "../include/piece.h"
 #include "../include/draw.h"
-#include "../include/table.h"
+#include "../include/types.h"
 
 using namespace std;
 using namespace sf;

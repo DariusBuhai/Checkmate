@@ -4,8 +4,10 @@
 #include <vector>
 
 #include "../include/pieces.h"
-#include "../include/piece.h"
+//#include "../include/piece.h"
 #include "../include/rules.h"
+#include "../include/draw.h"
+#include "../include/table.h"
 #include "../include/types.h"
 
 Pieces::Pieces(){

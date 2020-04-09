@@ -2,9 +2,6 @@
 #include <vector>
 
 #include "include/draw.h"
-#include "include/piece.h"
-#include "include/pieces.h"
-#include "include/rules.h"
 
 using namespace std;
 
@@ -16,9 +13,9 @@ int main(){
 	//std :: cout << r.isInCheck(0);
 	//Pieces All;
 	//All.displayPieces();
-    
+
 	/*
-	
+
 	std::vector<std::vector<std::pair<int, int>> > ans;
 	ans = x.path();
 	for (auto &w : ans){
@@ -53,6 +50,6 @@ int main(){
 		std::cout << "\n";
 	}
 	*/
-	
+
     return 0;
 }
