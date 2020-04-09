@@ -169,6 +169,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
     std::vector<std::pair<int, int>> attack_pos;
     std::pair<int, int> pos = pcs->getPos();
 
+
     saveBoard(aux_board);
 
     int dst = -1;
@@ -179,8 +180,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
     {
         return getFuturePawn(pcs);
     }
-    else
-    {
+    else{
         attack_pos = canAttackPos(pcs);
         for (auto& next_pos : attack_pos)
         {

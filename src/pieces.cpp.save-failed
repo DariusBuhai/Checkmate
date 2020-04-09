@@ -6,11 +6,12 @@
 #include "../include/pieces.h"
 //#include "../include/piece.h"
 #include "../include/rules.h"
-#include "../include/draw.h"
-#include "../include/table.h"
+//#include "../include/draw.h"
+//#include "../include/table.h"
 #include "../include/types.h"
 
 #include "piece.cpp"
+#include "table.cpp"
 Pieces::Pieces(){
     this->initPieces();
     this->updateBoard();
@@ -105,6 +106,7 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
         Piece* new_piece = new Queen(piece->getPos(), piece->getPlayer());
         delete piece;
         piece = new_piece;
+        drawPiece(window,piece);
     }
 
     switchPlayer();
