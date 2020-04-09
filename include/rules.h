@@ -23,7 +23,7 @@ private:
 public:
     //tells you what piece is on the field
     void helper();
-    std::vector <std::pair<int, int>> canAttackPos(std::pair<int, int>, int);
+    std::vector <std::pair<int, int>> canAttackPos(Piece*);
     bool isInCheck(int);
     std::vector<std::pair<int, int>> getFuturePositions(Piece*);
     ~Rules();
