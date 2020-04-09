@@ -37,6 +37,8 @@ public:
     int getCurrentPlayer();
     void setCurrentPlayer(int);
     void switchPlayer();
+
+    void resetGame();
 };
 
 

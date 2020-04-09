@@ -109,7 +109,6 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
                 pieces.erase(pieces.begin() + i);
             }
     }
-
     switchPlayer();
     updateBoard();
 }
@@ -130,4 +129,11 @@ void Pieces::setCurrentPlayer(int player) {
 
 void Pieces::switchPlayer() {
     this->current_player = !current_player;
+}
+
+void Pieces::resetGame(){
+    pieces.clear();
+    initPieces();
+    updateBoard();
+    current_player = 0;
 }
