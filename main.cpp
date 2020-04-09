@@ -9,13 +9,23 @@
 using namespace std;
 
 int main(){
-	Draw d;
-
-	/*Pieces All;
+	//Draw d;
+	//Pieces p;
+	//p.displayPieces();
+	//Rules r;
+	//std :: cout << r.isInCheck(0);
+	//Pieces All;
 	//All.displayPieces();
     Rules R;
+	Pawn x(std::make_pair(6, 6),0);
+	std::vector<std::pair<int, int> > ans = R.getFuturePositions(x);
+	for (auto it:ans)
+		std::cout << it.first <<" "<<it.second <<"\n";
+	//std::vector<int *> v;
+	//v.push_back(new int(4));
+	//delete v[0];
     //cout << "Este sah "<< R.isInCheck(0) <<"\n";
-
+	/*
 	std::vector<std::pair<int, int>> vec;
 	vec = R.canAttackPos(std::make_pair(3, 2), 0);
 	for (auto it:vec)
@@ -32,5 +42,6 @@ int main(){
 		std::cout << "\n";
 	}
 	*/
+	
     return 0;
 }

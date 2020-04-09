@@ -13,32 +13,33 @@ Pieces::Pieces(){
 }
 
 Pieces::~Pieces(){
-    for(auto piece: pieces)
-        piece.~Piece();
+    for(auto &piece: pieces)
+        (*piece).~Piece(),
+        delete piece;
     pieces.clear();
 }
 
 void Pieces::initPieces(){
-    pieces.push_back(Rook({0, 7}, 0));
-    pieces.push_back(Knight({1,7},0));
-    pieces.push_back(Bishop({2,7},0));
-    pieces.push_back(Queen({3,7},0));
-    pieces.push_back(King({4,7},0));
-    pieces.push_back(Bishop({5,7},0));
-    pieces.push_back(Knight({6,7},0));
-    pieces.push_back(Rook({7,7},0));
+    pieces.push_back(new Rook({0, 7}, 0));
+    pieces.push_back(new Knight({1,7},0));
+    pieces.push_back(new Bishop({2,7},0));
+    pieces.push_back(new Queen({3,7},0));
+    pieces.push_back(new King({4,7},0));
+    pieces.push_back(new Bishop({5,7},0));
+    pieces.push_back(new Knight({6,7},0));
+    pieces.push_back(new Rook({7,7},0));
     for(int i = 0 ; i < 8 ; i ++ )
-        pieces.push_back(Pawn({i,6},0));
-    pieces.push_back(Rook({0,0},1));
-    pieces.push_back(Knight({1,0},1));
-    pieces.push_back(Bishop({2,0},1));
-    pieces.push_back(Queen({3,0},1));
-    pieces.push_back(King({4,0},1));
-    pieces.push_back(Bishop({5,0},1));
-    pieces.push_back(Knight({6,0},1));
-    pieces.push_back(Rook({7,0},1));
+        pieces.push_back(new Pawn({i,6},0));
+    pieces.push_back(new Rook({0,0},1));
+    pieces.push_back(new Knight({1,0},1));
+    pieces.push_back(new Bishop({2,0},1));
+    pieces.push_back(new Queen({3,0},1));
+    pieces.push_back(new King({4,0},1));
+    pieces.push_back(new Bishop({5,0},1));
+    pieces.push_back(new Knight({6,0},1));
+    pieces.push_back(new Rook({7,0},1));
     for(int i = 0 ; i < 8 ; i ++ )
-        pieces.push_back(Pawn({i, 1}, 1));
+        pieces.push_back(new Pawn({i, 1}, 1));
 }
 
 void Pieces::updateBoard() {
@@ -46,11 +47,13 @@ void Pieces::updateBoard() {
         for(int j=0;j<8;j++)
             for(int k=0;k<8;k++)
                 board[i][j][k] = nullptr;
-    for(int i=0;i<pieces.size();i++)
-        board[pieces[i].getPlayer()][pieces[i].getPos().first][pieces[i].getPos().second] = &pieces[i];
+    for( unsigned int i=0;i<pieces.size();i++)
+        board[(*(pieces[i])).getPlayer()][(*(pieces[i])).getPos().first][(*(pieces[i])).getPos().second] = pieces[i];
 }
 
-void Pieces::setPieces(std::vector<Piece> new_pieces){
+void Pieces::setPieces(std::vector<Piece*> new_pieces){
+    for(auto piece: pieces)
+        (*piece).~Piece();
     pieces.clear();
     for (auto it: new_pieces)
         pieces.push_back(it);
@@ -60,10 +63,10 @@ void Pieces::setPieces(std::vector<Piece> new_pieces){
 
 void Pieces::displayPieces(){
     for(auto x : pieces)
-        std::cout<<"Piesa " << x.getType() << " " << x.getPlayer() << " se afla pe pozitia " << x.getPos().first<< " " << x.getPos().second << '\n';
+        std::cout<<"Piesa " << (*x).getType() << " " << (*x).getPlayer() << " se afla pe pozitia " << (*x).getPos().first<< " " << (*x).getPos().second << '\n';
 }
 
-std::vector<Piece> Pieces::getPieces(){
+std::vector<Piece*> Pieces::getPieces(){
     return pieces;
 }
 

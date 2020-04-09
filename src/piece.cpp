@@ -10,7 +10,7 @@ Piece::Piece(std::pair<int, int> pos, int player) : pos(pos), has_moved(false), 
 Piece::Piece() : pos({0,0}), has_moved(false), player(0) {}
 
 std::vector<std::vector<std::pair<int, int>>> Piece::path(){
-    return std::vector<std::vector<std::pair<int,int>>>();
+    return std::vector<std::vector<std::pair<int,int>>>(0);
 }
 
 void Piece::move(std::pair<int, int> position){
@@ -68,7 +68,7 @@ std::vector<std::vector<std::pair<int, int> > > Pawn::path()
         if (isInTable({posx, posy}))
             p[0].push_back(std::make_pair(posx, posy));
         posx -= 2;
-        if (isInTable({posx, posy}))
+        if (Piece::isInTable({posx, posy}))
             p[1].push_back(std::make_pair(posx, posy));
         /*
         while (posy < pos.second + dist)

@@ -21,8 +21,8 @@ public:
 
     Piece(std::pair<int, int>, int);
     Piece();
-
-    bool isInTable(std::pair<int, int>);
+    virtual ~Piece(){};
+    static bool isInTable(std::pair<int, int>);
 
     std::string getType();
     std::pair<int,int> getPos();
@@ -35,8 +35,7 @@ public:
 
 class Pawn : public Piece
 {
-private:
-	std::string name;
+
 public:
     Pawn(std::pair<int, int>, bool);
     std::vector<std::vector<std::pair<int, int>>> path();

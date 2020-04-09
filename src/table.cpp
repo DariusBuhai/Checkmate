@@ -31,7 +31,7 @@ void Table::draw(sf::RenderWindow *window) {
     drawGrid(window, size_type(size.width-2*padding-indicator_spacing, size.height-2*padding-indicator_spacing), position_type(position.x + indicator_spacing + padding, position.y + padding));
 
     for(auto piece : rules.getPieces())
-        drawPiece(window, piece);
+        drawPiece(window, *piece);
 
 }
 
