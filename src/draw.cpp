@@ -23,8 +23,8 @@ Draw::Draw() {
 
 void Draw::init(){
 
-    /// Create the window of the application
-    RenderWindow window(VideoMode(this->screen_width, this->screen_height, 32), "Checkmate AI",Style::Titlebar | Style::Close);
+    /** Create the window of the application */
+    RenderWindow window(VideoMode((unsigned int)screen_width, (unsigned int)screen_height, 32), "Checkmate AI",Style::Titlebar | Style::Close);
     window.setVerticalSyncEnabled(true);
     window.setActive(true);
 
@@ -35,10 +35,14 @@ void Draw::init(){
         while (window.pollEvent(event)){
             if (event.type == Event::Closed)
                 window.close();
-            table.digest_action(event);
+            digestAction(event);
         }
         window.display();
     }
+}
+
+void Draw::digestAction(sf::Event event){
+    table.digestAction(event);
 }
 
 void Draw::draw(sf::RenderWindow* window) {

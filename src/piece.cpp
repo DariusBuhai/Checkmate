@@ -10,11 +10,11 @@
 #include "../include/types.h"
 
 // ------------- piece methods ----------------
-Piece::Piece(std::pair<int, int> pos, bool is_black) : pos(pos), has_moved(false), is_black(is_black) {}
-Piece::Piece() : pos({0,0}), has_moved(false), is_black(false) {}
+Piece::Piece(std::pair<int, int> pos, int player) : pos(pos), has_moved(false), player(player) {}
+Piece::Piece() : pos({0,0}), has_moved(false), player(0) {}
 
 std::vector<std::vector<std::pair<int, int>>> Piece::path(){
-    return std::vector<std::vector<std::pair<int,int>>>();
+    return std::vector<std::vector<std::pair<int,int>>>(0);
 }
 
 void Piece::move(std::pair<int, int> position){
@@ -30,8 +30,8 @@ std::pair<int,int> Piece::getPos(){
     return this->pos;
 }
 
-bool Piece::getIsBlack(){
-    return this->is_black;
+int Piece::getPlayer(){
+    return this->player;
 }
 
 bool Piece::getHasMoved(){
@@ -59,46 +59,39 @@ Pawn::Pawn(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){
 std::vector<std::vector<std::pair<int, int> > > Pawn::path()
 {
     std::vector<std::vector< std::pair<int,int > > > p;
-	p.resize(2);
+    p.resize(3);
     int posx, posy;
     posx = pos.first;
     posy = pos.second;
 
-    // we go down, we are white
-    if (is_black == 1)
+    // we go down, we are black
+    if (player == 1)
     {
-        posx++;
         posy++;
-        if (isInTable({posx, posy}))
-            p[0].push_back(std::make_pair(posx, posy));
-        posx -= 2;
+        if(isInTable({posx, posy}))
+            p[0].emplace_back(std::make_pair(posx, posy));
+        if(posy==2 && isInTable({posx, posy+1}))
+            p[0].emplace_back(std::make_pair(posx, posy+1));
+        posx++;
         if (isInTable({posx, posy}))
             p[1].push_back(std::make_pair(posx, posy));
-        /*
-        while (posy < pos.second + dist)
-        {
-            posy ++ ;
-            p[0].push_back(std::make_pair(posx, posy));
-        }
-        */
+        posx -= 2;
+        if (Piece::isInTable({posx, posy}))
+            p[2].push_back(std::make_pair(posx, posy));
     }
-    // we go up, we are black
-    else
-    {
-        posx++;
+    // we go up, we are white
+    else{
         posy--;
         if (isInTable({posx, posy}))
-            p[0].push_back(std::make_pair(posx, posy));
-        posx -= 2;
+            p[0].emplace_back(std::make_pair(posx, posy));
+        if (posy==5 && isInTable({posx, posy-1}))
+            p[0].emplace_back(std::make_pair(posx, posy-1));
+        posx++;
         if (isInTable({posx, posy}))
             p[1].push_back(std::make_pair(posx, posy));
-        /*
-        while (posy > pos.second - dist)
-        {
-            posy -- ;
-            p[0].push_back(std::make_pair(posx, posy));
-        }
-        */
+        posx -= 2;
+        if (isInTable({posx, posy}))
+            p[2].push_back(std::make_pair(posx, posy));
     }
     return p;
 }
@@ -151,11 +144,8 @@ std::vector<std::vector<std::pair<int, int> > > Knight::path()
     int dist_x[] = { -2, -1, 2, 1, -2, -1, 2, 1 };
     int dist_y[] = { -1, -2, -1, -2, 1, 2, 1, 2 };
     for (int i = 0; i < 8; i++)
-    {
-
         if (Piece::isInTable({pos.first + dist_x[i], pos.second + dist_y[i]}))
             p[i].push_back(std::make_pair(pos.first + dist_x[i], pos.second + dist_y[i]));
-    }
     return p;
 
 }
