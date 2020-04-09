@@ -59,7 +59,7 @@ Pawn::Pawn(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){
 std::vector<std::vector<std::pair<int, int> > > Pawn::path()
 {
     std::vector<std::vector< std::pair<int,int > > > p;
-    p.resize(3);
+    p.resize(2);
     int posx, posy;
     posx = pos.first;
     posy = pos.second;
@@ -68,30 +68,22 @@ std::vector<std::vector<std::pair<int, int> > > Pawn::path()
     if (player == 1)
     {
         posy++;
-        if(isInTable({posx, posy}))
-            p[0].emplace_back(std::make_pair(posx, posy));
-        if(posy==2 && isInTable({posx, posy+1}))
-            p[0].emplace_back(std::make_pair(posx, posy+1));
         posx++;
         if (isInTable({posx, posy}))
-            p[1].push_back(std::make_pair(posx, posy));
+            p[0].push_back(std::make_pair(posx, posy));
         posx -= 2;
         if (Piece::isInTable({posx, posy}))
-            p[2].push_back(std::make_pair(posx, posy));
+            p[1].push_back(std::make_pair(posx, posy));
     }
     // we go up, we are white
     else{
         posy--;
-        if (isInTable({posx, posy}))
-            p[0].emplace_back(std::make_pair(posx, posy));
-        if (posy==5 && isInTable({posx, posy-1}))
-            p[0].emplace_back(std::make_pair(posx, posy-1));
         posx++;
         if (isInTable({posx, posy}))
-            p[1].push_back(std::make_pair(posx, posy));
+            p[0].push_back(std::make_pair(posx, posy));
         posx -= 2;
         if (isInTable({posx, posy}))
-            p[2].push_back(std::make_pair(posx, posy));
+            p[1].push_back(std::make_pair(posx, posy));
     }
     return p;
 }

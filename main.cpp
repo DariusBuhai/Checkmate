@@ -19,11 +19,22 @@ int main(){
 	//std :: cout << r.isInCheck(0);
 	//Pieces All;
 	//All.displayPieces();
-    //Rules R;
-	//Pawn x(std::make_pair(6, 6),0);
-	//std::vector<std::pair<int, int> > ans = R.getFuturePositions(x);
-	//for (auto it:ans)
-		//std::cout << it.first <<" "<<it.second <<"\n";
+
+	/*
+
+	std::vector<std::vector<std::pair<int, int>> > ans;
+	ans = x.path();
+	for (auto &w : ans){
+		for (auto &it: w)
+			std::cout << it.first << " " << it.second << " ";
+	std::cout<<"\n";
+	}
+	*/
+	Knight x(std::make_pair(6, 7),0);
+	Rules R;
+	std::vector<std::pair<int, int> > ans = R.getFuturePositions(&x);
+	for (auto it:ans)
+		std::cout << it.first <<" "<<it.second <<"\n";
 	//std::vector<int *> v;
 	//v.push_back(new int(4));
 	//delete v[0];
@@ -45,6 +56,6 @@ int main(){
 		std::cout << "\n";
 	}
 	*/
-	
+
     return 0;
 }
