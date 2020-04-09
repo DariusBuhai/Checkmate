@@ -1,11 +1,14 @@
 #include <iostream>
 #include <vector>
 
-#include "include/draw.h"
-#include "include/piece.h"
-#include "include/pieces.h"
-#include "include/rules.h"
+#include "../include/pieces.h"
+#include "../include/piece.h"
+#include "../include/rules.h"
+#include "../include/draw.h"
+#include "../include/table.h"
+#include "../include/types.h"
 
+#include "draw.cpp"
 using namespace std;
 
 int main(){

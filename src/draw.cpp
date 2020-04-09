@@ -6,9 +6,14 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "../include/pieces.h"
+#include "../include/piece.h"
+#include "../include/rules.h"
 #include "../include/draw.h"
-#include "../include/table.h"
+//#include "../include/table.h"
+#include "../include/types.h"
 
+#include "table.cpp"
 using namespace std;
 using namespace sf;
 
@@ -22,7 +27,7 @@ void Draw::init(){
     RenderWindow window(VideoMode(this->screen_width, this->screen_height, 32), "Checkmate AI",Style::Titlebar | Style::Close);
     window.setVerticalSyncEnabled(true);
     window.setActive(true);
-    
+
     while(window.isOpen()){
         Event event;
         window.clear();

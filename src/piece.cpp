@@ -2,7 +2,11 @@
 #include <vector>
 #include <utility>
 
+#include "../include/pieces.h"
 #include "../include/piece.h"
+#include "../include/rules.h"
+#include "../include/draw.h"
+#include "../include/table.h"
 #include "../include/types.h"
 
 // ------------- piece methods ----------------
@@ -62,7 +66,7 @@ std::vector<std::vector<std::pair<int, int> > > Pawn::path()
 
     // we go down, we are white
     if (is_black == 1)
-    {    
+    {
         posx++;
         posy++;
         if (isInTable({posx, posy}))

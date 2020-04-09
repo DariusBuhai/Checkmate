@@ -1,5 +1,9 @@
-#include "../include/rules.h"
+#include "../include/pieces.h"
 #include "../include/piece.h"
+#include "../include/rules.h"
+#include "../include/draw.h"
+#include "../include/table.h"
+#include "../include/types.h"
 #include <string>
 #include <vector>
 #include <iostream>

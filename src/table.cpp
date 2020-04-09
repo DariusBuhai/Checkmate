@@ -6,10 +6,14 @@
 
 #include <iostream>
 
+//#include "../include/pieces.h"
+#include "../include/piece.h"
+#include "../include/rules.h"
+#include "../include/draw.h"
 #include "../include/table.h"
 #include "../include/types.h"
-#include "../include/rules.h"
 
+#include "pieces.cpp"
 using namespace std;
 using namespace sf;
 
@@ -149,7 +153,6 @@ void Table::digest_action(sf::Event event){
             cout<<"Pressed outside the table"<<'\n';
         }
     }
-
 }
 
 void Table::draw_piece(sf::RenderWindow* window, Piece piece){
