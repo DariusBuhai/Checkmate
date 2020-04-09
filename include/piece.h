@@ -29,7 +29,7 @@ public:
     int getPlayer();
 	bool getHasMoved();
 
-    virtual std::vector<std::vector<std::pair<int, int>>> path();
+    virtual std::vector<std::pair<int, int>> path();
     void move(std::pair<int, int>);
 };
 
@@ -38,35 +38,35 @@ class Pawn : public Piece
 
 public:
     Pawn(std::pair<int, int>, bool);
-    std::vector<std::vector<std::pair<int, int>>> path();
+    std::vector<std::pair<int, int>> path();
 };
 
 class Rook : public Piece
 {
 public:
 	Rook(std::pair<int, int>, bool);
-	std::vector<std::vector<std::pair<int, int>>> path();
+    std::vector<std::pair<int, int>> path();
 };
 
 class Knight : public Piece
 {
 public:
 	Knight(std::pair<int, int>, bool);
-	std::vector<std::vector<std::pair<int, int>>> path();
+	std::vector<std::pair<int, int>> path();
 };
 
 class Bishop : public Piece
 {
 public:
 	Bishop(std::pair<int, int>, bool);
-	std::vector<std::vector<std::pair<int, int>>> path();
+	std::vector<std::pair<int, int>> path();
 };
 
 class Queen : public Piece
 {
 public:
 	Queen(std::pair<int, int>, bool);
-	std::vector<std::vector<std::pair<int, int>>> path();
+	std::vector<std::pair<int, int>> path();
 };
 
 
@@ -74,7 +74,7 @@ class King : public Piece
 {
 public:
 	King(std::pair<int, int>, bool);
-	std::vector<std::vector<std::pair<int, int>>> path();
+	std::vector<std::pair<int, int>> path();
 };
 
 #endif //CHECKMATE_PIECE_H

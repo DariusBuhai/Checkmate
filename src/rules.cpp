@@ -18,15 +18,13 @@ std::vector <std::pair<int, int> > Rules::canAttackPos(std::pair<int, int> pos, 
     std::vector<std::pair<int, int> > ans;
 
     if(board[player][pos.first][pos.second] == nullptr) return ans;
-    for (auto way : board[player][pos.first][pos.second]->path())
-        for (auto p : way)
-        {
-            if (board[player][p.first][p.second] != nullptr)
-                break;
-            ans.push_back(std::make_pair(p.first, p.second));
-            if (board[player][p.first][p.second] != nullptr)
-                break;
-        }        
+    for (auto p : board[player][pos.first][pos.second]->path()){
+        if (board[player][p.first][p.second] != nullptr)
+            break;
+        ans.push_back(std::make_pair(p.first, p.second));
+        if (board[player][p.first][p.second] != nullptr)
+            break;
+    }
     return ans;
 }
 
@@ -70,22 +68,22 @@ inline void Rules::getBoard(Piece* aux_board[2][8][8]){
                 board[i][j][k] = aux_board[i][j][k];
 }
 
-std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece pcs){
+std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
 
-    int player = pcs.getPlayer();
+    int player = pcs->getPlayer();
     std:: cout<<"\n";
     if(player!=current_player) return {};
 
     Piece* aux_board[2][8][8];
-    std::pair<int, int> pos = pcs.getPos();
+    std::pair<int, int> pos = pcs->getPos();
     std::vector<std::pair<int, int>> ans;
     std::vector<std::pair<int, int>> location;
     
     saveBoard(aux_board);
     if (board[player][pos.first][pos.second] == nullptr)
         return ans;
-    
-    //std:: cout << board[player][pos.first][pos.second]->getType();
+
+    return pcs->path();
     if (board[player][pos.first][pos.second]->getType() == "Pawn") {
         
         //return {{pos.first, pos.second-1}};
@@ -98,7 +96,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece pcs){
         if (player == 0) {
             dst = 1;
         }
-        if (board[0][pos.first][pos.second + dst] != nullptr and board[1][pos.first][pos.second + dst] != nullptr) {
+        if (board[0][pos.first][pos.second + dst] != nullptr or board[1][pos.first][pos.second + dst] != nullptr) {
             std::cout << "lmao";
             board[player][pos.first][pos.second + dst]->getType() = "Pawn";
             board[!player][pos.first][pos.second + dst] = nullptr;
@@ -106,7 +104,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece pcs){
             //if (!isInCheck(player))
                 ans.push_back(std::make_pair(pos.first, pos.second + dst));
             getBoard(aux_board);
-            if (!pcs.getHasMoved()) {
+            if (!pcs->getHasMoved()) {
                 dst *= 2;
                 if (board[0][pos.first][pos.second + dst]!=nullptr and board[1][pos.first][pos.second + dst]!=nullptr) {
                     saveBoard(aux_board);

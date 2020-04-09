@@ -140,7 +140,7 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
     if(current != nullptr){
         last_selected_piece = current;
         try{
-            vector<pair<int, int>> future_positions = rules.getFuturePositions(*current);
+            vector<pair<int, int>> future_positions = rules.getFuturePositions(current);
             this->future_positions = future_positions;
         }catch (int e){
             cout<<"An error occurred trying to find future positions!";
