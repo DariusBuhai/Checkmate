@@ -48,7 +48,7 @@ public:
     void digestAction(sf::Event);
 
     void draw(sf::RenderWindow*);
-    void drawPiece(sf::RenderWindow*, Piece);
+    void drawPiece(sf::RenderWindow*, Piece*);
 
     void setSize(size_type s);
     void setPosition(position_type p);

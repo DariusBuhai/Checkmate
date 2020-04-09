@@ -41,7 +41,7 @@ bool Rules::isInCheck(int player)
         for (int j = 0; j < 8; j++)
             if (board[!player][i][j] != nullptr)
             {
-                if (board[!player][i][j]->getType() == "King")
+                if (dynamic_cast<King*>(board[!player][i][j]))
                     haveKing = 1;
                 pos = canAttackPos(board[!player][i][j]);
                 for (auto it:pos)
@@ -53,7 +53,7 @@ bool Rules::isInCheck(int player)
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++)
             if (board[player][i][j] != nullptr)
-                if (board[player][i][j]->getType() == "King")
+                if (dynamic_cast<King*>(board[player][i][j]))
                     return mat[i][j];
     return false;
 }
@@ -176,7 +176,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
     if (player == 0)
         dst = 1;
 
-    if (board[player][pos.first][pos.second]->getType() == "Pawn")
+    if (dynamic_cast<Pawn*>(board[player][pos.first][pos.second]))
     {
         return getFuturePawn(pcs);
     }

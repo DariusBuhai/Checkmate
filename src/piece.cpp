@@ -22,10 +22,6 @@ void Piece::move(std::pair<int, int> position){
     pos = position;
 }
 
-std::string Piece::getType(){
-    return this->type;
-}
-
 std::pair<int,int> Piece::getPos(){
     return this->pos;
 }
@@ -44,16 +40,24 @@ void Piece::set_position(int x_next, int y_next)
     pos.second = y_next;
 }
 
-
 bool Piece::isInTable(std::pair<int, int> position)
 {
     return ((position.first>= 0 && position.first<= 7) && (position.second>= 0 && position.second <= 7));
 }
 
+std::string Piece::getImage(){
+    return "resources/pieces/Bishop_black.png";
+}
+
 //--------------- Pawn methods -------------------
 
-Pawn::Pawn(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){
-    type = "Pawn";
+Pawn::Pawn(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
+
+std::string Pawn::getImage(){
+    std::string img_location = "resources/pieces/Pawn_";
+    img_location += player==1 ? "black" : "white";
+    img_location += ".png";
+    return img_location;
 }
 
 std::vector<std::vector<std::pair<int, int> > > Pawn::path()
@@ -89,10 +93,7 @@ std::vector<std::vector<std::pair<int, int> > > Pawn::path()
 
 //-------------- Rook Methods ----------------
 
-Rook::Rook(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack)
-{
-    type = "Rook";
-}
+Rook::Rook(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 
 std::vector<std::vector<std::pair<int, int> > > Rook::path()
 {
@@ -121,12 +122,16 @@ std::vector<std::vector<std::pair<int, int> > > Rook::path()
 
 }
 
+std::string Rook::getImage(){
+    std::string img_location = "resources/pieces/Rook_";
+    img_location += player==1 ? "black" : "white";
+    img_location += ".png";
+    return img_location;
+}
+
 // -------------- Knight Methods ------------------
 
-Knight::Knight(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack)
-{
-    type = "Knight";
-}
+Knight::Knight(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 
 std::vector<std::vector<std::pair<int, int> > > Knight::path()
 {
@@ -141,11 +146,16 @@ std::vector<std::vector<std::pair<int, int> > > Knight::path()
 
 }
 
+std::string Knight::getImage(){
+    std::string img_location = "resources/pieces/Knight_";
+    img_location += player==1 ? "black" : "white";
+    img_location += ".png";
+    return img_location;
+}
+
 // ------------ Bishop Methods ---------------
 
-Bishop::Bishop(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){
-    type = "Bishop";
-}
+Bishop::Bishop(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 
 
 std::vector<std::vector<std::pair<int, int> > > Bishop::path()
@@ -182,12 +192,16 @@ std::vector<std::vector<std::pair<int, int> > > Bishop::path()
 
 }
 
+std::string Bishop::getImage(){
+    std::string img_location = "resources/pieces/Bishop_";
+    img_location += player==1 ? "black" : "white";
+    img_location += ".png";
+    return img_location;
+}
+
 // ---------------- Queen Methods ----------------
 
-Queen::Queen(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack)
-{
-    type = "Queen";
-}
+Queen::Queen(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 
 
 std::vector<std::vector<std::pair<int, int> > > Queen::path()
@@ -241,13 +255,17 @@ std::vector<std::vector<std::pair<int, int> > > Queen::path()
     return p;
 }
 
+std::string Queen::getImage(){
+    std::string img_location = "resources/pieces/Queen_";
+    img_location += player==1 ? "black" : "white";
+    img_location += ".png";
+    return img_location;
+}
+
 // ---------- King Methods -------------
 
 
-King::King(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack)
-{
-    type = "King";
-}
+King::King(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 
 std::vector<std::vector<std::pair<int, int> > > King::path()
 {
@@ -261,4 +279,11 @@ std::vector<std::vector<std::pair<int, int> > > King::path()
             p[i].push_back(std::make_pair(pos.first + dist_x[i], pos.second + dist_y[i]));
     }
     return p;
+}
+
+std::string King::getImage(){
+    std::string img_location = "resources/pieces/King_";
+    img_location += player==1 ? "black" : "white";
+    img_location += ".png";
+    return img_location;
 }
