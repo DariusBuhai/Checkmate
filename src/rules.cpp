@@ -73,8 +73,6 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece pcs){
 
         return {{pos.first, pos.second-1}};
 
-        /** Please fix this code! */
-
         //pawn can move back and front, but can only attack sideways, so we are gonna check
         //if we can move up and down first
 
