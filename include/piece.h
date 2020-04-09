@@ -7,7 +7,6 @@
 #include <vector>
 #include <string>
 
-#include "types.h"
 
 class Piece{
 protected:

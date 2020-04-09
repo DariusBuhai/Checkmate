@@ -59,7 +59,7 @@ inline void Rules::getBoard(Piece* aux_board[2][8][8]){
                 board[i][j][k] = aux_board[i][j][k];
 }
 
-std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
+std::vector<std::pair<int, int>>Rules::getFuturePositions(Piece* pcs){
 
     int player = pcs->getPlayer();
 
@@ -67,7 +67,6 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
 
     if(pcs->getType()!="Pawn" || 1==1)
         return canAttackPos(pcs);
-
 
     Piece* aux_board[2][8][8];
     std::vector<std::pair<int, int>> ans;

@@ -6,6 +6,7 @@
 #include "../include/pieces.h"
 #include "../include/piece.h"
 #include "../include/rules.h"
+#include "../include/types.h"
 
 Pieces::Pieces(){
     this->initPieces();
@@ -77,6 +78,11 @@ Piece* Pieces::getPiece(std::pair<int, int> position) {
 }
 
 void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
+    history.emplace_back(Move(piece, piece->getPos(), new_position));
+
+    std::cout<<history.back().from.first<<','<<history.back().from.second<<' ';
+    std::cout<<history.back().to.first<<','<<history.back().to.second<<'\n';
+
     piece->move(new_position);
     switchPlayer();
     updateBoard();

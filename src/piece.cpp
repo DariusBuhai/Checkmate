@@ -61,8 +61,7 @@ std::vector<std::vector<std::pair<int, int> > > Pawn::path()
     posy = pos.second;
 
     // we go down, we are black
-    if (player == 1)
-    {
+    if (player == 1){
         posy++;
         if(isInTable({posx, posy}))
             p[0].emplace_back(std::make_pair(posx, posy));
