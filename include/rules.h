@@ -26,6 +26,7 @@ public:
     std::vector <std::pair<int, int>> canAttackPos(Piece*);
     bool isInCheck(int);
     std::vector<std::pair<int, int>> getFuturePositions(Piece*);
+    std::vector<std::pair<int, int>> getFuturePawn(Piece*);
     ~Rules();
 };
 
