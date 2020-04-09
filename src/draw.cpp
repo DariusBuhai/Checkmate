@@ -54,7 +54,7 @@ void Draw::draw(sf::RenderWindow* window) {
     if (!font.loadFromFile("resources/sansation.ttf")) throw EXIT_FAILURE;
     button.setFont(font);
     button.setCharacterSize(40);
-    button.setFillColor(sf::Color::Black);
+    button.setFillColor(sf::Color::Blue);
     button.setPosition(100, screen_height-100);
     window->draw(button);
 

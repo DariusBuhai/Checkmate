@@ -152,7 +152,10 @@ void Table::digestAction(sf::Event event){
     if(event.type==sf::Event::MouseButtonPressed){
         try{
             pair<int, int> grid_position = this->determine_grid_position(position_type(event.mouseButton.x, event.mouseButton.y));
-            if(grid_position==selected_square) return resetSelectedSquare();
+            if(grid_position==selected_square){
+                resetFuturePositions();
+                return resetSelectedSquare();
+            }
             updateSelectedSquare(grid_position);
         }catch (int e){
             cout<<"Pressed outside the table"<<'\n';
