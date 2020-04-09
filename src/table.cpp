@@ -199,4 +199,8 @@ void Table::drawPiece(sf::RenderWindow* window, Piece piece){
     window->draw(item);
 }
 
+void Table::resetGame() {
+    this->rules.resetGame();
+}
+
 

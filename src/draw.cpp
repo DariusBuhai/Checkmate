@@ -31,18 +31,61 @@ void Draw::init(){
         while (window.pollEvent(event)){
             if (event.type == Event::Closed)
                 window.close();
-            digestAction(event);
+            digestAction(&window, event);
         }
         window.display();
     }
 }
 
-void Draw::digestAction(sf::Event event){
+bool Draw::mouseInsideLimits(pair<int, int> location, std::pair<int, int> x, std::pair<int,int> y, bool reverse_y, bool reverse_x){
+    if(reverse_y){
+        y.first = screen_height-y.first;
+        y.second = screen_height-y.second;
+    }
+    if(reverse_x){
+        x.first = screen_height-x.first;
+        x.second = screen_height-x.second;
+    }
+
+    return (location.first > x.first && location.first < x.second) &&
+           (location.second >  y.first && location.second <= y.second);
+}
+
+bool Draw::mouseInsideLimits(sf::Event event, std::pair<int, int> x, std::pair<int,int> y, bool reverse_y, bool reverse_x){
+    return mouseInsideLimits({event.mouseButton.x,event.mouseButton.y}, x, y, reverse_y, reverse_x);
+}
+
+void Draw::digestAction(sf::RenderWindow* window, sf::Event event){
     table.digestAction(event);
+
+    if(event.type==sf::Event::MouseButtonPressed){
+        //cout<<event.mouseButton.x<<' '<<event.mouseButton.y<<'\n';
+
+        if(mouseInsideLimits(event, {80, 320}, {200, 120}, true))
+            table.resetGame();
+    }
+    if(event.type==sf::Event::MouseMoved){
+        sf::Cursor cursor;
+        hoveringResetButton = false;
+        hoveringPreviousMoveButton = false;
+        if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {80, 320}, {200, 120}, true)){
+            cursor.loadFromSystem(sf::Cursor::Hand);
+            hoveringResetButton = true;
+        }
+        window->setMouseCursor(cursor);
+    }
 }
 
 void Draw::drawButton(sf::RenderWindow* window, string title, sf::Color color, std::pair<int, int> position){
-
+    sf::Text button = sf::Text();
+    button.setString(title);
+    sf::Font font;
+    if (!font.loadFromFile("resources/sansation.ttf")) throw EXIT_FAILURE;
+    button.setFont(font);
+    button.setCharacterSize(40);
+    button.setFillColor(color);
+    button.setPosition(position.first, position.second);
+    window->draw(button);
 }
 
 void Draw::draw(sf::RenderWindow* window) {
@@ -50,18 +93,9 @@ void Draw::draw(sf::RenderWindow* window) {
     table.setSize(size_type(screen_width-150, screen_height-150));
     table.setPosition(position_type(25, 25));
 
-    /// Draw contents
     window->draw(RectangleShape(Vector2f(screen_width, screen_height)));
 
-    sf::Text button = sf::Text();
-    button.setString("Reset Game");
-    sf::Font font;
-    if (!font.loadFromFile("resources/sansation.ttf")) throw EXIT_FAILURE;
-    button.setFont(font);
-    button.setCharacterSize(40);
-    button.setFillColor(sf::Color::Blue);
-    button.setPosition(100, screen_height-100);
-    window->draw(button);
+    drawButton(window, "Reset Game", hoveringResetButton ? sf::Color::Red : sf::Color::Blue, {100,screen_height-160});
 
     table.draw(window);
 

@@ -103,11 +103,10 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
     if(piece->getType()=="Pawn" && ((piece->getPlayer()==1 && piece->getPos().second==7) || (piece->getPlayer()==0 && piece->getPos().second==0))){
         for(int i=0;i<this->pieces.size();i++)
             if(pieces[i]==piece){
-                delete pieces[i];
+                //delete pieces[i];
                 pieces[i] = new Queen(piece->getPos(), piece->getPlayer());;
             }
     }
-
     switchPlayer();
     updateBoard();
 }
@@ -128,4 +127,11 @@ void Pieces::setCurrentPlayer(int player) {
 
 void Pieces::switchPlayer() {
     this->current_player = !current_player;
+}
+
+void Pieces::resetGame(){
+    pieces.clear();
+    initPieces();
+    updateBoard();
+    current_player = 0;
 }
