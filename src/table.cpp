@@ -52,7 +52,7 @@ void Table::drawIndicators(sf::RenderWindow *window, size_type s, position_type 
         l.setFont(font);
         l.setCharacterSize(40);
         l.setFillColor(sf::Color::Black);
-        l.setPosition(p.x + indicator_spacing / 2 -20, p.y +indicatorHeight*i + indicatorHeight/2 - 20);
+        l.setPosition(p.x + indicator_spacing / 2 + 20, p.y +indicatorHeight*i + indicatorHeight/2 - 20);
         window->draw(l);
     }
     for(int j=0;j<8;j++){
@@ -63,7 +63,7 @@ void Table::drawIndicators(sf::RenderWindow *window, size_type s, position_type 
         l.setFont(font);
         l.setCharacterSize(40);
         l.setFillColor(sf::Color::Black);
-        l.setPosition(p.x + indicatorWidth * j + indicator_spacing + indicatorWidth / 2 - 20, s.height - indicatorHeight / 2 + 20);
+        l.setPosition(p.x + indicatorWidth * j + indicator_spacing + indicatorWidth / 2 - 20, s.height - indicatorHeight / 2 -20);
         window->draw(l);
     }
 }
@@ -156,7 +156,10 @@ void Table::digestAction(sf::Event event){
     if(event.type==sf::Event::MouseButtonPressed){
         try{
             pair<int, int> grid_position = this->determine_grid_position(position_type(event.mouseButton.x, event.mouseButton.y));
-            if(grid_position==selected_square) return resetSelectedSquare();
+            if(grid_position==selected_square){
+                resetFuturePositions();
+                return resetSelectedSquare();
+            }
             updateSelectedSquare(grid_position);
         }catch (int e){
             cout<<"Pressed outside the table"<<'\n';

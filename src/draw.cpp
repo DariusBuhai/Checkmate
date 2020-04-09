@@ -45,13 +45,27 @@ void Draw::digestAction(sf::Event event){
     table.digestAction(event);
 }
 
+void Draw::drawButton(sf::RenderWindow* window, string title, sf::Color color, std::pair<int, int> position){
+
+}
+
 void Draw::draw(sf::RenderWindow* window) {
 
-    table.setSize(size_type(screen_width-50, screen_height-50));
+    table.setSize(size_type(screen_width-150, screen_height-150));
     table.setPosition(position_type(25, 25));
 
     /// Draw contents
     window->draw(RectangleShape(Vector2f(screen_width, screen_height)));
+
+    sf::Text button = sf::Text();
+    button.setString("Reset Game");
+    sf::Font font;
+    if (!font.loadFromFile("resources/sansation.ttf")) throw EXIT_FAILURE;
+    button.setFont(font);
+    button.setCharacterSize(40);
+    button.setFillColor(sf::Color::Blue);
+    button.setPosition(100, screen_height-100);
+    window->draw(button);
 
     table.draw(window);
 

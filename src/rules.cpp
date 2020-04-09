@@ -81,6 +81,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
 {
     Piece* aux_board[2][8][8];
     saveBoard(aux_board);
+
     int player = pcs->getPlayer();
     std::vector<std::pair<int, int>> ans;
     std::pair<int, int> pos = pcs->getPos();
@@ -93,7 +94,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
         {
 
             //make a virtual move of the piece and check if valid
-            if( board[player][pos.first][pos.second + dst] == nullptr)
+            if( board[player][pos.first][pos.second + dst] == nullptr && board[!player][pos.first][pos.second + dst] == nullptr)
             {
                 std::cout<<"e pion"<<'\n';
                 board[player][pos.first][pos.second + dst] = board[player][pos.first][pos.second];
@@ -152,14 +153,16 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
     return ans;
 }
 
-std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs)
-{
+
+
+std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
     //returns the position that a piece can move.
     int player = pcs->getPlayer();
 
     if(player!=current_player)
         return {};
     //to save the board
+
     Piece* aux_board[2][8][8];
     saveBoard(aux_board);
     std::vector<std::pair<int, int>> ans;

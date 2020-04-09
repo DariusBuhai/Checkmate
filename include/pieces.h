@@ -2,6 +2,7 @@
 #define PIECES_H_INCLUDED
 
 #include <vector>
+#include <deque>
 #include <string>
 
 /**
@@ -9,6 +10,7 @@
  */
 
 #include "piece.h"
+#include "types.h"
 
 class Pieces{
 protected:
@@ -16,6 +18,7 @@ protected:
     void updateBoard();
 protected:
     Piece* board[2][8][8];
+    std::deque<Move> history;
     std::vector<Piece *> pieces;
     int current_player = 0;
 public:
