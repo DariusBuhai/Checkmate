@@ -20,11 +20,11 @@ Table::Table(){
 
 Table::~Table(){};
 
-void Table::setSize(size_type s) {
+void Table::setSize(sizeType s) {
     this->size = s;
 }
 
-void Table::setPosition(position_type p) {
+void Table::setPosition(positionType p) {
     this->position = p;
 }
 
@@ -35,15 +35,15 @@ void Table::setDarkMode(bool dm){
 void Table::draw(sf::RenderWindow *window) {
 
     drawIndicators(window, size, position);
-    drawOutline(window, size_type(size.width-indicatorSpacing, size.height-indicatorSpacing), position_type(position.x+indicatorSpacing, position.y));
-    drawGrid(window, size_type(size.width-2*padding-indicatorSpacing, size.height-2*padding-indicatorSpacing), position_type(position.x + indicatorSpacing + padding, position.y + padding));
+    drawOutline(window, sizeType(size.width-indicatorSpacing, size.height-indicatorSpacing), positionType(position.x+indicatorSpacing, position.y));
+    drawGrid(window, sizeType(size.width-2*padding-indicatorSpacing, size.height-2*padding-indicatorSpacing), positionType(position.x + indicatorSpacing + padding, position.y + padding));
 
     for(auto piece : rules.getPieces())
         drawPiece(window, piece);
 
 }
 
-void Table::drawIndicators(sf::RenderWindow *window, size_type s, position_type p){
+void Table::drawIndicators(sf::RenderWindow *window, sizeType s, positionType p){
 
     double indicatorHeight = (s.height-indicatorSpacing) / 8;
     double indicatorWidth = (s.width-indicatorSpacing) / 8;
@@ -72,7 +72,7 @@ void Table::drawIndicators(sf::RenderWindow *window, size_type s, position_type 
     }
 }
 
-void Table::drawOutline(sf::RenderWindow *window, size_type s, position_type p){
+void Table::drawOutline(sf::RenderWindow *window, sizeType s, positionType p){
 
     RectangleShape fill(Vector2f(s.width - 2*borderWidth, s.height - 2*borderWidth));
     fill.setOutlineThickness((float)borderWidth);
@@ -82,7 +82,7 @@ void Table::drawOutline(sf::RenderWindow *window, size_type s, position_type p){
 
 }
 
-void Table::drawGrid(sf::RenderWindow *window, size_type s, position_type p){
+void Table::drawGrid(sf::RenderWindow *window, sizeType s, positionType p){
 
     double squareWidth = (s.width) / 8;
     double squareHeight = (s.height) / 8;
@@ -111,12 +111,12 @@ void Table::drawGrid(sf::RenderWindow *window, size_type s, position_type p){
         }
 }
 
-pair<int, int> Table::determine_grid_position(position_type pos){
+pair<int, int> Table::determine_grid_position(positionType pos){
 
     pair<int, int> r(0,0);
 
-    size_type s(size.width-2*padding-indicatorSpacing, size.height-2*padding-indicatorSpacing);
-    position_type p(position.x + indicatorSpacing + padding, position.y + padding);
+    sizeType s(size.width-2*padding-indicatorSpacing, size.height-2*padding-indicatorSpacing);
+    positionType p(position.x + indicatorSpacing + padding, position.y + padding);
 
     if(pos.x>=p.x && pos.x<=p.x+s.width && pos.y>=p.y && pos.y <= p.y + s.height){
         r.first = (int) (pos.x - p.x) / (s.width/8);
@@ -162,7 +162,7 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
 void Table::digestAction(sf::Event event){
     if(event.type==sf::Event::MouseButtonPressed){
         try{
-            pair<int, int> grid_position = this->determine_grid_position(position_type(event.mouseButton.x, event.mouseButton.y));
+            pair<int, int> grid_position = this->determine_grid_position(positionType(event.mouseButton.x, event.mouseButton.y));
             if(grid_position==selectedSquare){
                 resetFuturePositions();
                 return resetSelectedSquare();
@@ -192,8 +192,8 @@ void Table::digestAction(sf::Event event){
 
 void Table::drawPiece(sf::RenderWindow* window, Piece* piece){
 
-    size_type s(this->size.width - this->borderWidth - this->indicatorSpacing, this->size.height - this->borderWidth - this->indicatorSpacing);
-    position_type p(this->position.x + this->indicatorSpacing + piece->getPos().first * (s.width/8), this->position.y + piece->getPos().second * (s.height/8));
+    sizeType s(this->size.width - this->borderWidth - this->indicatorSpacing, this->size.height - this->borderWidth - this->indicatorSpacing);
+    positionType p(this->position.x + this->indicatorSpacing + piece->getPos().first * (s.width/8), this->position.y + piece->getPos().second * (s.height/8));
 
     sf::Texture piece_img;
 

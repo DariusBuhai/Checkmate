@@ -87,39 +87,49 @@ void Draw::digestAction(sf::RenderWindow* window, sf::Event event){
     }
 }
 
-void Draw::drawButton(sf::RenderWindow* window, string title, sf::Color color, std::pair<int, int> position){
-    sf::Text button = sf::Text();
-    button.setString(title);
+void Draw::drawText(sf::RenderWindow* window, string title, sf::Color color, std::pair<int, int> position, int size){
+    sf::Text text = sf::Text();
+    text.setString(title);
     sf::Font font;
     if (!font.loadFromFile("resources/sansation.ttf")) throw EXIT_FAILURE;
-    button.setFont(font);
-    button.setCharacterSize(40);
-    button.setFillColor(color);
-    button.setPosition(position.first, position.second);
-    window->draw(button);
+    text.setFont(font);
+    text.setCharacterSize(size);
+    text.setFillColor(color);
+    text.setPosition(position.first, position.second);
+    window->draw(text);
 }
 
 void Draw::draw(sf::RenderWindow* window) {
 
-    table.setSize(size_type(screenWidth-150, screenHeight-150));
-    table.setPosition(position_type(0, 25));
+    table.setSize(sizeType(screenWidth-150, screenHeight-150));
+    table.setPosition(positionType(0, 25));
     table.setDarkMode(darkMode);
 
     RectangleShape fill = RectangleShape(Vector2f(screenWidth, screenHeight));
     fill.setFillColor(darkMode ? Color::Black : Color::White);
     window->draw(fill);
 
-    drawButton(window, "Reset Game", hoveringResetButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {100,screenHeight-120});
-    drawButton(window, "Undo Move", hoveringPreviousMoveButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {400,screenHeight-120});
+    table.draw(window);
+
+    drawText(window, "Reset Game", hoveringResetButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {100,screenHeight-120});
+    drawText(window, "Undo Move", hoveringPreviousMoveButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {400,screenHeight-120});
 
     string aiButtonText = table.isPlayingAgainstAi() ? "Play with friend" : "Play against AI";
-    drawButton(window, aiButtonText, hoveringPlayAiButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {700,screenHeight-120});
+    drawText(window, aiButtonText, hoveringPlayAiButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {700,screenHeight-120});
 
-    if(table.isPlayingAgainstAi()) drawButton(window, "AI", sf::Color::Magenta, {screenWidth - 100,100});
+    if(table.isPlayingAgainstAi()){
+        drawText(window, "AI", sf::Color::Magenta, {screenWidth - 100,50});
+        drawText(window, "Active", sf::Color::Magenta, {screenWidth - 130,100});
+    }
 
-    drawButton(window, "Dark\nMode", hoveringDarkModeButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {screenWidth - 130,200});
+    drawText(window, "Dark\nMode", hoveringDarkModeButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {screenWidth - 130,200});
 
-    table.draw(window);
+    if(1==1){
+        drawText(window, "Checkmate!", sf::Color::Red, {(screenWidth-150)/2-220,360}, 100);
+        drawText(window, "Player", sf::Color::Blue, {screenWidth - 130,360});
+        drawText(window, "2", sf::Color::Blue, {screenWidth - 90,400});
+        drawText(window, "Wins", sf::Color::Blue, {screenWidth - 120,440});
+    }
 
 }
 

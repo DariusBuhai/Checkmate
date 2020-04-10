@@ -45,5 +45,4 @@ public:
 };
 
 
-
 #endif // PIECES_H_INCLUDED

@@ -30,7 +30,7 @@ private:
     void draw(sf::RenderWindow*);
     void digestAction(sf::RenderWindow*, sf::Event);
 
-    void drawButton(sf::RenderWindow*, std::string, sf::Color, std::pair<int, int>);
+    void drawText(sf::RenderWindow*, std::string, sf::Color, std::pair<int, int>, int = 40);
 
 public:
     void init();
