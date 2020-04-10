@@ -12,6 +12,10 @@ Rules::Rules(){
 
 Rules::~Rules() = default;
 
+
+
+
+
 std::vector<std::pair<int, int>> Rules::canAttackPos(Piece* pcs)
 {
     //returns where a position can move without considering check.
@@ -128,7 +132,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
             int posx,posy;
             posx = pos.first + 1;
             posy = pos.second + dst;
-            if ((posx > -1 and posx < 9) and (posy > -1 and posy < 9))
+            if ((posx > -1 and posx < 8) and (posy > -1 and posy < 8))
                 if (board[!player][posx][posy] != nullptr)
                 {
                     board[!player][posx][posy] = nullptr;
@@ -140,7 +144,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
                 }
             posx = pos.first - 1;
             posy = pos.second + dst;
-            if ((posx > -1 and posx < 9) and (posy > -1 and posy < 9))
+            if ((posx > -1 and posx < 8) and (posy > -1 and posy < 8))
                 if (board[!player][posx][posy] != nullptr)
                 {
                     board[!player][posx][posy] = nullptr;
@@ -181,6 +185,8 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
         return getFuturePawn(pcs);
     }
     else{
+        
+
         attack_pos = canAttackPos(pcs);
         for (auto& next_pos : attack_pos)
         {
