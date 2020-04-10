@@ -124,10 +124,10 @@ void Draw::draw(sf::RenderWindow* window) {
 
     drawText(window, "Dark\nMode", hoveringDarkModeButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {screenWidth - 130,200});
 
-    if(1==1){
+    if(table.getIsCheckMate()){
         drawText(window, "Checkmate!", sf::Color::Red, {(screenWidth-150)/2-220,360}, 100);
         drawText(window, "Player", sf::Color::Blue, {screenWidth - 130,360});
-        drawText(window, "2", sf::Color::Blue, {screenWidth - 90,400});
+        drawText(window, ""+string(1, '1'+table.getWinnerPlayer()), sf::Color::Blue, {screenWidth - 90,400});
         drawText(window, "Wins", sf::Color::Blue, {screenWidth - 120,440});
     }
 

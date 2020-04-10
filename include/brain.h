@@ -13,7 +13,7 @@
 class Brain{
 private:
     Rules* rules;
-    int player = 0;
+    int player = 1;
 
     int getEvaluation(Piece*);
 

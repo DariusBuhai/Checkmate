@@ -145,6 +145,14 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
         rules.movePiece(lastSelectedPiece, new_position);
         resetFuturePositions();
         resetSelectedSquare();
+
+        if(rules.isCheckMate(!lastSelectedPiece->getPlayer())){
+            winnerPlayer = lastSelectedPiece->getPlayer();
+            resetSelectedSquare();
+            resetFuturePositions();
+            checkMate = true;
+        }
+
         return;
     }
     resetFuturePositions();
@@ -162,12 +170,14 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
 void Table::digestAction(sf::Event event){
     if(event.type==sf::Event::MouseButtonPressed){
         try{
-            pair<int, int> grid_position = this->determine_grid_position(positionType(event.mouseButton.x, event.mouseButton.y));
-            if(grid_position==selectedSquare){
-                resetFuturePositions();
-                return resetSelectedSquare();
+            if(!checkMate){
+                pair<int, int> grid_position = this->determine_grid_position(positionType(event.mouseButton.x, event.mouseButton.y));
+                if(grid_position==selectedSquare){
+                    resetFuturePositions();
+                    return resetSelectedSquare();
+                }
+                updateSelectedSquare(grid_position);
             }
-            updateSelectedSquare(grid_position);
         }catch (int e){
             cout<<"Pressed outside the table"<<'\n';
         }
@@ -209,10 +219,12 @@ void Table::drawPiece(sf::RenderWindow* window, Piece* piece){
 }
 
 void Table::resetGame() {
+    checkMate = false;
     rules.resetGame();
 }
 
 void Table::undoMove() {
+    checkMate = false;
     if(playAgainstAi && rules.getCurrentPlayer()==0)
         rules.undoMove();
     rules.undoMove();
@@ -224,5 +236,13 @@ void Table::togglePlayAgainstAi(){
 
 bool Table::isPlayingAgainstAi() const{
     return playAgainstAi;
+}
+
+bool Table::getIsCheckMate() {
+    return checkMate;
+}
+
+int Table::getWinnerPlayer() {
+    return winnerPlayer;
 }
 

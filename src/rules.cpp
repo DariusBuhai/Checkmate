@@ -171,8 +171,7 @@ void Rules::getAttackedPositions(bool mat[8][8], int player)
             mat[i][j] = 0;
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++)
-            if (board[!player][i][j] != nullptr)
-            {
+            if (board[!player][i][j] != nullptr){
                 pos = canAttackPos(board[!player][i][j]);
                 for (auto it:pos)
                     mat[it.first][it.second] = 1;
@@ -239,11 +238,11 @@ std::vector<std::pair<int, int>> Rules::canCastle(Piece* pcs)
 }
 
 
-std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
+std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs, bool checkPlayer){
     //returns the position that a piece can move.
     int player = pcs->getPlayer();
 
-    if(player!=currentPlayer)
+    if(checkPlayer && player!=currentPlayer)
         return {};
     //to save the board
 
@@ -257,9 +256,8 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
     saveBoard(aux_board);
 
 
-    if (dynamic_cast<Pawn*>(board[player][pos.first][pos.second])){
+    if (dynamic_cast<Pawn*>(board[player][pos.first][pos.second]))
         return getFuturePawn(pcs);
-    }
     else{
         if (dynamic_cast<King*>(board[player][pos.first][pos.second]))
             ans = canCastle(board[player][pos.first][pos.second]);
@@ -279,18 +277,9 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
     return ans;
 }
 
-bool Rules::isCheckMate(int player)
-{
-    for (int i = 0; i < 8; i++)
-        for (int j = 0 ; j < 8; j++)
-        {
-            if (board[player][i][j] != nullptr)
-            {
-                if ( (getFuturePositions(board[player][i][j])).size() != 0)
-                {
-                    return true;
-                }
-            }
-        }
-    return false;
+bool Rules::isCheckMate(int player){
+    for(Piece* piece : pieces)
+        if (piece->getPlayer()==player && !getFuturePositions(piece, false).empty())
+            return false;
+    return true;
 }

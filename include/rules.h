@@ -25,14 +25,12 @@ private:
 public:
     Rules();
     ~Rules();
-    void helper();
     std::vector <std::pair<int, int>> canAttackPos(Piece*);
     bool isInCheck(int);
-    std::vector<std::pair<int, int>> getFuturePositions(Piece*);
+    std::vector<std::pair<int, int>> getFuturePositions(Piece*, bool = true);
     std::vector<std::pair<int, int>> getFuturePawn(Piece*);
     std::vector<std::pair<int, int>> canCastle(Piece*);
     bool isCheckMate(int);
-    void togglePlayAgainstAi();
     void getAttackedPositions(bool [8][8], int);
 
 };

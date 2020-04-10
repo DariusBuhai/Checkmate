@@ -30,6 +30,8 @@ private:
 
     bool playAgainstAi = false;
     bool darkMode = false;
+    bool checkMate = false;
+    int winnerPlayer = -1;
 
     Rules rules;
     Brain* brain;
@@ -57,6 +59,9 @@ public:
     void setSize(sizeType);
     void setPosition(positionType);
     void setDarkMode(bool);
+
+    bool getIsCheckMate();
+    int getWinnerPlayer();
 
     void resetGame();
     void undoMove();
