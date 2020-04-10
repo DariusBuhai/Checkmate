@@ -30,7 +30,10 @@ public:
     bool isInCheck(int);
     std::vector<std::pair<int, int>> getFuturePositions(Piece*);
     std::vector<std::pair<int, int>> getFuturePawn(Piece*);
+    std::vector<std::pair<int, int>> canCastle(Piece*);
     void togglePlayAgainstAi();
+    void getAttackedPositions(bool [8][8], int);
+
 };
 
 #endif
