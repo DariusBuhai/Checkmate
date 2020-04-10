@@ -23,6 +23,7 @@ private:
 
     bool play_against_ai = false;
 public:
+    Rules();
     ~Rules();
     void helper();
     std::vector <std::pair<int, int>> canAttackPos(Piece*);

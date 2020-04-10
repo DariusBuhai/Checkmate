@@ -13,12 +13,13 @@
 #include "types.h"
 
 class Pieces{
+    void resizeBoard();
     void initPieces();
     void updateBoard();
 protected:
-    Piece* board[2][8][8];
+    std::vector<std::vector<std::vector<Piece*>>> board;
     std::deque<Move> history;
-    std::vector<Piece *> pieces;
+    std::vector<Piece*> pieces;
     int current_player;
 public:
 
@@ -26,8 +27,9 @@ public:
     ~Pieces();
 
     std::vector<Piece* > getPieces();
-    Piece* getPiece(std::pair<int, int>);
-    Piece* getPiece(std::pair<int, int>, int);
+    Piece* getPiece(int, std::pair<int, int>);
+    Piece* operator[](std::pair<int, int>);
+    std::vector<std::vector<Piece*>> operator[](int);
 
     void setPieces(const std::vector<Piece*>&);
 

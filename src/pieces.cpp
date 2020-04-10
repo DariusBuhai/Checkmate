@@ -7,6 +7,7 @@
 #include "../include/types.h"
 
 Pieces::Pieces(){
+    resizeBoard();
     initPieces();
     updateBoard();
 }
@@ -16,6 +17,15 @@ Pieces::~Pieces(){
         (*piece).~Piece(),
         delete piece;
     pieces.clear();
+}
+
+void Pieces::resizeBoard() {
+    board.resize(2);
+    for(int i=0;i<2;i++){
+        board[i].resize(8);
+        for(int j=0;j<8;j++)
+            board[i][j].resize(8);
+    }
 }
 
 void Pieces::initPieces(){
@@ -46,8 +56,8 @@ void Pieces::updateBoard() {
         for(int j=0;j<8;j++)
             for(int k=0;k<8;k++)
                 board[i][j][k] = nullptr;
-    for( unsigned int i=0;i<pieces.size();i++)
-        board[(*(pieces[i])).getPlayer()][(*(pieces[i])).getPos().first][(*(pieces[i])).getPos().second] = pieces[i];
+    for(unsigned int i=0;i<pieces.size();i++)
+        board[pieces[i]->getPlayer()][pieces[i]->getPos().first][pieces[i]->getPos().second] = pieces[i];
 }
 
 void Pieces::setPieces(const std::vector<Piece*>& new_pieces){
@@ -64,14 +74,18 @@ std::vector<Piece*> Pieces::getPieces(){
     return pieces;
 }
 
-Piece* Pieces::getPiece(std::pair<int, int> position) {
+Piece* Pieces::getPiece(int player, std::pair<int, int> position){
+    return board[player][position.first][position.second];
+}
+
+Piece* Pieces::operator[](std::pair<int, int> position){
     if(board[1][position.first][position.second]!= nullptr)
         return board[1][position.first][position.second];
     return board[0][position.first][position.second];
 }
 
-Piece* Pieces::getPiece(std::pair<int, int> position, int player) {
-    return board[player][position.first][position.second];
+std::vector<std::vector<Piece*>> Pieces::operator[](int player){
+    return board[player];
 }
 
 void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
@@ -109,7 +123,7 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
 }
 
 void Pieces::movePiece(std::pair<int, int> old_position, std::pair<int, int> new_position){
-    Piece* piece = getPiece(old_position);
+    Piece* piece = operator[](old_position);
     if(piece!= nullptr)
         movePiece(piece, new_position);
 }

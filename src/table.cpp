@@ -136,7 +136,7 @@ void Table::resetSelectedSquare(){
 void Table::updateSelectedSquare(pair<int, int> new_position){
     if(!(new_position.first>=0 && new_position.first<8 && new_position.second>=0 && new_position.second<8)) return;
     this->selected_square = new_position;
-    Piece* current = rules.getPiece(new_position);
+    Piece* current = rules[new_position];
     if(find(future_positions.begin(), future_positions.end(), new_position)!=future_positions.end()){
         rules.movePiece(last_selected_piece, new_position);
         if(play_against_ai){

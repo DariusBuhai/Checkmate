@@ -16,6 +16,7 @@ private:
     int player = 0;
 
     int getEvaluation(Piece*);
+
 public:
     Brain(Rules*);
     Move determineBestMove();

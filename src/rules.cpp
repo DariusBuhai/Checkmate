@@ -6,6 +6,10 @@
 #include <vector>
 #include <iostream>
 
+Rules::Rules(){
+    Pieces();
+}
+
 Rules::~Rules() = default;
 
 std::vector<std::pair<int, int>> Rules::canAttackPos(Piece* pcs)
@@ -93,7 +97,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
             //make a virtual move of the piece and check if valid
             if( board[player][pos.first][pos.second + dst] == nullptr && board[!player][pos.first][pos.second + dst] == nullptr)
             {
-                std::cout<<"e pion"<<'\n';
+                //std::cout<<"e pion"<<'\n';
                 board[player][pos.first][pos.second + dst] = board[player][pos.first][pos.second];
                 board[player][pos.first][pos.second] = nullptr;
                 if (!isInCheck(player))
