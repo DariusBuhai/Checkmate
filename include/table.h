@@ -8,8 +8,8 @@
 
 #include "types.h"
 #include "piece.h"
-#include "pieces.h"
 #include "rules.h"
+#include "brain.h"
 
 #ifndef CHECKMATE_TABLE_H
 #define CHECKMATE_TABLE_H
@@ -27,8 +27,10 @@ private:
     std::pair<int, int> selected_square = {-1, -1};
     std::vector<std::pair<int, int>> future_positions;
     Piece* last_selected_piece = nullptr;
+    bool play_against_ai = false;
 
     Rules rules;
+    Brain* brain;
 
     void resetFuturePositions();
 
@@ -55,6 +57,9 @@ public:
 
     void resetGame();
     void undoMove();
+    void togglePlayAgainstAi();
+
+    bool isPlayingAgainstAi() const;
 };
 
 #endif //CHECKMATE_TABLE_H

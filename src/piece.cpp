@@ -1,13 +1,8 @@
-#include <iostream>
 #include <vector>
 #include <utility>
 
-#include "../include/pieces.h"
 #include "../include/piece.h"
-#include "../include/rules.h"
-#include "../include/draw.h"
 #include "../include/table.h"
-#include "../include/types.h"
 
 // ------------- piece methods ----------------
 Piece::Piece(std::pair<int, int> pos, int player) : pos(pos), has_moved(false), player(player) {}
@@ -47,6 +42,7 @@ bool Piece::isInTable(std::pair<int, int> position)
 {
     return ((position.first>= 0 && position.first<= 7) && (position.second>= 0 && position.second <= 7));
 }
+
 
 std::string Piece::getImage(){
     return "resources/pieces/Bishop_black.png";
@@ -156,6 +152,7 @@ std::string Knight::getImage(){
     return img_location;
 }
 
+
 // ------------ Bishop Methods ---------------
 
 Bishop::Bishop(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
@@ -194,6 +191,7 @@ std::vector<std::vector<std::pair<int, int> > > Bishop::path()
     return p;
 
 }
+
 
 std::string Bishop::getImage(){
     std::string img_location = "resources/pieces/Bishop_";
@@ -257,6 +255,7 @@ std::vector<std::vector<std::pair<int, int> > > Queen::path()
 
     return p;
 }
+
 
 std::string Queen::getImage(){
     std::string img_location = "resources/pieces/Queen_";

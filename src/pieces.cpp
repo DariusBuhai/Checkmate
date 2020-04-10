@@ -1,18 +1,14 @@
 #include <iostream>
 #include <vector>
 #include <utility>
-#include <vector>
 
 #include "../include/pieces.h"
-//#include "../include/piece.h"
-#include "../include/rules.h"
-#include "../include/draw.h"
 #include "../include/table.h"
 #include "../include/types.h"
 
 Pieces::Pieces(){
-    this->initPieces();
-    this->updateBoard();
+    initPieces();
+    updateBoard();
 }
 
 Pieces::~Pieces(){
@@ -54,20 +50,15 @@ void Pieces::updateBoard() {
         board[(*(pieces[i])).getPlayer()][(*(pieces[i])).getPos().first][(*(pieces[i])).getPos().second] = pieces[i];
 }
 
-void Pieces::setPieces(std::vector<Piece*> new_pieces){
+void Pieces::setPieces(const std::vector<Piece*>& new_pieces){
     for(auto piece: pieces)
         (*piece).~Piece();
     pieces.clear();
     for (auto it: new_pieces)
         pieces.push_back(it);
-    this->updateBoard();
+    updateBoard();
 }
 
-
-void Pieces::displayPieces(){
-    //for(auto x : pieces)
-    //    std::cout<<"Piesa " << (*x).getType() << " " << (*x).getPlayer() << " se afla pe pozitia " << (*x).getPos().first<< " " << (*x).getPos().second << '\n';
-}
 
 std::vector<Piece*> Pieces::getPieces(){
     return pieces;
@@ -79,6 +70,10 @@ Piece* Pieces::getPiece(std::pair<int, int> position) {
     return board[0][position.first][position.second];
 }
 
+Piece* Pieces::getPiece(std::pair<int, int> position, int player) {
+    return board[player][position.first][position.second];
+}
+
 void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
     history.emplace_back(Move(piece, piece->getPos(), new_position));
 
@@ -88,10 +83,10 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
     if(board[!piece->getPlayer()][new_position.first][new_position.second]!=nullptr){
         Piece* piece_to_delete = board[!piece->getPlayer()][new_position.first][new_position.second];
         int i = 0;
-        for(;i<this->pieces.size();i++)
+        for(;i<pieces.size();i++)
             if(pieces[i]==piece_to_delete)
                 break;
-        for(;i<this->pieces.size()-1;i++)
+        for(;i<pieces.size()-1;i++)
             pieces[i] = pieces[i+1];
         pieces.pop_back();
         delete piece_to_delete;
@@ -101,7 +96,7 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
     piece->move(new_position);
 
     if(dynamic_cast<Pawn*>(piece) && ((piece->getPlayer()==1 && piece->getPos().second==7) || (piece->getPlayer()==0 && piece->getPos().second==0))){
-        for(int i=0;i<this->pieces.size();i++)
+        for(int i=0;i<pieces.size();i++)
             if(pieces[i]==piece){
                 pieces.push_back(new Queen(piece->getPos(), piece->getPlayer()));
                 (*(pieces[i])).~Piece();
@@ -116,7 +111,7 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
 void Pieces::movePiece(std::pair<int, int> old_position, std::pair<int, int> new_position){
     Piece* piece = getPiece(old_position);
     if(piece!= nullptr)
-        this->movePiece(piece, new_position);
+        movePiece(piece, new_position);
 }
 
 int Pieces::getCurrentPlayer() {
@@ -124,11 +119,11 @@ int Pieces::getCurrentPlayer() {
 }
 
 void Pieces::setCurrentPlayer(int player) {
-    this->current_player = player;
+    current_player = player;
 }
 
 void Pieces::switchPlayer() {
-    this->current_player = !current_player;
+    current_player = !current_player;
 }
 
 void Pieces::resetGame(){

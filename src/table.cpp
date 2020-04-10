@@ -9,12 +9,16 @@
 #include "../include/piece.h"
 #include "../include/table.h"
 #include "../include/types.h"
+#include "../include/pieces.h"
 
 using namespace std;
 using namespace sf;
 
-Table::Table(){}
-Table::~Table(){}
+Table::Table(){
+    brain = new Brain(&rules);
+}
+
+Table::~Table(){};
 
 void Table::setSize(size_type s) {
     this->size = s;
@@ -135,6 +139,10 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
     Piece* current = rules.getPiece(new_position);
     if(find(future_positions.begin(), future_positions.end(), new_position)!=future_positions.end()){
         rules.movePiece(last_selected_piece, new_position);
+        if(play_against_ai){
+            Move m = brain->determineBestMove();
+            rules.movePiece(m.piece, m.to);
+        }
         resetFuturePositions();
         resetSelectedSquare();
         return;
@@ -196,11 +204,18 @@ void Table::drawPiece(sf::RenderWindow* window, Piece* piece){
 }
 
 void Table::resetGame() {
-    this->rules.resetGame();
+    rules.resetGame();
 }
 
 void Table::undoMove() {
     rules.undoMove();
 }
 
+void Table::togglePlayAgainstAi(){
+    play_against_ai = !play_against_ai;
+}
+
+bool Table::isPlayingAgainstAi() const{
+    return play_against_ai;
+}
 

@@ -1,22 +1,19 @@
 #include "../include/rules.h"
-#include "../include/draw.h"
 #include "../include/table.h"
 #include "../include/types.h"
+
 #include <string>
 #include <vector>
 #include <iostream>
 
-
-Rules::~Rules() {}
+Rules::~Rules() = default;
 
 std::vector<std::pair<int, int>> Rules::canAttackPos(Piece* pcs)
 {
     //returns where a position can move without considering check.
     std::vector<std::pair<int, int>> ans;
-    for(auto l: pcs->path())
-    {
-        for (auto p : l)
-        {
+    for(auto l: pcs->path()){
+        for (auto p : l){
             if (board[pcs->getPlayer()][p.first][p.second] != nullptr)
                 break;
             ans.emplace_back(p);
@@ -176,8 +173,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
     if (player == 0)
         dst = 1;
 
-    if (dynamic_cast<Pawn*>(board[player][pos.first][pos.second]))
-    {
+    if (dynamic_cast<Pawn*>(board[player][pos.first][pos.second])){
         return getFuturePawn(pcs);
     }
     else{
