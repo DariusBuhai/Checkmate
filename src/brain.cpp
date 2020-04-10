@@ -33,7 +33,6 @@ int Brain::getEvaluation(Piece* piece) {
     return 0;
 }
 
-
 Move Brain::determineBestMove(){
     if(rules == nullptr) throw EXIT_FAILURE;
 
@@ -43,10 +42,9 @@ Move Brain::determineBestMove(){
 
     for(Piece* piece: rules->getPieces()){
         for(auto pos: rules->getFuturePositions(piece)){
-            cout<<pos.first<<' '<<pos.second<<'\n';
             Piece* opPlayer = rules->getPiece(piece->getPlayer(), pos);
             future_pos.emplace_back(Move(piece, pos));
-            if(opPlayer!= nullptr){
+            if(opPlayer != nullptr){
                 int eval = getEvaluation(opPlayer);
                 if(eval>best_eval){
                     best_eval = eval;
@@ -55,7 +53,8 @@ Move Brain::determineBestMove(){
             }
         }
     }
-
+    if(future_pos.empty())
+        return Move();
     if(best_move.piece!= nullptr)
         return best_move;
     return future_pos[random() % future_pos.size()];

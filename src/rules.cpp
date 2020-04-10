@@ -108,7 +108,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
                     ans.emplace_back(std::make_pair(pos.first, pos.second + dst));
             }
             getBoard(aux_board);
-            if(player!=current_player)
+            if(player!=currentPlayer)
                 return {};
             //std::cout<<"e pion"<<'\n';
             //if it has never moved, it can move by 2 positions.
@@ -164,7 +164,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
     //returns the position that a piece can move.
     int player = pcs->getPlayer();
 
-    if(player!=current_player)
+    if(player!=currentPlayer)
         return {};
     //to save the board
 

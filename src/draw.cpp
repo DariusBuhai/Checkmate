@@ -20,7 +20,7 @@ Draw::Draw() {
 void Draw::init(){
 
     /** Create the window of the application */
-    RenderWindow window(VideoMode((unsigned int)screen_width, (unsigned int)screen_height, 32), "Checkmate AI",Style::Titlebar | Style::Close);
+    RenderWindow window(VideoMode((unsigned int)screenWidth, (unsigned int)screenHeight, 32), "Checkmate AI",Style::Titlebar | Style::Close);
     window.setVerticalSyncEnabled(true);
     window.setActive(true);
 
@@ -37,51 +37,51 @@ void Draw::init(){
     }
 }
 
-bool Draw::mouseInsideLimits(pair<int, int> location, std::pair<int, int> x, std::pair<int,int> y, bool reverse_y, bool reverse_x){
-    if(reverse_y){
-        y.first = screen_height-y.first;
-        y.second = screen_height-y.second;
-    }
-    if(reverse_x){
-        x.first = screen_height-x.first;
-        x.second = screen_height-x.second;
-    }
-
+bool Draw::mouseInsideLimits(pair<int, int> location, std::pair<int, int> x, std::pair<int,int> y){
+    y.first = screenHeight-y.first;
+    y.second = screenHeight-y.second;
     return (location.first > x.first && location.first < x.second) &&
-           (location.second >  y.first && location.second <= y.second);
+           (location.second > y.first && location.second < y.second);
 }
 
-bool Draw::mouseInsideLimits(sf::Event event, std::pair<int, int> x, std::pair<int,int> y, bool reverse_y, bool reverse_x){
-    return mouseInsideLimits({event.mouseButton.x,event.mouseButton.y}, x, y, reverse_y, reverse_x);
+bool Draw::mouseInsideLimits(sf::Event event, std::pair<int, int> x, std::pair<int,int> y){
+    return mouseInsideLimits({event.mouseButton.x,event.mouseButton.y}, x, y);
 }
 
 void Draw::digestAction(sf::RenderWindow* window, sf::Event event){
     table.digestAction(event);
 
     if(event.type==sf::Event::MouseButtonPressed){
-        if(mouseInsideLimits(event, {80, 320}, {200, 120}, true))
+        if(mouseInsideLimits(event, {80, 320}, {120, 50}))
             table.resetGame();
-        if(mouseInsideLimits(event, {400, 620}, {200, 120}, true))
+        if(mouseInsideLimits(event, {400, 620}, {120, 50}))
             table.undoMove();
-        if(mouseInsideLimits(event, {700, 920}, {200, 120}, true))
+        if(mouseInsideLimits(event, {700, 920}, {120, 50}))
             table.togglePlayAgainstAi();
+        if(mouseInsideLimits(event, {screenWidth - 130, screenWidth-20}, {screenHeight-200, screenHeight-300}))
+            darkMode = !darkMode;
     }
     if(event.type==sf::Event::MouseMoved){
         sf::Cursor cursor;
         hoveringResetButton = false;
         hoveringPreviousMoveButton = false;
         hoveringPlayAiButton = false;
-        if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {100, 320}, {200, 120}, true)){
+        hoveringDarkModeButton = false;
+        if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {100, 320}, {120, 50})){
             cursor.loadFromSystem(sf::Cursor::Hand);
             hoveringResetButton = true;
         }
-        if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {400, 620}, {200, 120}, true)){
+        if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {400, 620}, {120, 50})){
             cursor.loadFromSystem(sf::Cursor::Hand);
             hoveringPreviousMoveButton = true;
         }
-        if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {700, 920}, {200, 120}, true)){
+        if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {700, 920}, {120, 50})){
             cursor.loadFromSystem(sf::Cursor::Hand);
             hoveringPlayAiButton = true;
+        }
+        if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {screenWidth - 130, screenWidth-20}, {screenHeight-200, screenHeight-300})){
+            cursor.loadFromSystem(sf::Cursor::Hand);
+            hoveringDarkModeButton = true;
         }
         window->setMouseCursor(cursor);
     }
@@ -101,22 +101,23 @@ void Draw::drawButton(sf::RenderWindow* window, string title, sf::Color color, s
 
 void Draw::draw(sf::RenderWindow* window) {
 
-    table.setSize(size_type(screen_width-150, screen_height-150));
-    table.setPosition(position_type(25, 25));
+    table.setSize(size_type(screenWidth-150, screenHeight-150));
+    table.setPosition(position_type(0, 25));
+    table.setDarkMode(darkMode);
 
-    window->draw(RectangleShape(Vector2f(screen_width, screen_height)));
+    RectangleShape fill = RectangleShape(Vector2f(screenWidth, screenHeight));
+    fill.setFillColor(darkMode ? Color::Black : Color::White);
+    window->draw(fill);
 
-    drawButton(window, "Reset Game", hoveringResetButton ? sf::Color::Red : sf::Color::Blue, {100,screen_height-160});
-    drawButton(window, "Undo Move", hoveringPreviousMoveButton ? sf::Color::Red : sf::Color::Blue, {400,screen_height-160});
+    drawButton(window, "Reset Game", hoveringResetButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {100,screenHeight-120});
+    drawButton(window, "Undo Move", hoveringPreviousMoveButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {400,screenHeight-120});
 
-    if(table.isPlayingAgainstAi())
-        drawButton(window, "Play with friend", hoveringPlayAiButton ? sf::Color::Red : sf::Color::Blue, {700,screen_height-160});
-    else
-        drawButton(window, "Play against AI", hoveringPlayAiButton ? sf::Color::Red : sf::Color::Blue, {700,screen_height-160});
+    string aiButtonText = table.isPlayingAgainstAi() ? "Play with friend" : "Play against AI";
+    drawButton(window, aiButtonText, hoveringPlayAiButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {700,screenHeight-120});
 
-    if(table.isPlayingAgainstAi()){
-        drawButton(window, "AI", sf::Color::Magenta, {screen_width - 80,100});
-    }
+    if(table.isPlayingAgainstAi()) drawButton(window, "AI", sf::Color::Magenta, {screenWidth - 100,100});
+
+    drawButton(window, "Dark\nMode", hoveringDarkModeButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {screenWidth - 130,200});
 
     table.draw(window);
 

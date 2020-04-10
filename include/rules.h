@@ -21,7 +21,7 @@ private:
     inline void saveBoard(Piece* [2][8][8]);
     inline void getBoard(Piece* [2][8][8]);
 
-    bool play_against_ai = false;
+    bool playAgainstAi = false;
 public:
     Rules();
     ~Rules();

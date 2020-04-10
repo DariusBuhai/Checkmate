@@ -85,7 +85,7 @@ Piece* Pieces::operator[](std::pair<int, int> position){
 }
 
 std::vector<std::vector<Piece*>> Pieces::operator[](int player){
-    return board[player];
+    return this->board[player];
 }
 
 void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
@@ -129,22 +129,22 @@ void Pieces::movePiece(std::pair<int, int> old_position, std::pair<int, int> new
 }
 
 int Pieces::getCurrentPlayer() {
-    return current_player;
+    return currentPlayer;
 }
 
 void Pieces::setCurrentPlayer(int player) {
-    current_player = player;
+    currentPlayer = player;
 }
 
 void Pieces::switchPlayer() {
-    current_player = !current_player;
+    currentPlayer = !currentPlayer;
 }
 
 void Pieces::resetGame(){
     pieces.clear();
     initPieces();
     updateBoard();
-    current_player = 0;
+    currentPlayer = 0;
 }
 
 void Pieces::undoMove() {
