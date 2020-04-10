@@ -31,6 +31,7 @@ public:
     std::vector<std::pair<int, int>> getFuturePositions(Piece*);
     std::vector<std::pair<int, int>> getFuturePawn(Piece*);
     std::vector<std::pair<int, int>> canCastle(Piece*);
+    bool isCheckMate(int);
     void togglePlayAgainstAi();
     void getAttackedPositions(bool [8][8], int);
 

@@ -106,7 +106,7 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
 
     if(board[!piece->getPlayer()][new_position.first][new_position.second]!=nullptr){
         Piece* piece_to_delete = board[!piece->getPlayer()][new_position.first][new_position.second];
-        int i = 0;
+        unsigned int i = 0;
         for(;i<pieces.size();i++)
             if(pieces[i]==piece_to_delete)
                 break;
@@ -120,7 +120,7 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
     piece->move(new_position);
 
     if(dynamic_cast<Pawn*>(piece) && ((piece->getPlayer()==1 && piece->getPos().second==7) || (piece->getPlayer()==0 && piece->getPos().second==0))){
-        for(int i=0;i<pieces.size();i++)
+        for(unsigned int i=0;i<pieces.size();i++)
             if(pieces[i]==piece){
                 pieces.push_back(new Queen(piece->getPos(), piece->getPlayer()));
                 (*(pieces[i])).~Piece();

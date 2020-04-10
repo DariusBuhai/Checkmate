@@ -256,9 +256,6 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
 
     saveBoard(aux_board);
 
-    int dst = -1;
-    if (player == 0)
-        dst = 1;
 
     if (dynamic_cast<Pawn*>(board[player][pos.first][pos.second])){
         return getFuturePawn(pcs);
@@ -280,4 +277,20 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
         }
     }
     return ans;
+}
+
+bool Rules::isCheckMate(int player)
+{
+    for (int i = 0; i < 8; i++)
+        for (int j = 0 ; j < 8; j++)
+        {
+            if (board[player][i][j] != nullptr)
+            {
+                if ( (getFuturePositions(board[player][i][j])).size() != 0)
+                {
+                    return true;
+                }
+            }
+        }
+    return false;
 }
