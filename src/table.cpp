@@ -199,4 +199,8 @@ void Table::resetGame() {
     this->rules.resetGame();
 }
 
+void Table::undoMove() {
+    rules.undoMove();
+}
+
 

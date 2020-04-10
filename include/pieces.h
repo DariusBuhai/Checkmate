@@ -39,6 +39,7 @@ public:
     void switchPlayer();
 
     void resetGame();
+    void undoMove();
 };
 
 

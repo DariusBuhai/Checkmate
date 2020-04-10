@@ -137,3 +137,16 @@ void Pieces::resetGame(){
     updateBoard();
     current_player = 0;
 }
+
+void Pieces::undoMove() {
+    if(!history.empty()){
+        history.back().piece->move(history.back().from);
+        switchPlayer();
+
+        if(dynamic_cast<Pawn*>(history.back().piece) && ((history.back().piece->getPlayer()==0 && history.back().piece->getPos().second==6) || (history.back().piece->getPlayer()==1 && history.back().piece->getPos().second==1)))
+            history.back().piece->resetHasMoved();
+
+        updateBoard();
+        history.pop_back();
+    }
+}

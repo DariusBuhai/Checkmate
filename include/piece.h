@@ -14,7 +14,7 @@ protected:
     bool has_moved;
     int player;
 
-    void set_position(int, int);
+    void setPosition(int, int);
 public:
 
     Piece(std::pair<int, int>, int);
@@ -28,6 +28,7 @@ public:
 
     virtual std::vector<std::vector<std::pair<int, int>>> path();
     void move(std::pair<int, int>);
+    void resetHasMoved();
 
     virtual std::string getImage();
 };

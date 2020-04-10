@@ -61,14 +61,21 @@ void Draw::digestAction(sf::RenderWindow* window, sf::Event event){
     if(event.type==sf::Event::MouseButtonPressed){
         if(mouseInsideLimits(event, {80, 320}, {200, 120}, true))
             table.resetGame();
+        if(mouseInsideLimits(event, {400, 620}, {200, 120}, true)){
+            table.undoMove();
+        }
     }
     if(event.type==sf::Event::MouseMoved){
         sf::Cursor cursor;
         hoveringResetButton = false;
         hoveringPreviousMoveButton = false;
-        if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {80, 320}, {200, 120}, true)){
+        if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {100, 320}, {200, 120}, true)){
             cursor.loadFromSystem(sf::Cursor::Hand);
             hoveringResetButton = true;
+        }
+        if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {400, 620}, {200, 120}, true)){
+            cursor.loadFromSystem(sf::Cursor::Hand);
+            hoveringPreviousMoveButton = true;
         }
         window->setMouseCursor(cursor);
     }
@@ -95,7 +102,7 @@ void Draw::draw(sf::RenderWindow* window) {
 
     drawButton(window, "Reset Game", hoveringResetButton ? sf::Color::Red : sf::Color::Blue, {100,screen_height-160});
     drawButton(window, "Undo Move", hoveringPreviousMoveButton ? sf::Color::Red : sf::Color::Blue, {400,screen_height-160});
-    drawButton(window, "Play with AI", hoveringPreviousMoveButton ? sf::Color::Red : sf::Color::Blue, {700,screen_height-160});
+    drawButton(window, "Play with AI", 1==2 ? sf::Color::Red : sf::Color::Blue, {700,screen_height-160});
 
     table.draw(window);
 

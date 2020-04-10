@@ -54,6 +54,7 @@ public:
     void setPosition(position_type p);
 
     void resetGame();
+    void undoMove();
 };
 
 #endif //CHECKMATE_TABLE_H

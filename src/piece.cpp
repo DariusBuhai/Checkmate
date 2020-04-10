@@ -34,8 +34,11 @@ bool Piece::getHasMoved(){
     return has_moved;
 }
 
-void Piece::set_position(int x_next, int y_next)
-{
+void Piece::resetHasMoved() {
+    has_moved = false;
+}
+
+void Piece::setPosition(int x_next, int y_next){
     pos.first = x_next;
     pos.second = y_next;
 }
