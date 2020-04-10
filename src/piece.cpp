@@ -5,15 +5,15 @@
 #include "../include/table.h"
 
 // ------------- piece methods ----------------
-Piece::Piece(std::pair<int, int> pos, int player) : pos(pos), has_moved(false), player(player) {}
-Piece::Piece() : pos({0,0}), has_moved(false), player(0) {}
+Piece::Piece(std::pair<int, int> pos, int player) : pos(pos), hasMoved(false), player(player) {}
+Piece::Piece() : pos({0,0}), hasMoved(false), player(0) {}
 
 std::vector<std::vector<std::pair<int, int>>> Piece::path(){
     return std::vector<std::vector<std::pair<int,int>>>(0);
 }
 
 void Piece::move(std::pair<int, int> position){
-    has_moved = true;
+    hasMoved = true;
     pos = position;
 }
 
@@ -26,11 +26,11 @@ int Piece::getPlayer(){
 }
 
 bool Piece::getHasMoved(){
-    return has_moved;
+    return hasMoved;
 }
 
 void Piece::resetHasMoved() {
-    has_moved = false;
+    hasMoved = false;
 }
 
 void Piece::setPosition(int x_next, int y_next){
@@ -38,9 +38,12 @@ void Piece::setPosition(int x_next, int y_next){
     pos.second = y_next;
 }
 
-bool Piece::isInTable(std::pair<int, int> position)
-{
+bool Piece::isInTable(std::pair<int, int> position){
     return ((position.first>= 0 && position.first<= 7) && (position.second>= 0 && position.second <= 7));
+}
+
+bool Piece::isInTable(){
+    return isInTable(this->pos);
 }
 
 

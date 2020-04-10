@@ -13,17 +13,19 @@
 class Draw{
 private:
 
-    const double screen_width = 1100;
-    const double screen_height = 1100;
+    const double screenWidth = 1100;
+    const double screenHeight = 1100;
 
     Table table;
 
     bool hoveringResetButton = false;
     bool hoveringPreviousMoveButton = false;
     bool hoveringPlayAiButton = false;
+    bool hoveringDarkModeButton = false;
+    bool darkMode = false;
 
-    bool mouseInsideLimits(std::pair<int, int>, std::pair<int, int>, std::pair<int,int>, bool = false, bool = false);
-    bool mouseInsideLimits(sf::Event, std::pair<int, int>, std::pair<int,int>, bool = false, bool = false);
+    bool mouseInsideLimits(std::pair<int, int>, std::pair<int, int>, std::pair<int,int>);
+    bool mouseInsideLimits(sf::Event, std::pair<int, int>, std::pair<int,int>);
 
     void draw(sf::RenderWindow*);
     void digestAction(sf::RenderWindow*, sf::Event);

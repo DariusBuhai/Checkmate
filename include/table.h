@@ -18,16 +18,18 @@ class Table{
 private:
     /// Settings
     const double padding = 10;
-    const double border_width = 10;
-    const double indicator_spacing = 100;
+    const double borderWidth = 10;
+    const double indicatorSpacing = 100;
 
     size_type size;
     position_type position;
 
-    std::pair<int, int> selected_square = {-1, -1};
-    std::vector<std::pair<int, int>> future_positions;
-    Piece* last_selected_piece = nullptr;
-    bool play_against_ai = false;
+    std::pair<int, int> selectedSquare = {-1, -1};
+    std::vector<std::pair<int, int>> futurePositions;
+    Piece* lastSelectedPiece = nullptr;
+
+    bool playAgainstAi = false;
+    bool darkMode = false;
 
     Rules rules;
     Brain* brain;
@@ -52,8 +54,9 @@ public:
     void draw(sf::RenderWindow*);
     void drawPiece(sf::RenderWindow*, Piece*);
 
-    void setSize(size_type s);
-    void setPosition(position_type p);
+    void setSize(size_type);
+    void setPosition(position_type);
+    void setDarkMode(bool);
 
     void resetGame();
     void undoMove();
