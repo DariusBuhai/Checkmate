@@ -20,16 +20,16 @@ class Rules: public Pieces{
 private:
     inline void saveBoard(Piece* [2][8][8]);
     inline void getBoard(Piece* [2][8][8]);
+
+    bool play_against_ai = false;
 public:
-    //tells you what piece is on the field
+    ~Rules();
     void helper();
     std::vector <std::pair<int, int>> canAttackPos(Piece*);
     bool isInCheck(int);
     std::vector<std::pair<int, int>> getFuturePositions(Piece*);
     std::vector<std::pair<int, int>> getFuturePawn(Piece*);
-    std::vector<std::pair<int, int>> canCastle(Piece*);
-    void getAtteckedPositions(bool[8][8]);
-    ~Rules();
+    void togglePlayAgainstAi();
 };
 
 #endif

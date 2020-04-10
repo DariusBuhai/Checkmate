@@ -17,8 +17,10 @@ private:
     const double screen_height = 1100;
 
     Table table;
+
     bool hoveringResetButton = false;
     bool hoveringPreviousMoveButton = false;
+    bool hoveringPlayAiButton = false;
 
     bool mouseInsideLimits(std::pair<int, int>, std::pair<int, int>, std::pair<int,int>, bool = false, bool = false);
     bool mouseInsideLimits(sf::Event, std::pair<int, int>, std::pair<int,int>, bool = false, bool = false);

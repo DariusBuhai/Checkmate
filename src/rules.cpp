@@ -1,13 +1,12 @@
 #include "../include/rules.h"
-#include "../include/draw.h"
 #include "../include/table.h"
 #include "../include/types.h"
+
 #include <string>
 #include <vector>
 #include <iostream>
 
-
-Rules::~Rules() {}
+Rules::~Rules() = default;
 
 
 
@@ -17,10 +16,8 @@ std::vector<std::pair<int, int>> Rules::canAttackPos(Piece* pcs)
 {
     //returns where a position can move without considering check.
     std::vector<std::pair<int, int>> ans;
-    for(auto l: pcs->path())
-    {
-        for (auto p : l)
-        {
+    for(auto l: pcs->path()){
+        for (auto p : l){
             if (board[pcs->getPlayer()][p.first][p.second] != nullptr)
                 break;
             ans.emplace_back(p);
@@ -179,11 +176,9 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
     int dst = -1;
     if (player == 0)
         dst = 1;
-    
-    if (dynamic_cast<Pawn*>(board[player][pos.first][pos.second]))
-    {
-        ans =  getFuturePawn(pcs);
 
+    if (dynamic_cast<Pawn*>(board[player][pos.first][pos.second])){
+        return getFuturePawn(pcs);
     }
     else{
         
@@ -202,23 +197,3 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
     }
     return ans;
 }
-
-
-std::vector<std::pair<int, int> > Rules::canCastle(Piece* pcs)
-{
-    if (!dynamic_cast<King*> (pcs))
-        return {};
-    if (!(pcs->getHasMoved()))
-    {
-        bool canPass[9][9];
-        for (int i = 0; i < 9; i++)
-            for (int j = 0 ; j < 9; j++)
-                canPass[i][j] = true;
-        
-        std::pair<int, int> pos = pcs->getPos();
-        for (int x = pos.first; x < 8; x ++)
-        {
-
-        }
-    }
-} 
