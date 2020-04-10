@@ -278,3 +278,19 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
     }
     return ans;
 }
+
+bool Rules::isCheckMate(int player)
+{
+    for (int i = 0; i < 8; i++)
+        for (int j = 0 ; j < 8; j++)
+        {
+            if (board[player][i][j] != nullptr)
+            {
+                if ( (getFuturePositions(board[player][i][j])).size() != 0)
+                {
+                    return true;
+                }
+            }
+        }
+    return false;
+}
