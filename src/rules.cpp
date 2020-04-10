@@ -160,6 +160,85 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
 
 
 
+
+
+void Rules::getAttackedPositions(bool mat[8][8], int player)
+{
+
+    std::vector<std::pair<int, int>> pos;
+    for (int i = 0; i < 8; i++)
+        for (int j = 0 ; j < 8; j++)
+            mat[i][j] = 0;
+    for (int i = 0; i < 8; i++)
+        for (int j = 0; j < 8; j++)
+            if (board[!player][i][j] != nullptr)
+            {
+                pos = canAttackPos(board[!player][i][j]);
+                for (auto it:pos)
+                    mat[it.first][it.second] = 1;
+                pos.clear();
+            }
+}
+
+
+std::vector<std::pair<int, int>> Rules::canCastle(Piece* pcs)
+{
+    if (!(dynamic_cast<King*> (pcs)))
+        return {};
+    int player = pcs->getPlayer();
+    if (!(pcs->getHasMoved()) and !(isInCheck(player)))
+    {       
+        bool isAttacked[8][8];
+        // the king has to pass throught not attacked positions;
+        getAttackedPositions(isAttacked, pcs->getPlayer());
+        std::pair<int, int> pos = pcs->getPos();
+        std::vector<std::pair<int, int>> ans;
+        //bool canMove = true;
+        //first we go to the right
+        while (pos.first < 7)
+        {
+            pos.first ++ ;
+            if (board[!player][pos.first][pos.second] != nullptr)
+                break;
+            if (isAttacked[pos.first][pos.second])
+                break;
+            if (board[player][pos.first][pos.second] != nullptr)
+            {
+                if (dynamic_cast<Rook*> (board[player][pos.first][pos.second]))
+                {
+                    if (!(board[player][pos.first][pos.second]->getHasMoved()))
+                        ans.push_back(pos);
+                }
+                break;
+            }
+        }
+        pos = pcs->getPos();
+        while (pos.first > 1)
+        {
+            pos.first --;
+            if (board[!player][pos.first][pos.second] != nullptr)
+                break;
+            if (isAttacked[pos.first][pos.second])
+                break;
+            if (board[player][pos.first][pos.second] != nullptr)
+            {
+                if (dynamic_cast<Rook*> (board[player][pos.first][pos.second]))
+                {
+                    if (!(board[player][pos.first][pos.second]->getHasMoved()))
+                        ans.push_back(pos);
+                }
+                break;
+            }
+        }
+        return ans;
+
+    }
+    return {};
+
+
+}
+
+
 std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
     //returns the position that a piece can move.
     int player = pcs->getPlayer();
@@ -185,7 +264,8 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
         return getFuturePawn(pcs);
     }
     else{
-        
+        if (dynamic_cast<King*>(board[player][pos.first][pos.second]))
+            ans = canCastle(board[player][pos.first][pos.second]);
 
         attack_pos = canAttackPos(pcs);
         for (auto& next_pos : attack_pos)
