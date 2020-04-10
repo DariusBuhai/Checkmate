@@ -256,9 +256,6 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs){
 
     saveBoard(aux_board);
 
-    int dst = -1;
-    if (player == 0)
-        dst = 1;
 
     if (dynamic_cast<Pawn*>(board[player][pos.first][pos.second])){
         return getFuturePawn(pcs);
