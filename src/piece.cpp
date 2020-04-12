@@ -33,6 +33,7 @@ void Piece::resetHasMoved() {
     hasMoved = false;
 }
 
+
 void Piece::setPosition(int x_next, int y_next){
     pos.first = x_next;
     pos.second = y_next;
@@ -51,16 +52,13 @@ std::string Piece::getImage(){
     return "resources/pieces/Bishop_black.png";
 }
 
+std::string Piece::getType(){
+    return "piece";
+}
+
 //--------------- Pawn methods -------------------
 
 Pawn::Pawn(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
-
-std::string Pawn::getImage(){
-    std::string img_location = "resources/pieces/Pawn_";
-    img_location += player==1 ? "black" : "white";
-    img_location += ".png";
-    return img_location;
-}
 
 std::vector<std::vector<std::pair<int, int> > > Pawn::path()
 {
@@ -91,6 +89,17 @@ std::vector<std::vector<std::pair<int, int> > > Pawn::path()
             p[1].push_back(std::make_pair(posx, posy));
     }
     return p;
+}
+
+std::string Pawn::getImage(){
+    std::string img_location = "resources/pieces/Pawn_";
+    img_location += player==1 ? "black" : "white";
+    img_location += ".png";
+    return img_location;
+}
+
+std::string Pawn::getType(){
+    return "pawn";
 }
 
 //-------------- Rook Methods ----------------
@@ -131,6 +140,10 @@ std::string Rook::getImage(){
     return img_location;
 }
 
+std::string Rook::getType(){
+    return "rook";
+}
+
 // -------------- Knight Methods ------------------
 
 Knight::Knight(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
@@ -153,6 +166,10 @@ std::string Knight::getImage(){
     img_location += player==1 ? "black" : "white";
     img_location += ".png";
     return img_location;
+}
+
+std::string Knight::getType(){
+    return "knight";
 }
 
 
@@ -201,6 +218,10 @@ std::string Bishop::getImage(){
     img_location += player==1 ? "black" : "white";
     img_location += ".png";
     return img_location;
+}
+
+std::string Bishop::getType(){
+    return "bishop";
 }
 
 // ---------------- Queen Methods ----------------
@@ -267,6 +288,10 @@ std::string Queen::getImage(){
     return img_location;
 }
 
+std::string Queen::getType(){
+    return "queen";
+}
+
 // ---------- King Methods -------------
 
 
@@ -291,4 +316,8 @@ std::string King::getImage(){
     img_location += player==1 ? "black" : "white";
     img_location += ".png";
     return img_location;
+}
+
+std::string King::getType(){
+    return "king";
 }

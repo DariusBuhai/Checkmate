@@ -20,7 +20,7 @@ Draw::Draw() {
 void Draw::init(){
 
     /** Create the window of the application */
-    RenderWindow window(VideoMode((unsigned int)screenWidth, (unsigned int)screenHeight, 32), "Checkmate AI",Style::Titlebar | Style::Close);
+    RenderWindow window(VideoMode((unsigned int)screenWidth, (unsigned int)screenHeight, 32), "AI Chess",Style::Titlebar | Style::Close);
     window.setVerticalSyncEnabled(true);
     window.setActive(true);
 

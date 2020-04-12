@@ -14,12 +14,16 @@ class Brain{
 private:
     Rules* rules;
     int player = 1;
+    std::map<std::string, std::vector<std::vector<int>>> evaluation;
 
-    int getEvaluation(Piece*);
+    int getBestRemoved(Piece*);
+    int getEvaluation(Piece*, std::pair<int,int>);
 
 public:
     Brain(Rules*);
+
     Move determineBestMove();
+    void initializeEvaluation();
 };
 
 #endif //CHECKMATE_BRAIN_H

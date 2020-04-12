@@ -28,6 +28,7 @@ public:
 	bool getHasMoved();
 
     virtual std::vector<std::vector<std::pair<int, int>>> path();
+    virtual std::string getType();
     void move(std::pair<int, int>);
     void resetHasMoved();
 
@@ -40,6 +41,7 @@ public:
     Pawn(std::pair<int, int>, bool);
     std::vector<std::vector<std::pair<int, int>>> path();
     std::string getImage();
+    std::string getType();
 };
 
 class Rook : public Piece
@@ -48,6 +50,7 @@ public:
 	Rook(std::pair<int, int>, bool);
     std::vector<std::vector<std::pair<int, int>>> path();
     std::string getImage();
+    std::string getType();
 };
 
 class Knight : public Piece
@@ -56,6 +59,7 @@ public:
 	Knight(std::pair<int, int>, bool);
     std::vector<std::vector<std::pair<int, int>>> path();
     std::string getImage();
+    std::string getType();
 };
 
 class Bishop : public Piece
@@ -64,6 +68,7 @@ public:
 	Bishop(std::pair<int, int>, bool);
     std::vector<std::vector<std::pair<int, int>>> path();
     std::string getImage();
+    std::string getType();
 };
 
 class Queen : public Piece
@@ -72,6 +77,7 @@ public:
 	Queen(std::pair<int, int>, bool);
     std::vector<std::vector<std::pair<int, int>>> path();
     std::string getImage();
+    std::string getType();
 };
 
 
@@ -81,6 +87,7 @@ public:
 	King(std::pair<int, int>, bool);
     std::vector<std::vector<std::pair<int, int>>> path();
     std::string getImage();
+    std::string getType();
 };
 
 #endif //CHECKMATE_PIECE_H
