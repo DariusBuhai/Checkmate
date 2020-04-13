@@ -65,6 +65,7 @@ void Draw::digestAction(sf::RenderWindow* window, sf::Event event){
     }
     if(event.type==sf::Event::MouseMoved){
         sf::Cursor cursor;
+        cursor.loadFromSystem(sf::Cursor::Arrow);
         hoveringResetButton = false;
         hoveringPreviousMoveButton = false;
         hoveringPlayAiButton = false;
