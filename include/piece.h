@@ -24,6 +24,7 @@ public:
     bool isInTable();
 
     std::pair<int,int> getPos();
+    std::pair<int,int> getPosCastle();
     int getPlayer();
 	bool getHasMoved();
 

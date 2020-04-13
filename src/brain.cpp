@@ -6,6 +6,7 @@
 #include "../include/rules.h"
 #include "../include/piece.h"
 #include "../include/types.h"
+#include "../include/pieces.h"
 
 #include <iostream>
 #include <fstream>
@@ -14,20 +15,24 @@
 
 using namespace std;
 
-Brain::Brain(Rules* r){
+Brain::Brain(Rules* r)
+{
     rules = r;
     initializeEvaluation();
 }
 
 
-void Brain::initializeEvaluation(){
+void Brain::initializeEvaluation()
+{
     vector<string> pt = {"pawn", "bishop", "knight", "queen", "rook", "king"};
-    for(auto p: pt){
+    for(auto p: pt)
+    {
         ifstream read("data/evaluation/"+p+".txt");
         int x;
         evaluation[p].resize(8);
-        for(int i=0;i<8;i++)
-            for (int j = 0; j < 8; j++){
+        for(int i=0; i<8; i++)
+            for (int j = 0; j < 8; j++)
+            {
                 read>>x;
                 evaluation[p][i].push_back(x);
             }
@@ -35,7 +40,8 @@ void Brain::initializeEvaluation(){
     }
 }
 
-int Brain::getBestRemoved(Piece* piece) {
+int Brain::getPointsEvaluation(Piece* piece)
+{
     if (dynamic_cast<Pawn *>(piece))
         return 10;
     if (dynamic_cast<Knight *>(piece))
@@ -51,14 +57,53 @@ int Brain::getBestRemoved(Piece* piece) {
     return 0;
 }
 
-int Brain::getEvaluation(Piece* piece, pair<int,int> pos){
+int Brain::getEvaluation(Piece* piece, pair<int,int> pos)
+{
     if(player==1)
         return evaluation[piece->getType()][pos.first][pos.second];
     return evaluation[piece->getType()][7-pos.first][7-pos.second];
 }
 
-Move Brain::determineBestMove(){
-    if(rules == nullptr) throw EXIT_FAILURE;
+Evaluation Brain :: evalAttacked(Piece* piece)
+{
+    Evaluation evalAttack;
+    evalAttack.eval = 0;
+    evalAttack.nr_pieces = 0;
+    for(Piece* current : rules->getPieces())
+    {
+         vector<pair<int, int>> futurePositions =rules->getFuturePositions(current);
+         /*if(find(futurePositions.begin(), futurePositions.end(), piece->getPos())!=futurePositions.end())
+         {
+             evalAttack.nr_pieces ++;
+             evalAttack.eval += getPointsEvaluation(current);
+         }
+         */
+    }
+    return evalAttack;
+}
+
+Evaluation Brain :: evalProtected(Piece* piece)
+{
+    Evaluation evalProtect;
+    evalProtect.eval =  getPointsEvaluation(piece);
+    evalProtect.nr_pieces = 1;
+    for(Piece* current : rules->getPieces())
+    {
+         //vector<pair<int, int>> protectedPositions = rules->getProtectedPositions(current);
+         /*if(find(protectedPositions.begin(), protectedPositions.end(), piece->getPos())!= protectedPositions.end())
+         {
+             evalProtect.nr_pieces ++;
+             evalProtect.eval += getPointsEvaluation(current);
+         }
+         */
+    }
+    return evalProtect;
+}
+
+Move Brain::determineBestMove()
+{
+    if(rules == nullptr)
+        throw EXIT_FAILURE;
 
     vector<Move> future_pos;
 
@@ -68,39 +113,66 @@ Move Brain::determineBestMove(){
     Move best_removed_move;
     int best_removed = -9999;
 
-    for(Piece* piece: rules->getPieces()){
-        for(auto pos: rules->getFuturePositions(piece)){
-            Piece* opPlayer = rules->getPiece(!piece->getPlayer(), pos);
+    for(Piece* piece: rules->getPieces())   ///ma plimb prin piese
+    {
+        for(auto pos: rules->getFuturePositions(piece))  ///ma plimb prin pozitiile in care poate ajunge fiecare piese
+        {
+            Piece* opPlayer = rules->getPiece(!piece->getPlayer(), pos); ///tipul pozitiei in care poate ajunge
             future_pos.emplace_back(Move(piece, pos));
 
             int eval = this->getEvaluation(piece, pos) * 10;
-            if(eval > best_eval){
+            if(eval > best_eval)
+            {
                 best_eval = eval;
                 best_eval_move = Move(piece, pos);
             }
 
-            if(opPlayer != nullptr){
-                int eval = getBestRemoved(opPlayer);
-                if(eval>best_removed){
-                    best_removed = eval;
-                    best_removed_move = Move(piece, pos);
+            if(opPlayer != nullptr && opPlayer->getType() != "King")
+            {
+                int eval = getPointsEvaluation(opPlayer);
+                int evalpiece = getPointsEvaluation(piece);
+                if(evalpiece <= eval)
+                {
+                    eval = eval - evalpiece;
+                    if(eval>best_removed)
+                    {
+                        best_removed = eval;
+                        best_removed_move = Move(piece, pos);
+                    }
+                }
+                else
+                {
+                    Evaluation evalProtect = evalProtected(piece);
+                    Evaluation evalAttack = evalAttacked(piece);
+                    if(evalAttack.nr_pieces >= evalProtect.nr_pieces )
+                    {
+                        int eval = evalAttack.eval - evalProtect.eval;
+                        if(eval>best_removed)
+                        {
+                            best_removed = eval;
+                            best_removed_move = Move(piece, pos);
+                        }
+                    }
                 }
             }
         }
     }
-    if(future_pos.empty()) {
+    if(future_pos.empty())
+    {
         cout << "No moves found! Checkmate\n";
         return Move();
     }
-    if(best_removed_move.piece != nullptr){
+    if(best_removed_move.piece != nullptr)
+    {
         cout<<"Found the best piece to remove\n";
         return best_removed_move;
     }
-    if(best_eval_move.piece!= nullptr){
+    if(best_eval_move.piece!= nullptr)
+    {
         cout<<"Moving based on evaluation\n";
         return best_eval_move;
     }
     cout << "Moving to a random position\n";
-    //return future_pos[random() % future_pos.size()];
+    return future_pos[rand() % future_pos.size()];
 }
 

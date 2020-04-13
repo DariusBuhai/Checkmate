@@ -20,7 +20,11 @@ void Piece::move(std::pair<int, int> position){
 std::pair<int,int> Piece::getPos(){
     return this->pos;
 }
-
+std::pair<int,int> Piece::getPosCastle()
+{
+    pos.first += 1;
+    return this->pos;
+}
 int Piece::getPlayer(){
     return this->player;
 }

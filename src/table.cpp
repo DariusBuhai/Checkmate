@@ -9,11 +9,11 @@
 #include "../include/piece.h"
 #include "../include/table.h"
 #include "../include/types.h"
-//#include "../include/pieces.h"
-//#include "../include/brain.h"
+#include "../include/rules.h"
+#include "../include/pieces.h"
+#include "../include/brain.h"
 
 #include "pieces.cpp"
-#include "brain.cpp"
 using namespace std;
 using namespace sf;
 

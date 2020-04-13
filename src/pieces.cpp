@@ -98,7 +98,8 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
     if(board[piece->getPlayer()][new_position.first][new_position.second] != nullptr)
     {
         Piece* aux = board[piece->getPlayer()][new_position.first][new_position.second];
-        aux->move(piece->getPos());
+        aux->move(piece->getPosCastle());
+        new_position.first -=1;
         piece->move(new_position);
         switchPlayer();
         updateBoard();

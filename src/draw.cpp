@@ -87,6 +87,7 @@ void Draw::digestAction(sf::RenderWindow* window, sf::Event event){
             hoveringDarkModeButton = true;
         }
         window->setMouseCursor(cursor);
+
     }
 }
 
