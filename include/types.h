@@ -41,4 +41,9 @@ struct Move{
         piece = nullptr;
     }
 };
+
+struct Evaluation{
+    int nr_pieces;
+    int eval;
+};
 #endif //CHECKMATE_TYPES_H

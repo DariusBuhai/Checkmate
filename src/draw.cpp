@@ -85,6 +85,7 @@ void Draw::digestAction(sf::RenderWindow* window, sf::Event event){
             hoveringDarkModeButton = true;
         }
         window->setMouseCursor(cursor);
+
     }
 }
 
@@ -131,6 +132,7 @@ void Draw::draw(sf::RenderWindow* window) {
         drawText(window, ""+string(1, '1'+table.getWinnerPlayer()), sf::Color::Blue, {screenWidth - 90,400});
         drawText(window, "Wins", sf::Color::Blue, {screenWidth - 120,440});
     }
+
 
 }
 

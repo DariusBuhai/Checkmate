@@ -9,7 +9,9 @@
 #include "../include/piece.h"
 #include "../include/table.h"
 #include "../include/types.h"
+#include "../include/rules.h"
 #include "../include/pieces.h"
+#include "../include/brain.h"
 
 using namespace std;
 using namespace sf;
@@ -93,7 +95,7 @@ void Table::drawGrid(sf::RenderWindow *window, sizeType s, positionType p){
             square.setSize(Vector2f(squareWidth, squareHeight));
             square.setPosition(p.x +squareWidth*i, p.y + squareHeight*j);
 
-            if((i+j)%2==0) square.setFillColor(darkMode ? Color(50, 50, 50) : Color(120, 120, 120));
+            if((i+j)%2!=0) square.setFillColor(darkMode ? Color(50, 50, 50) : Color(120, 120, 120));
             else square.setFillColor(darkMode ? Color(150, 150, 150) : Color::White);
 
             pair<int, int> current_pos = {i, j};
