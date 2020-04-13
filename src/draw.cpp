@@ -62,7 +62,7 @@ void Draw::draw(sf::RenderWindow* window) {
     button.setFont(font);
     button.setCharacterSize(40);
     button.setFillColor(sf::Color::Blue);
-    button.setPosition(100, screen_height-100);
+    button.setPosition(100, screen_height-160);
     window->draw(button);
 
     table.draw(window);

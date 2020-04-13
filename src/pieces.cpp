@@ -104,8 +104,9 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
     if(piece->getType()=="Pawn" && ((piece->getPlayer()==1 && piece->getPos().second==7) || (piece->getPlayer()==0 && piece->getPos().second==0))){
         for(int i=0;i<this->pieces.size();i++)
             if(pieces[i]==piece){
-                delete pieces[i];
-                pieces[i] = new Queen(piece->getPos(), piece->getPlayer());;
+                //delete pieces[i];
+                pieces[i] = new Queen(piece->getPos(), piece->getPlayer());
+                break;
             }
     }
 
