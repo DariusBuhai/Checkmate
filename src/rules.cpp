@@ -12,10 +12,6 @@ Rules::Rules(){
 
 Rules::~Rules() = default;
 
-
-
-
-
 std::vector<std::pair<int, int>> Rules::canAttackPos(Piece* pcs)
 {
     //returns where a position can move without considering check.
