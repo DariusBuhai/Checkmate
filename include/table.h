@@ -8,8 +8,8 @@
 
 #include "types.h"
 #include "piece.h"
-#include "pieces.h"
 #include "rules.h"
+#include "brain.h"
 
 #ifndef CHECKMATE_TABLE_H
 #define CHECKMATE_TABLE_H
@@ -18,28 +18,34 @@ class Table{
 private:
     /// Settings
     const double padding = 10;
-    const double border_width = 10;
-    const double indicator_spacing = 100;
+    const double borderWidth = 10;
+    const double indicatorSpacing = 100;
 
-    size_type size;
-    position_type position;
+    sizeType size;
+    positionType position;
 
-    std::pair<int, int> selected_square = {-1, -1};
-    std::vector<std::pair<int, int>> future_positions;
-    Piece* last_selected_piece = nullptr;
+    std::pair<int, int> selectedSquare = {-1, -1};
+    std::vector<std::pair<int, int>> futurePositions;
+    Piece* lastSelectedPiece = nullptr;
+
+    bool playAgainstAi = false;
+    bool darkMode = false;
+    bool checkMate = false;
+    int winnerPlayer = -1;
 
     Rules rules;
+    Brain* brain;
 
     void resetFuturePositions();
 
     void resetSelectedSquare();
     void updateSelectedSquare(std::pair<int, int>);
 
-    void drawGrid(sf::RenderWindow*, size_type, position_type);
-    void drawOutline(sf::RenderWindow*, size_type, position_type);
-    void drawIndicators(sf::RenderWindow*, size_type, position_type);
+    void drawGrid(sf::RenderWindow*, sizeType, positionType);
+    void drawOutline(sf::RenderWindow*, sizeType, positionType);
+    void drawIndicators(sf::RenderWindow*, sizeType, positionType);
 
-    std::pair<int, int> determine_grid_position(position_type);
+    std::pair<int, int> determine_grid_position(positionType);
 
 public:
     Table();
@@ -48,10 +54,20 @@ public:
     void digestAction(sf::Event);
 
     void draw(sf::RenderWindow*);
-    void drawPiece(sf::RenderWindow*, Piece);
+    void drawPiece(sf::RenderWindow*, Piece*);
 
-    void setSize(size_type s);
-    void setPosition(position_type p);
+    void setSize(sizeType);
+    void setPosition(positionType);
+    void setDarkMode(bool);
+
+    bool getIsCheckMate();
+    int getWinnerPlayer();
+
+    void resetGame();
+    void undoMove();
+    void togglePlayAgainstAi();
+
+    bool isPlayingAgainstAi() const;
 };
 
 #endif //CHECKMATE_TABLE_H

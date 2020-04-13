@@ -1,29 +1,20 @@
-#include <iostream>
 #include <vector>
 #include <utility>
 
-#include "../include/pieces.h"
 #include "../include/piece.h"
-#include "../include/rules.h"
-#include "../include/draw.h"
 #include "../include/table.h"
-#include "../include/types.h"
 
 // ------------- piece methods ----------------
-Piece::Piece(std::pair<int, int> pos, int player) : pos(pos), has_moved(false), player(player) {}
-Piece::Piece() : pos({0,0}), has_moved(false), player(0) {}
+Piece::Piece(std::pair<int, int> pos, int player) : pos(pos), hasMoved(false), player(player) {}
+Piece::Piece() : pos({0,0}), hasMoved(false), player(0) {}
 
 std::vector<std::vector<std::pair<int, int>>> Piece::path(){
     return std::vector<std::vector<std::pair<int,int>>>(0);
 }
 
 void Piece::move(std::pair<int, int> position){
-    has_moved = true;
+    hasMoved = true;
     pos = position;
-}
-
-std::string Piece::getType(){
-    return this->type;
 }
 
 std::pair<int,int> Piece::getPos(){
@@ -35,26 +26,39 @@ int Piece::getPlayer(){
 }
 
 bool Piece::getHasMoved(){
-    return has_moved;
+    return hasMoved;
 }
 
-void Piece::set_position(int x_next, int y_next)
-{
+void Piece::resetHasMoved() {
+    hasMoved = false;
+}
+
+
+void Piece::setPosition(int x_next, int y_next){
     pos.first = x_next;
     pos.second = y_next;
 }
 
-
-bool Piece::isInTable(std::pair<int, int> position)
-{
+bool Piece::isInTable(std::pair<int, int> position){
     return ((position.first>= 0 && position.first<= 7) && (position.second>= 0 && position.second <= 7));
+}
+
+bool Piece::isInTable(){
+    return isInTable(this->pos);
+}
+
+
+std::string Piece::getImage(){
+    return "resources/pieces/Bishop_black.png";
+}
+
+std::string Piece::getType(){
+    return "piece";
 }
 
 //--------------- Pawn methods -------------------
 
-Pawn::Pawn(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){
-    type = "Pawn";
-}
+Pawn::Pawn(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 
 std::vector<std::vector<std::pair<int, int> > > Pawn::path()
 {
@@ -87,12 +91,20 @@ std::vector<std::vector<std::pair<int, int> > > Pawn::path()
     return p;
 }
 
+std::string Pawn::getImage(){
+    std::string img_location = "resources/pieces/Pawn_";
+    img_location += player==1 ? "black" : "white";
+    img_location += ".png";
+    return img_location;
+}
+
+std::string Pawn::getType(){
+    return "pawn";
+}
+
 //-------------- Rook Methods ----------------
 
-Rook::Rook(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack)
-{
-    type = "Rook";
-}
+Rook::Rook(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 
 std::vector<std::vector<std::pair<int, int> > > Rook::path()
 {
@@ -121,12 +133,20 @@ std::vector<std::vector<std::pair<int, int> > > Rook::path()
 
 }
 
+std::string Rook::getImage(){
+    std::string img_location = "resources/pieces/Rook_";
+    img_location += player==1 ? "black" : "white";
+    img_location += ".png";
+    return img_location;
+}
+
+std::string Rook::getType(){
+    return "rook";
+}
+
 // -------------- Knight Methods ------------------
 
-Knight::Knight(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack)
-{
-    type = "Knight";
-}
+Knight::Knight(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 
 std::vector<std::vector<std::pair<int, int> > > Knight::path()
 {
@@ -141,11 +161,21 @@ std::vector<std::vector<std::pair<int, int> > > Knight::path()
 
 }
 
+std::string Knight::getImage(){
+    std::string img_location = "resources/pieces/Knight_";
+    img_location += player==1 ? "black" : "white";
+    img_location += ".png";
+    return img_location;
+}
+
+std::string Knight::getType(){
+    return "knight";
+}
+
+
 // ------------ Bishop Methods ---------------
 
-Bishop::Bishop(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){
-    type = "Bishop";
-}
+Bishop::Bishop(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 
 
 std::vector<std::vector<std::pair<int, int> > > Bishop::path()
@@ -182,12 +212,21 @@ std::vector<std::vector<std::pair<int, int> > > Bishop::path()
 
 }
 
+
+std::string Bishop::getImage(){
+    std::string img_location = "resources/pieces/Bishop_";
+    img_location += player==1 ? "black" : "white";
+    img_location += ".png";
+    return img_location;
+}
+
+std::string Bishop::getType(){
+    return "bishop";
+}
+
 // ---------------- Queen Methods ----------------
 
-Queen::Queen(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack)
-{
-    type = "Queen";
-}
+Queen::Queen(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 
 
 std::vector<std::vector<std::pair<int, int> > > Queen::path()
@@ -241,13 +280,22 @@ std::vector<std::vector<std::pair<int, int> > > Queen::path()
     return p;
 }
 
+
+std::string Queen::getImage(){
+    std::string img_location = "resources/pieces/Queen_";
+    img_location += player==1 ? "black" : "white";
+    img_location += ".png";
+    return img_location;
+}
+
+std::string Queen::getType(){
+    return "queen";
+}
+
 // ---------- King Methods -------------
 
 
-King::King(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack)
-{
-    type = "King";
-}
+King::King(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 
 std::vector<std::vector<std::pair<int, int> > > King::path()
 {
@@ -261,4 +309,15 @@ std::vector<std::vector<std::pair<int, int> > > King::path()
             p[i].push_back(std::make_pair(pos.first + dist_x[i], pos.second + dist_y[i]));
     }
     return p;
+}
+
+std::string King::getImage(){
+    std::string img_location = "resources/pieces/King_";
+    img_location += player==1 ? "black" : "white";
+    img_location += ".png";
+    return img_location;
+}
+
+std::string King::getType(){
+    return "king";
 }
