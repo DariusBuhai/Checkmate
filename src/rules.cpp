@@ -32,6 +32,23 @@ std::vector<std::pair<int, int>> Rules::canAttackPos(Piece* pcs)
     return ans;
 }
 
+std::vector<std::pair<int, int>> Rules::canProtectPos(Piece* pcs)
+{
+    //returns protected pieces from a given position
+    std::vector<std::pair<int, int>> ans;
+    for(auto l: pcs->path())
+    {
+        for (auto p : l)
+        {
+            if (board[pcs->getPlayer()][p.first][p.second] != nullptr)
+                ans.emplace_back(p);
+            else
+                break;
+        }
+    }
+    return ans;
+}
+
 bool Rules::isInCheck(int player)
 {
     //checks if the current player is in check
@@ -281,6 +298,33 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs, bool chec
             if(!isInCheck(player))
                 ans.push_back(next_pos);
             getBoard(aux_board);
+        }
+    }
+    return ans;
+}
+
+std::vector<std::pair<int, int>> Rules::getProtectedPositions(Piece* pcs)
+{
+    //returns protected pieces from a given position
+    std::vector<std::pair<int, int>> ans;
+    for(auto l: pcs->path())
+    {
+        for (auto p : l)
+        {
+            if (board[pcs->getPlayer()][p.first][p.second] != nullptr)
+            {
+                /*
+                int player = pcs -> getPlayer();
+                if(player == 0)
+                    std::cout<<pcs->getType()<<" alb apara " << board[pcs->getPlayer()][p.first][p.second] -> getType() << " " << p.first + 1 << " " << 8 - p.second  <<'\n';
+                else
+                    std::cout<<pcs->getType()<<" negru apara " << board[pcs->getPlayer()][p.first][p.second] -> getType() << " " << p.first + 1<< " " << 8 - p.second <<'\n';
+                    */
+                ans.emplace_back(p);
+                break;
+            }
+            else
+                break;
         }
     }
     return ans;

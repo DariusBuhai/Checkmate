@@ -26,11 +26,13 @@ public:
     Rules();
     ~Rules();
     std::vector <std::pair<int, int>> canAttackPos(Piece*);
+    std::vector <std::pair<int, int>> canProtectPos(Piece*);
     bool isInCheck(int);
     std::vector<std::pair<int, int>> getFuturePositions(Piece*, bool = true);
     std::vector<std::pair<int, int>> getProtectedPositions(Piece*);
     std::vector<std::pair<int, int>> getFuturePawn(Piece*);
     std::vector<std::pair<int, int>> canCastle(Piece*);
+
     bool isCheckMate(int);
     void getAttackedPositions(bool [8][8], int);
 

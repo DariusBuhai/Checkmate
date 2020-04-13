@@ -69,15 +69,16 @@ Evaluation Brain :: evalAttacked(Piece* piece)
     Evaluation evalAttack;
     evalAttack.eval = 0;
     evalAttack.nr_pieces = 0;
+    std::pair<int,int> position = piece -> getPos();
     for(Piece* current : rules->getPieces())
     {
-         vector<pair<int, int>> futurePositions =rules->getFuturePositions(current);
-         /*if(find(futurePositions.begin(), futurePositions.end(), piece->getPos())!=futurePositions.end())
-         {
-             evalAttack.nr_pieces ++;
-             evalAttack.eval += getPointsEvaluation(current);
-         }
-         */
+        vector<pair<int, int>> futurePositions =rules->getFuturePositions(current);
+        for(auto x : futurePositions)
+            if(x.first == position.first && x.second == position.second)
+            {
+                evalAttack.nr_pieces ++;
+                evalAttack.eval += getPointsEvaluation(current);
+            }
     }
     return evalAttack;
 }
@@ -87,15 +88,23 @@ Evaluation Brain :: evalProtected(Piece* piece)
     Evaluation evalProtect;
     evalProtect.eval =  getPointsEvaluation(piece);
     evalProtect.nr_pieces = 1;
+    std::pair<int,int> position = piece -> getPos();
     for(Piece* current : rules->getPieces())
     {
-         //vector<pair<int, int>> protectedPositions = rules->getProtectedPositions(current);
-         /*if(find(protectedPositions.begin(), protectedPositions.end(), piece->getPos())!= protectedPositions.end())
-         {
-             evalProtect.nr_pieces ++;
-             evalProtect.eval += getPointsEvaluation(current);
-         }
-         */
+        vector<pair<int, int>> protectedPositions = rules->getProtectedPositions(current);
+        /*
+        std::pair<int,int> pos = current -> getPos();
+        cout<<current->getType()<<" " << 8 - pos.first<< " " << 8 - pos.second<<'\n';
+        for (auto x : protectedPositions)
+            cout<< 8 - x.first  << " " << 8 - x.second <<'\n';
+        */
+        for(auto x : protectedPositions)
+            if(x.first == position.first && x.second == position.second)
+            {
+                evalProtect.nr_pieces ++;
+                evalProtect.eval += getPointsEvaluation(current);
+                break;
+            }
     }
     return evalProtect;
 }
@@ -142,8 +151,8 @@ Move Brain::determineBestMove()
                 }
                 else
                 {
-                    Evaluation evalProtect = evalProtected(piece);
-                    Evaluation evalAttack = evalAttacked(piece);
+                    Evaluation evalProtect = evalProtected(opPlayer);
+                    Evaluation evalAttack = evalAttacked(opPlayer);
                     if(evalAttack.nr_pieces >= evalProtect.nr_pieces )
                     {
                         int eval = evalAttack.eval - evalProtect.eval;
