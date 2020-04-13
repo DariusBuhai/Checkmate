@@ -14,6 +14,7 @@ class Brain {
 private:
     Rules* rules;
     int player = 1;
+    int moves = 0;
     std::map<std::string, std::vector<std::vector<int>>> evaluation;
 
     int getPointsEvaluation(Piece*);
@@ -24,6 +25,7 @@ public:
     Evaluation evalAttacked(Piece*);
     Evaluation evalProtected(Piece*);
     Move determineBestMove();
+    int getmoves();
     void initializeEvaluation();
 };
 
