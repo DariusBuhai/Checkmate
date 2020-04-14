@@ -10,11 +10,10 @@
 #include "../include/draw.h"
 #include "../include/types.h"
 
-#include "table.cpp";
-
 using namespace std;
 using namespace sf;
 
+#include "table.cpp"
 Draw::Draw() {
     this->init();
 }

@@ -10,7 +10,7 @@
 #include "../include/table.h"
 #include "../include/types.h"
 #include "../include/rules.h"
-#include "../include/pieces.h"
+//#include "../include/pieces.h"
 #include "../include/brain.h"
 
 #include "pieces.cpp"
