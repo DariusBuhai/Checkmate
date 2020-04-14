@@ -16,7 +16,7 @@ protected:
 
     void setPosition(int, int);
 public:
-
+    std::pair<int,int> changePos(std::pair<int,int>);
     Piece(std::pair<int, int>, int);
     Piece();
     virtual ~Piece(){};

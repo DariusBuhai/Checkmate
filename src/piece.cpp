@@ -26,6 +26,15 @@ std::pair<int,int> Piece::getPosCastle()
     pos.first += 1;
     return this->pos;
 }
+
+/*std::pair<int,int> Piece::changePos(std::pair<int,int> position)
+{
+    pos.first = position.first;
+    pos.second = position.second;
+    return this -> pos;
+}
+*/
+
 int Piece::getPlayer(){
     return this->player;
 }

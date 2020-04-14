@@ -32,22 +32,6 @@ std::vector<std::pair<int, int>> Rules::canAttackPos(Piece* pcs)
     return ans;
 }
 
-std::vector<std::pair<int, int>> Rules::canProtectPos(Piece* pcs)
-{
-    //returns protected pieces from a given position
-    std::vector<std::pair<int, int>> ans;
-    for(auto l: pcs->path())
-    {
-        for (auto p : l)
-        {
-            if (board[pcs->getPlayer()][p.first][p.second] != nullptr)
-                ans.emplace_back(p);
-            else
-                break;
-        }
-    }
-    return ans;
-}
 
 bool Rules::isInCheck(int player)
 {
@@ -96,7 +80,9 @@ inline void Rules::getBoard(Piece* aux_board[2][8][8])
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 8; j++)
             for (int k = 0; k < 8; k++)
+            {
                 board[i][j][k] = aux_board[i][j][k];
+            }
 }
 
 std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
@@ -323,8 +309,6 @@ std::vector<std::pair<int, int>> Rules::getProtectedPositions(Piece* pcs)
                 ans.emplace_back(p);
                 break;
             }
-            else
-                break;
         }
     }
     return ans;

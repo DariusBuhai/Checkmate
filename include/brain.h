@@ -10,7 +10,7 @@
 #include "rules.h"
 #include "piece.h"
 
-class Brain {
+class Brain : public Rules{
 private:
     Rules* rules;
     int player = 1;
@@ -22,8 +22,10 @@ private:
 
 public:
     Brain(Rules*);
-    Evaluation evalAttacked(Piece*);
-    Evaluation evalProtected(Piece*);
+    Evaluation evalAttacked(Piece*,std::pair<int,int>);
+    Evaluation evalProtected(Piece*,std::pair<int,int>);
+    bool isOkToMove(Piece*,std::pair<int,int>);
+    bool canCheck(Piece*,std::pair<int,int>);
     Move determineBestMove();
     int getmoves();
     void initializeEvaluation();

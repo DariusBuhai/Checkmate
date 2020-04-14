@@ -17,12 +17,14 @@ a function that gets a list of all possible moves for you
 */
 
 class Rules: public Pieces{
-private:
-    inline void saveBoard(Piece* [2][8][8]);
-    inline void getBoard(Piece* [2][8][8]);
+protected:
+    //inline void saveBoard(Piece* [2][8][8]);
+    //inline void getBoard(Piece* [2][8][8]);
 
     bool playAgainstAi = false;
 public:
+    inline void saveBoard(Piece* [2][8][8]);
+    inline void getBoard(Piece* [2][8][8]);
     Rules();
     ~Rules();
     std::vector <std::pair<int, int>> canAttackPos(Piece*);
