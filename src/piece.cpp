@@ -21,19 +21,10 @@ std::pair<int,int> Piece::getPos(){
     return this->pos;
 }
 
-std::pair<int,int> Piece::getPosCastle()
-{
+std::pair<int,int> Piece::getPosCastle(){
     pos.first += 1;
     return this->pos;
 }
-
-/*std::pair<int,int> Piece::changePos(std::pair<int,int> position)
-{
-    pos.first = position.first;
-    pos.second = position.second;
-    return this -> pos;
-}
-*/
 
 int Piece::getPlayer(){
     return this->player;
@@ -73,6 +64,7 @@ std::string Piece::getType(){
 //--------------- Pawn methods -------------------
 
 Pawn::Pawn(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
+Pawn::Pawn(Piece piece): Piece(piece.getPos(), piece.getPlayer()){}
 
 std::vector<std::vector<std::pair<int, int> > > Pawn::path(std::pair<int,int> position)
 {
@@ -119,6 +111,7 @@ std::string Pawn::getType(){
 //-------------- Rook Methods ----------------
 
 Rook::Rook(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
+Rook::Rook(Piece piece): Piece(piece.getPos(), piece.getPlayer()){}
 
 std::vector<std::vector<std::pair<int, int> > > Rook::path(std::pair<int,int> position)
 {
@@ -161,6 +154,7 @@ std::string Rook::getType(){
 // -------------- Knight Methods ------------------
 
 Knight::Knight(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
+Knight::Knight(Piece piece): Piece(piece.getPos(), piece.getPlayer()){}
 
 std::vector<std::vector<std::pair<int, int> > > Knight::path(std::pair<int,int> position)
 {
@@ -190,7 +184,7 @@ std::string Knight::getType(){
 // ------------ Bishop Methods ---------------
 
 Bishop::Bishop(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
-
+Bishop::Bishop(Piece piece): Piece(piece.getPos(), piece.getPlayer()){}
 
 std::vector<std::vector<std::pair<int, int> > > Bishop::path(std::pair<int,int> position)
 {
@@ -241,7 +235,7 @@ std::string Bishop::getType(){
 // ---------------- Queen Methods ----------------
 
 Queen::Queen(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
-
+Queen::Queen(Piece piece): Piece(piece.getPos(), piece.getPlayer()){}
 
 std::vector<std::vector<std::pair<int, int> > > Queen::path(std::pair<int,int> position)
 {
@@ -310,6 +304,7 @@ std::string Queen::getType(){
 
 
 King::King(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
+King::King(Piece piece): Piece(piece.getPos(), piece.getPlayer()){}
 
 std::vector<std::vector<std::pair<int, int> > > King::path(std::pair<int,int> position)
 {

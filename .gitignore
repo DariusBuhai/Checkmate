@@ -2,6 +2,7 @@
 TestSFML.cbp
 CMakeLists.txt
 cmake-build-debug
+update.command
 # CodeBlocks
 bin
 obj

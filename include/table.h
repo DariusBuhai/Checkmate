@@ -45,7 +45,7 @@ private:
     void drawOutline(sf::RenderWindow*, sizeType, positionType);
     void drawIndicators(sf::RenderWindow*, sizeType, positionType);
 
-    std::pair<int, int> determine_grid_position(positionType);
+    std::pair<int, int> determineGridPosition(positionType);
 
 public:
     Table();
