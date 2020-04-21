@@ -13,7 +13,6 @@
 using namespace std;
 using namespace sf;
 
-#include "table.cpp"
 Draw::Draw() {
     this->init();
 }

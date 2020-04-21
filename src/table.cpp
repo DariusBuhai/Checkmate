@@ -15,8 +15,6 @@
 using namespace std;
 using namespace sf;
 
-#include "pieces.cpp"
-
 Table::Table(){
     brain = new Brain(&rules);
 }

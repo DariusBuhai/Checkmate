@@ -6,8 +6,6 @@
 #include "../include/table.h"
 #include "../include/types.h"
 
-#include "piece.cpp"
-
 Pieces::Pieces(){
 
     resizeBoard();
@@ -156,17 +154,17 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
 
     switchPlayer();
     updateBoard();
-    cout<<"piesele albe\n";
+    std::cout<<"piesele albe\n";
     for(int i = 0 ; i < 8 ; i++)
     {
         for(int j = 0 ; j < 8; j++)
         {
             if(board[0][j][i] != nullptr)
-                cout<<board[0][j][i] -> getType()<<" ";
+                std::cout<<board[0][j][i] -> getType()<<" ";
             else
-                cout<<" nimic ";
+                std::cout<<" nimic ";
         }
-        cout<<'\n';
+        std::cout<<'\n';
     }
 }
 

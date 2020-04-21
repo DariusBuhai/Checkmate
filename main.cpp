@@ -3,7 +3,6 @@
 
 #include "include/draw.h"
 
-#include "draw.cpp"
 using namespace std;
 
 int main(){
