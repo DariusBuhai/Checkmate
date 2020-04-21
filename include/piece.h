@@ -28,7 +28,7 @@ public:
     int getPlayer();
 	bool getHasMoved();
 
-    virtual std::vector<std::vector<std::pair<int, int>>> path();
+    virtual std::vector<std::vector<std::pair<int, int>>> path(std::pair<int,int>);
     virtual std::string getType();
     void move(std::pair<int, int>);
     void resetHasMoved();
@@ -40,7 +40,7 @@ class Pawn : public Piece
 {
 public:
     Pawn(std::pair<int, int>, bool);
-    std::vector<std::vector<std::pair<int, int>>> path();
+    std::vector<std::vector<std::pair<int, int>>> path(std::pair<int,int>);
     std::string getImage();
     std::string getType();
 };
@@ -49,7 +49,7 @@ class Rook : public Piece
 {
 public:
 	Rook(std::pair<int, int>, bool);
-    std::vector<std::vector<std::pair<int, int>>> path();
+    std::vector<std::vector<std::pair<int, int>>> path(std::pair<int,int>);
     std::string getImage();
     std::string getType();
 };
@@ -58,7 +58,7 @@ class Knight : public Piece
 {
 public:
 	Knight(std::pair<int, int>, bool);
-    std::vector<std::vector<std::pair<int, int>>> path();
+    std::vector<std::vector<std::pair<int, int>>> path(std::pair<int,int>);
     std::string getImage();
     std::string getType();
 };
@@ -67,7 +67,7 @@ class Bishop : public Piece
 {
 public:
 	Bishop(std::pair<int, int>, bool);
-    std::vector<std::vector<std::pair<int, int>>> path();
+    std::vector<std::vector<std::pair<int, int>>> path(std::pair<int,int>);
     std::string getImage();
     std::string getType();
 };
@@ -76,7 +76,7 @@ class Queen : public Piece
 {
 public:
 	Queen(std::pair<int, int>, bool);
-    std::vector<std::vector<std::pair<int, int>>> path();
+    std::vector<std::vector<std::pair<int, int>>> path(std::pair<int,int>);
     std::string getImage();
     std::string getType();
 };
@@ -86,7 +86,7 @@ class King : public Piece
 {
 public:
 	King(std::pair<int, int>, bool);
-    std::vector<std::vector<std::pair<int, int>>> path();
+    std::vector<std::vector<std::pair<int, int>>> path(std::pair<int,int>);
     std::string getImage();
     std::string getType();
 };

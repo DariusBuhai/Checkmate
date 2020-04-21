@@ -27,10 +27,11 @@ public:
     inline void getBoard(Piece* [2][8][8]);
     Rules();
     ~Rules();
-    std::vector <std::pair<int, int>> canAttackPos(Piece*);
+    std::vector <std::pair<int, int>> canAttackPos(Piece*,std::pair<int,int>);
     std::vector <std::pair<int, int>> canProtectPos(Piece*);
     bool isInCheck(int);
     std::vector<std::pair<int, int>> getFuturePositions(Piece*, bool = true);
+    std::vector<std::pair<int, int>> getFuturePositions2(Piece*,std::pair<int, int>, bool = true );
     std::vector<std::pair<int, int>> getProtectedPositions(Piece*);
     std::vector<std::pair<int, int>> getFuturePawn(Piece*);
     std::vector<std::pair<int, int>> canCastle(Piece*);

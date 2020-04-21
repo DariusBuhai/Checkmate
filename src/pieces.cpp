@@ -7,29 +7,34 @@
 #include "../include/types.h"
 
 #include "piece.cpp"
-Pieces::Pieces(){
+Pieces::Pieces()
+{
     resizeBoard();
     initPieces();
     updateBoard();
 }
 
-Pieces::~Pieces(){
+Pieces::~Pieces()
+{
     for(auto &piece: pieces)
         (*piece).~Piece(),
         delete piece;
     pieces.clear();
 }
 
-void Pieces::resizeBoard() {
+void Pieces::resizeBoard()
+{
     board.resize(2);
-    for(int i=0;i<2;i++){
+    for(int i=0; i<2; i++)
+    {
         board[i].resize(8);
-        for(int j=0;j<8;j++)
+        for(int j=0; j<8; j++)
             board[i][j].resize(8);
     }
 }
 
-void Pieces::initPieces(){
+void Pieces::initPieces()
+{
     pieces.push_back(new Rook({0, 7}, 0));
     pieces.push_back(new Knight({1,7},0));
     pieces.push_back(new Bishop({2,7},0));
@@ -52,16 +57,18 @@ void Pieces::initPieces(){
         pieces.push_back(new Pawn({i, 1}, 1));
 }
 
-void Pieces::updateBoard() {
-    for(int i=0;i<2;i++)
-        for(int j=0;j<8;j++)
-            for(int k=0;k<8;k++)
+void Pieces::updateBoard()
+{
+    for(int i=0; i<2; i++)
+        for(int j=0; j<8; j++)
+            for(int k=0; k<8; k++)
                 board[i][j][k] = nullptr;
-    for(unsigned int i=0;i<pieces.size();i++)
+    for(unsigned int i=0; i<pieces.size(); i++)
         board[pieces[i]->getPlayer()][pieces[i]->getPos().first][pieces[i]->getPos().second] = pieces[i];
 }
 
-void Pieces::setPieces(const std::vector<Piece*>& new_pieces){
+void Pieces::setPieces(const std::vector<Piece*>& new_pieces)
+{
     for(auto piece: pieces)
         (*piece).~Piece();
     pieces.clear();
@@ -71,25 +78,32 @@ void Pieces::setPieces(const std::vector<Piece*>& new_pieces){
 }
 
 
-std::vector<Piece*> Pieces::getPieces(){
+std::vector<Piece*> Pieces::getPieces()
+{
     return pieces;
 }
 
-Piece* Pieces::getPiece(int player, std::pair<int, int> position){
+Piece* Pieces::getPiece(int player, std::pair<int, int> position)
+{
     return board[player][position.first][position.second];
 }
 
-Piece* Pieces::operator[](std::pair<int, int> position){
+Piece* Pieces::operator[](std::pair<int, int> position)
+{
     if(board[1][position.first][position.second]!= nullptr)
         return board[1][position.first][position.second];
     return board[0][position.first][position.second];
 }
 
-std::vector<std::vector<Piece*>> Pieces::operator[](int player){
+std::vector<std::vector<Piece*>> Pieces::operator[](int player)
+{
     return this->board[player];
 }
 
-void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
+void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position)
+{
+
+    std::pair <int,int> pos = piece -> getPos();
     history.emplace_back(Move(piece, piece->getPos(), new_position));
 
     std::cout<<history.back().from.first<<','<<history.back().from.second<<' ';
@@ -106,13 +120,14 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
         return;
     }
 
-    if(board[!piece->getPlayer()][new_position.first][new_position.second]!=nullptr){
+    if(board[!piece->getPlayer()][new_position.first][new_position.second]!=nullptr)
+    {
         Piece* piece_to_delete = board[!piece->getPlayer()][new_position.first][new_position.second];
         unsigned int i = 0;
-        for(;i<pieces.size();i++)
+        for(; i<pieces.size(); i++)
             if(pieces[i]==piece_to_delete)
                 break;
-        for(;i<pieces.size()-1;i++)
+        for(; i<pieces.size()-1; i++)
             pieces[i] = pieces[i+1];
         pieces.pop_back();
         delete piece_to_delete;
@@ -121,9 +136,11 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
 
     piece->move(new_position);
 
-    if(dynamic_cast<Pawn*>(piece) && ((piece->getPlayer()==1 && piece->getPos().second==7) || (piece->getPlayer()==0 && piece->getPos().second==0))){
-        for(unsigned int i=0;i<pieces.size();i++)
-            if(pieces[i]==piece){
+    if(dynamic_cast<Pawn*>(piece) && ((piece->getPlayer()==1 && piece->getPos().second==7) || (piece->getPlayer()==0 && piece->getPos().second==0)))
+    {
+        for(unsigned int i=0; i<pieces.size(); i++)
+            if(pieces[i]==piece)
+            {
                 pieces.push_back(new Queen(piece->getPos(), piece->getPlayer()));
                 (*(pieces[i])).~Piece();
                 delete (pieces[i]);
@@ -132,35 +149,54 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
     }
     switchPlayer();
     updateBoard();
+    cout<<"piesele albe\n";
+    for(int i = 0 ; i < 8 ; i++)
+    {
+        for(int j = 0 ; j < 8; j++)
+        {
+            if(board[0][j][i] != nullptr)
+                cout<<board[0][j][i] -> getType()<<" ";
+            else
+                cout<<" nimic ";
+        }
+        cout<<'\n';
+    }
 }
 
-void Pieces::movePiece(std::pair<int, int> old_position, std::pair<int, int> new_position){
+void Pieces::movePiece(std::pair<int, int> old_position, std::pair<int, int> new_position)
+{
     Piece* piece = operator[](old_position);
     if(piece!= nullptr)
         movePiece(piece, new_position);
 }
 
-int Pieces::getCurrentPlayer() {
+int Pieces::getCurrentPlayer()
+{
     return currentPlayer;
 }
 
-void Pieces::setCurrentPlayer(int player) {
+void Pieces::setCurrentPlayer(int player)
+{
     currentPlayer = player;
 }
 
-void Pieces::switchPlayer() {
+void Pieces::switchPlayer()
+{
     currentPlayer = !currentPlayer;
 }
 
-void Pieces::resetGame(){
+void Pieces::resetGame()
+{
     pieces.clear();
     initPieces();
     updateBoard();
     currentPlayer = 0;
 }
 
-void Pieces::undoMove() {
-    if(!history.empty()){
+void Pieces::undoMove()
+{
+    if(!history.empty())
+    {
         history.back().piece->move(history.back().from);
         switchPlayer();
 

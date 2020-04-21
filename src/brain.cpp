@@ -141,29 +141,29 @@ bool Brain :: isOkToMove(Piece* piece, std::pair<int,int> position)
 
 bool Brain :: canCheck(Piece* piece, std::pair<int,int> position)
 {
-    std::pair<int,int> pos = piece -> getPos();
-    Piece* aux_board[2][8][8];
-    rules -> saveBoard(aux_board);
-    /*board[1][position.first][position.second] = board[1][pos.first][pos.second];
-    board[1][pos.first][pos.second] = nullptr;
-    //board[1][position.first][position.second] -> changePos(position);
-    //cout<< poz.first + 1 << " " << 8 - poz.second << '\n';
-    for(int i = 0 ; i < 8 ; i++)
+    if(board[0][position.first][position.second] != nullptr)
     {
-        for(int j = 0 ; j < 8; j++)
+        int eval = getPointsEvaluation(board[0][position.first][position.second]);
+        int evalpiece = getPointsEvaluation(piece);
+        if(eval < evalpiece)
+            return false;
+        else
         {
-            if(board[1][j][i] != nullptr)
-                cout<<board[1][j][i] -> getType()<<" ";
-            else
-                cout<<" nimic ";
+            Evaluation evalProtect = evalProtected(board[0][position.first][position.second],board[0][position.first][position.second] -> getPos());
+            Evaluation evalAttack = evalAttacked(board[0][position.first][position.second],board[0][position.first][position.second] -> getPos());
+            if(evalAttack.nr_pieces <= evalProtect.nr_pieces && (evalAttack.nr_pieces <= evalProtect.nr_pieces || evalAttack.eval > evalProtect.eval) )
+                return false;
         }
-        cout<<'\n';
     }
-    vector<pair<int, int>> futurePositions =rules->getFuturePositions(board[1][position.first][position.second],false);
+    std::pair<int,int> pos = piece -> getPos();
+    cout<< piece -> getType()<< " " << pos.first + 1 << " " << 8-  pos.second << " " << 1 + position.first << " " << 8 - position.second << '\n';
+    board[1][position.first][position.second] = piece;
+    board[1][pos.first][pos.second] = nullptr;
+    vector<pair<int, int>> futurePositions =rules->getFuturePositions2(board[1][position.first][position.second],position,false);
     for (auto x : futurePositions)
         cout<< x.first + 1 << " " << 8 - x.second <<'\n';
-    /*for(auto x : futurePositions)
-        if(board[0][x.first][x.second] -> getType() == "king")
+    for(auto x : futurePositions)
+        if(board[0][x.first][x.second] != nullptr && board[0][x.first][x.second] -> getType() == "king")
         {
             board[1][position.first][position.second] = nullptr;
             board[1][pos.first][pos.second] = piece;
@@ -171,13 +171,23 @@ bool Brain :: canCheck(Piece* piece, std::pair<int,int> position)
         }
     board[1][position.first][position.second] = nullptr;
     board[1][pos.first][pos.second] = piece;
-    */
-    return 0;
+    return false;
 }
 int Brain :: getmoves()
 {
     return moves;
 }
+
+inline void Brain :: copyBoard()
+{
+    for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 8; j++)
+            for (int k = 0; k < 8; k++)
+            {
+                //boardBrain[i][j][k] = rules -> board[i][j][k];
+            }
+}
+
 Move Brain::determineBestMove()
 {
     if(rules == nullptr)
@@ -194,6 +204,20 @@ Move Brain::determineBestMove()
     Move best_eval_check_move;
     int best_eval_check = -9999;
 
+    /*copyBoard();
+    cout<<"piesele albe\n";
+    for(int i = 0 ; i < 8 ; i++)
+    {
+        for(int j = 0 ; j < 8; j++)
+        {
+            if(boardBrain[0][j][i] != nullptr)
+                cout<<boardBrain[0][j][i] -> getType()<<" ";
+            else
+                cout<<" nimic ";
+        }
+        cout<<'\n';
+    }
+    */
     for(Piece* piece: rules->getPieces())   ///ma plimb prin piese
         if(piece -> getPlayer() == 1)
         {

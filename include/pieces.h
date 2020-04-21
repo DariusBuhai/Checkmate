@@ -23,6 +23,7 @@ protected:
     int currentPlayer = 0;
 public:
 
+    //std::vector<std::vector<std::vector<Piece*>>> board;
     Pieces();
     ~Pieces();
 
