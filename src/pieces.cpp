@@ -79,7 +79,7 @@ Piece* Pieces::getPiece(int player, std::pair<int, int> position){
 }
 
 Piece* Pieces::operator[](std::pair<int, int> position){
-    if(board[1][position.first][position.second]!= nullptr)
+    if(board[1][position.first][position.second] != nullptr && board[1][position.first][position.second]->getIsVisible())
         return board[1][position.first][position.second];
     return board[0][position.first][position.second];
 }
@@ -88,14 +88,13 @@ std::vector<std::vector<Piece*>> Pieces::operator[](int player){
     return this->board[player];
 }
 
-void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
-    history.emplace_back(Move(piece, piece->getPos(), new_position));
+void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_taken_piece){
+    Move current_move = Move(piece, piece->getPos(), new_position);
 
-    std::cout<<history.back().from.first<<','<<history.back().from.second<<' ';
-    std::cout<<history.back().to.first<<','<<history.back().to.second<<'\n';
-    //you should castle.
-    if(board[piece->getPlayer()][new_position.first][new_position.second] != nullptr)
-    {
+    std::cout<<current_move.from.first<<','<<current_move.from.second<<' ';
+    std::cout<<current_move.to.first<<','<<current_move.to.second<<'\n';
+
+    if(board[piece->getPlayer()][new_position.first][new_position.second] != nullptr){
         Piece* aux = board[piece->getPlayer()][new_position.first][new_position.second];
         aux->move(piece->getPosCastle());
         new_position.first -=1;
@@ -107,15 +106,8 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
 
     if(board[!piece->getPlayer()][new_position.first][new_position.second]!=nullptr){
         Piece* piece_to_delete = board[!piece->getPlayer()][new_position.first][new_position.second];
-        unsigned int i = 0;
-        for(;i<pieces.size();i++)
-            if(pieces[i]==piece_to_delete)
-                break;
-        for(;i<pieces.size()-1;i++)
-            pieces[i] = pieces[i+1];
-        pieces.pop_back();
-        delete piece_to_delete;
-        board[!piece->getPlayer()][new_position.first][new_position.second] = nullptr;
+        *piece_to_delete = false;
+        current_move.hasTakenPiece = true;
     }
 
     piece->move(new_position);
@@ -129,6 +121,9 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position){
                 pieces.erase(pieces.begin() + i);
             }
     }
+
+    history.emplace_back(current_move);
+
     switchPlayer();
     updateBoard();
 }
@@ -152,6 +147,8 @@ void Pieces::switchPlayer() {
 }
 
 void Pieces::resetGame(){
+    for(auto piece: pieces)
+        delete piece;
     pieces.clear();
     initPieces();
     updateBoard();
@@ -160,11 +157,14 @@ void Pieces::resetGame(){
 
 void Pieces::undoMove() {
     if(!history.empty()){
-        history.back().piece->move(history.back().from);
+        Move current_move = history.back();
+        current_move.piece->move(current_move.from);
         switchPlayer();
 
-        if(dynamic_cast<Pawn*>(history.back().piece) && ((history.back().piece->getPlayer()==0 && history.back().piece->getPos().second==6) || (history.back().piece->getPlayer()==1 && history.back().piece->getPos().second==1)))
-            history.back().piece->resetHasMoved();
+        if(dynamic_cast<Pawn*>(current_move.piece) && ((current_move.piece->getPlayer()==0 && current_move.piece->getPos().second==6) || (current_move.piece->getPlayer()==1 && current_move.piece->getPos().second==1)))
+            current_move.piece->resetHasMoved();
+        if(current_move.hasTakenPiece)
+            *board[!current_move.piece->getPlayer()][current_move.to.first][current_move.to.second] = true;
 
         updateBoard();
         history.pop_back();

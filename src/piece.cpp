@@ -5,8 +5,8 @@
 #include "../include/table.h"
 
 // ------------- piece methods ----------------
-Piece::Piece(std::pair<int, int> pos, int player) : pos(pos), hasMoved(false), player(player) {}
-Piece::Piece() : pos({0,0}), hasMoved(false), player(0) {}
+Piece::Piece(std::pair<int, int> pos, int player) : pos(pos), hasMoved(false), player(player), isVisible(true) {}
+Piece::Piece() : pos({0,0}), hasMoved(false), player(0), isVisible(true) {}
 
 std::vector<std::vector<std::pair<int, int>>> Piece::path(){
     return std::vector<std::vector<std::pair<int,int>>>(0);
@@ -27,13 +27,14 @@ std::pair<int,int> Piece::getPosCastle()
     return this->pos;
 }
 
-/*std::pair<int,int> Piece::changePos(std::pair<int,int> position)
-{
-    pos.first = position.first;
-    pos.second = position.second;
-    return this -> pos;
+Piece& Piece::operator=(bool visibility){
+    this->isVisible = visibility;
+    return *this;
 }
-*/
+
+bool Piece::getIsVisible(){
+    return this->isVisible;
+}
 
 int Piece::getPlayer(){
     return this->player;

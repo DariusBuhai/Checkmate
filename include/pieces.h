@@ -33,7 +33,7 @@ public:
 
     void setPieces(const std::vector<Piece*>&);
 
-    void movePiece(Piece*, std::pair<int, int>);
+    void movePiece(Piece*, std::pair<int, int>, bool = false);
     void movePiece(std::pair<int, int>, std::pair<int, int>);
 
     int getCurrentPlayer();

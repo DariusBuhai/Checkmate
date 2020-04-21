@@ -112,7 +112,7 @@ void Table::drawGrid(sf::RenderWindow *window, sizeType s, positionType p){
         }
 }
 
-pair<int, int> Table::determine_grid_position(positionType pos){
+pair<int, int> Table::determineGridPosition(positionType pos){
 
     pair<int, int> r(0,0);
 
@@ -172,7 +172,7 @@ void Table::digestAction(sf::Event event){
     if(event.type==sf::Event::MouseButtonPressed){
         try{
             if(!checkMate){
-                pair<int, int> grid_position = this->determine_grid_position(positionType(event.mouseButton.x, event.mouseButton.y));
+                pair<int, int> grid_position = this->determineGridPosition(positionType(event.mouseButton.x, event.mouseButton.y));
                 if(grid_position==selectedSquare){
                     resetFuturePositions();
                     return resetSelectedSquare();
@@ -183,16 +183,18 @@ void Table::digestAction(sf::Event event){
             cout<<"Pressed outside the table"<<'\n';
         }
     }else if(event.type==sf::Event::KeyPressed){
-        if(selectedSquare.first!=-1 && selectedSquare.second!=-1){
-            if(event.key.code==Keyboard::Right)
-                updateSelectedSquare({selectedSquare.first+1, selectedSquare.second});
-            else if(event.key.code==Keyboard::Left)
-                updateSelectedSquare({selectedSquare.first-1, selectedSquare.second});
-            else if(event.key.code==Keyboard::Up)
-                updateSelectedSquare({selectedSquare.first, selectedSquare.second-1});
-            else if(event.key.code==Keyboard::Down)
-                updateSelectedSquare({selectedSquare.first, selectedSquare.second+1});
+        if(selectedSquare.first==-1 || selectedSquare.second==-1){
+            if(rules.getCurrentPlayer()==1) selectedSquare = {3,1};
+            else selectedSquare = {3,6};
         }
+        if(event.key.code==Keyboard::Right)
+            updateSelectedSquare({selectedSquare.first+1, selectedSquare.second});
+        else if(event.key.code==Keyboard::Left)
+            updateSelectedSquare({selectedSquare.first-1, selectedSquare.second});
+        else if(event.key.code==Keyboard::Up)
+            updateSelectedSquare({selectedSquare.first, selectedSquare.second-1});
+        else if(event.key.code==Keyboard::Down)
+            updateSelectedSquare({selectedSquare.first, selectedSquare.second+1});
     }
     if(rules.getCurrentPlayer()==1 && playAgainstAi){
         Move m = brain->determineBestMove();
@@ -202,6 +204,8 @@ void Table::digestAction(sf::Event event){
 }
 
 void Table::drawPiece(sf::RenderWindow* window, Piece* piece){
+
+    if(!piece->getIsVisible()) return;
 
     sizeType s(this->size.width - this->borderWidth - this->indicatorSpacing, this->size.height - this->borderWidth - this->indicatorSpacing);
     positionType p(this->position.x + this->indicatorSpacing + piece->getPos().first * (s.width/8), this->position.y + piece->getPos().second * (s.height/8));
@@ -222,6 +226,8 @@ void Table::drawPiece(sf::RenderWindow* window, Piece* piece){
 void Table::resetGame() {
     checkMate = false;
     rules.resetGame();
+    resetSelectedSquare();
+    resetFuturePositions();
 }
 
 void Table::undoMove() {
@@ -229,6 +235,8 @@ void Table::undoMove() {
     if(playAgainstAi && rules.getCurrentPlayer()==0)
         rules.undoMove();
     rules.undoMove();
+    resetSelectedSquare();
+    resetFuturePositions();
 }
 
 void Table::togglePlayAgainstAi(){

@@ -12,16 +12,19 @@ class Piece{
 protected:
     std::pair<int, int> pos;
     bool hasMoved;
+    bool isVisible;
     int player;
 
     void setPosition(int, int);
 public:
-    std::pair<int,int> changePos(std::pair<int,int>);
     Piece(std::pair<int, int>, int);
     Piece();
     virtual ~Piece(){};
     bool isInTable(std::pair<int, int>);
     bool isInTable();
+
+    bool getIsVisible();
+    Piece& operator=(bool);
 
     std::pair<int,int> getPos();
     std::pair<int,int> getPosCastle();
