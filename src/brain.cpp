@@ -27,7 +27,7 @@ void Brain::initializeEvaluation()
     vector<string> pt = {"pawn", "bishop", "knight", "queen", "rook", "king"};
     for(auto p: pt)
     {
-        ifstream read("data/evaluation/"+p+".txt");
+        ifstream read("resources/evaluation/"+p+".txt");
         int x;
         evaluation[p].resize(8);
         for(int i=0; i<8; i++)
@@ -270,23 +270,19 @@ Move Brain::determineBestMove()
             }
         }
     moves = moves + 2;
-    if(future_pos.empty())
-    {
+    if(future_pos.empty()){
         cout << "No moves found! Checkmate\n";
         return Move();
     }
-    if(best_removed_move.piece != nullptr)
-    {
+    if(best_removed_move.piece != nullptr){
         cout<<"Found the best piece to remove\n";
         return best_removed_move;
     }
-    if(best_eval_check_move.piece != nullptr)
-    {
+    if(best_eval_check_move.piece != nullptr){
         cout<<"Moving based on check\n";
         return best_eval_check_move;
     }
-    if(best_eval_move.piece!= nullptr)
-    {
+    if(best_eval_move.piece!= nullptr){
         cout<<"Moving based on evaluation\n";
         return best_eval_move;
     }

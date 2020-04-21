@@ -12,7 +12,6 @@ class Piece{
 protected:
     std::pair<int, int> pos;
     bool hasMoved;
-    bool isVisible;
     int player;
 
     void setPosition(int, int);
@@ -22,9 +21,6 @@ public:
     virtual ~Piece(){};
     bool isInTable(std::pair<int, int>);
     bool isInTable();
-
-    bool getIsVisible();
-    Piece& operator=(bool);
 
     std::pair<int,int> getPos();
     std::pair<int,int> getPosCastle();
@@ -42,6 +38,7 @@ public:
 class Pawn : public Piece
 {
 public:
+    Pawn(Piece);
     Pawn(std::pair<int, int>, bool);
     std::vector<std::vector<std::pair<int, int>>> path();
     std::string getImage();
@@ -51,6 +48,7 @@ public:
 class Rook : public Piece
 {
 public:
+    Rook(Piece);
 	Rook(std::pair<int, int>, bool);
     std::vector<std::vector<std::pair<int, int>>> path();
     std::string getImage();
@@ -60,6 +58,7 @@ public:
 class Knight : public Piece
 {
 public:
+    Knight(Piece);
 	Knight(std::pair<int, int>, bool);
     std::vector<std::vector<std::pair<int, int>>> path();
     std::string getImage();
@@ -69,6 +68,7 @@ public:
 class Bishop : public Piece
 {
 public:
+    Bishop(Piece);
 	Bishop(std::pair<int, int>, bool);
     std::vector<std::vector<std::pair<int, int>>> path();
     std::string getImage();
@@ -78,6 +78,7 @@ public:
 class Queen : public Piece
 {
 public:
+    Queen(Piece);
 	Queen(std::pair<int, int>, bool);
     std::vector<std::vector<std::pair<int, int>>> path();
     std::string getImage();
@@ -88,6 +89,7 @@ public:
 class King : public Piece
 {
 public:
+    King(Piece);
 	King(std::pair<int, int>, bool);
     std::vector<std::vector<std::pair<int, int>>> path();
     std::string getImage();

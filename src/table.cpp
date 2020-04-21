@@ -34,7 +34,6 @@ void Table::setDarkMode(bool dm){
 }
 
 void Table::draw(sf::RenderWindow *window) {
-
     drawIndicators(window, size, position);
     drawOutline(window, sizeType(size.width-indicatorSpacing, size.height-indicatorSpacing), positionType(position.x+indicatorSpacing, position.y));
     drawGrid(window, sizeType(size.width-2*padding-indicatorSpacing, size.height-2*padding-indicatorSpacing), positionType(position.x + indicatorSpacing + padding, position.y + padding));
@@ -180,7 +179,7 @@ void Table::digestAction(sf::Event event){
                 updateSelectedSquare(grid_position);
             }
         }catch (int e){
-            cout<<"Pressed outside the table"<<'\n';
+            //cout<<"Pressed outside the table"<<'\n';
         }
     }else if(event.type==sf::Event::KeyPressed){
         if(selectedSquare.first==-1 || selectedSquare.second==-1){
@@ -204,8 +203,6 @@ void Table::digestAction(sf::Event event){
 }
 
 void Table::drawPiece(sf::RenderWindow* window, Piece* piece){
-
-    if(!piece->getIsVisible()) return;
 
     sizeType s(this->size.width - this->borderWidth - this->indicatorSpacing, this->size.height - this->borderWidth - this->indicatorSpacing);
     positionType p(this->position.x + this->indicatorSpacing + piece->getPos().first * (s.width/8), this->position.y + piece->getPos().second * (s.height/8));

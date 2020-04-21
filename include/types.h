@@ -26,14 +26,15 @@ struct sizeType{
 
 struct Move{
     Piece *piece = nullptr;
-    bool hasTakenPiece = false;
+    Piece *deletedPiece = nullptr;
+    Piece *updatedPiece = nullptr;
     std::pair<int, int> from, to;
 
-    Move(Piece* p, std::pair<int, int> f, std::pair<int, int> t, bool htp = false){
+    Move(Piece* p, std::pair<int, int> f, std::pair<int, int> t, Piece *dp = nullptr){
         this->piece = p;
         this->from = f;
         this->to = t;
-        this->hasTakenPiece = htp;
+        this->deletedPiece = dp;
     }
     Move(Piece* p, std::pair<int, int> t){
         this->piece = p;
