@@ -44,14 +44,14 @@ bool Draw::mouseInsideLimits(pair<int, int> location, std::pair<int, int> x, std
            (location.second > y.first && location.second < y.second);
 }
 
-bool Draw::mouseInsideLimits(sf::Event event, std::pair<int, int> x, std::pair<int,int> y){
+bool Draw::mouseInsideLimits(Event event, std::pair<int, int> x, std::pair<int,int> y){
     return mouseInsideLimits({event.mouseButton.x,event.mouseButton.y}, x, y);
 }
 
-void Draw::digestAction(sf::RenderWindow* window, sf::Event event){
+void Draw::digestAction(RenderWindow* window, Event event){
     table.digestAction(event);
 
-    if(event.type==sf::Event::MouseButtonPressed){
+    if(event.type==Event::MouseButtonPressed){
         if(mouseInsideLimits(event, {80, 320}, {120, 50}))
             table.resetGame();
         if(mouseInsideLimits(event, {400, 620}, {120, 50}))
@@ -61,38 +61,42 @@ void Draw::digestAction(sf::RenderWindow* window, sf::Event event){
         if(mouseInsideLimits(event, {screenWidth - 130, screenWidth-20}, {screenHeight-200, screenHeight-300}))
             darkMode = !darkMode;
     }
-    if(event.type==sf::Event::MouseMoved){
-        sf::Cursor cursor;
-        cursor.loadFromSystem(sf::Cursor::Arrow);
+    if(event.type==Event::MouseMoved){
+        Cursor cursor;
+        cursor.loadFromSystem(Cursor::Arrow);
         hoveringResetButton = false;
         hoveringPreviousMoveButton = false;
         hoveringPlayAiButton = false;
         hoveringDarkModeButton = false;
+
         if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {100, 320}, {120, 50})){
-            cursor.loadFromSystem(sf::Cursor::Hand);
+            cursor.loadFromSystem(Cursor::Hand);
             hoveringResetButton = true;
         }
         if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {400, 620}, {120, 50})){
-            cursor.loadFromSystem(sf::Cursor::Hand);
+            cursor.loadFromSystem(Cursor::Hand);
             hoveringPreviousMoveButton = true;
         }
         if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {700, 920}, {120, 50})){
-            cursor.loadFromSystem(sf::Cursor::Hand);
+            cursor.loadFromSystem(Cursor::Hand);
             hoveringPlayAiButton = true;
         }
         if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {screenWidth - 130, screenWidth-20}, {screenHeight-200, screenHeight-300})){
-            cursor.loadFromSystem(sf::Cursor::Hand);
+            cursor.loadFromSystem(Cursor::Hand);
             hoveringDarkModeButton = true;
         }
+        /*if(mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, {screenWidth - 130, screenWidth-20}, {350, 250})){
+            cursor.loadFromSystem(Cursor::Hand);
+        }*/
         window->setMouseCursor(cursor);
 
     }
 }
 
-void Draw::drawText(sf::RenderWindow* window, string title, sf::Color color, std::pair<int, int> position, int size){
-    sf::Text text = sf::Text();
+void Draw::drawText(RenderWindow* window, string title, Color color, std::pair<int, int> position, int size){
+    Text text = Text();
     text.setString(title);
-    sf::Font font;
+    Font font;
     if (!font.loadFromFile("resources/sansation.ttf")) throw EXIT_FAILURE;
     text.setFont(font);
     text.setCharacterSize(size);
@@ -101,10 +105,10 @@ void Draw::drawText(sf::RenderWindow* window, string title, sf::Color color, std
     window->draw(text);
 }
 
-void Draw::draw(sf::RenderWindow* window) {
+void Draw::draw(RenderWindow* window) {
 
-    table.setSize(sizeType(screenWidth-150, screenHeight-150));
-    table.setPosition(positionType(0, 25));
+    table.setSize(SizeType(screenWidth-150, screenHeight-150));
+    table.setPosition({0, 25});
     table.setDarkMode(darkMode);
 
     RectangleShape fill = RectangleShape(Vector2f(screenWidth, screenHeight));
@@ -113,24 +117,26 @@ void Draw::draw(sf::RenderWindow* window) {
 
     table.draw(window);
 
-    drawText(window, "Reset Game", hoveringResetButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {100,screenHeight-120});
-    drawText(window, "Undo Move", hoveringPreviousMoveButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {400,screenHeight-120});
+    drawText(window, "Reset Game", hoveringResetButton ? Color::Blue : (darkMode ? Color::White : Color::Black), {100,screenHeight-120});
+    drawText(window, "Undo Move", hoveringPreviousMoveButton ? Color::Blue : (darkMode ? Color::White : Color::Black), {400,screenHeight-120});
 
     string aiButtonText = table.isPlayingAgainstAi() ? "Play with friend" : "Play against AI";
-    drawText(window, aiButtonText, hoveringPlayAiButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {700,screenHeight-120});
+    drawText(window, aiButtonText, hoveringPlayAiButton ? Color::Blue : (darkMode ? Color::White : Color::Black), {700,screenHeight-120});
 
     if(table.isPlayingAgainstAi()){
-        drawText(window, "AI", sf::Color::Magenta, {screenWidth - 100,50});
-        drawText(window, "Active", sf::Color::Magenta, {screenWidth - 130,100});
+        drawText(window, "AI", Color::Magenta, {screenWidth - 100,50});
+        drawText(window, "Active", Color::Magenta, {screenWidth - 130,100});
     }
 
-    drawText(window, "Dark\nMode", hoveringDarkModeButton ? sf::Color::Blue : (darkMode ? Color::White : Color::Black), {screenWidth - 130,200});
+    drawText(window, "Dark\nMode", hoveringDarkModeButton ? Color::Blue : (darkMode ? Color::White : Color::Black), {screenWidth - 130,200});
+
+    //drawText(window, "Button", hoveringButton ? Color::Magenta : (!darkMode ? Color::White : Color::Black), {screenWidth - 130,screenHeight-350});
 
     if(table.getIsCheckMate()){
-        drawText(window, "Checkmate!", sf::Color::Red, {(screenWidth-150)/2-220,360}, 100);
-        drawText(window, "Player", sf::Color::Blue, {screenWidth - 130,360});
-        drawText(window, ""+string(1, '1'+table.getWinnerPlayer()), sf::Color::Blue, {screenWidth - 90,400});
-        drawText(window, "Wins", sf::Color::Blue, {screenWidth - 120,440});
+        drawText(window, "Checkmate!", Color::Red, {(screenWidth-150)/2-220,360}, 100);
+        drawText(window, "Player", Color::Blue, {screenWidth - 130,360});
+        drawText(window, ""+string(1, '1'+table.getWinnerPlayer()), Color::Blue, {screenWidth - 90,400});
+        drawText(window, "Wins", Color::Blue, {screenWidth - 120,440});
     }
 
 

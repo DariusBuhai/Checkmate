@@ -17,7 +17,7 @@ private:
     int moves = 0;
     std::map<std::string, std::vector<std::vector<int>>> evaluation;
     std::vector<std::vector<std::vector<Piece*>>> boardBrain;
-    int getPointsEvaluation(Piece*);
+    static int getPointsEvaluation(Piece*);
     int getEvaluation(Piece*, std::pair<int,int>);
 
 public:

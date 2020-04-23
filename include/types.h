@@ -7,18 +7,9 @@
 
 #include "piece.h"
 
-struct positionType{
-    double x, y;
-
-    positionType(double x = 0, double y = 0){
-        this->x = x;
-        this->y = y;
-    }
-};
-
-struct sizeType{
+struct SizeType{
     double width, height;
-    sizeType(double width = 0, double height = 0){
+    SizeType(double width = 0, double height = 0){
         this->width = width;
         this->height = height;
     }
@@ -49,4 +40,5 @@ struct Evaluation{
     int nr_pieces;
     int eval;
 };
+
 #endif //CHECKMATE_TYPES_H

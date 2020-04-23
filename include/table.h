@@ -21,12 +21,15 @@ private:
     const double borderWidth = 10;
     const double indicatorSpacing = 100;
 
-    sizeType size;
-    positionType position;
+    SizeType size;
+    std::pair<int,int> position;
 
     std::pair<int, int> selectedSquare = {-1, -1};
+    std::pair<int, int> selectedPieceCurrentLocation = {-1,-1};
+    Piece* selectedPiece = nullptr;
     std::vector<std::pair<int, int>> futurePositions;
-    Piece* lastSelectedPiece = nullptr;
+
+    bool mouseButtonPressing = false;
 
     bool playAgainstAi = false;
     bool darkMode = false;
@@ -36,16 +39,20 @@ private:
     Rules rules;
     Brain* brain;
 
-    void resetFuturePositions();
+    sf::Clock gameClock;
 
+    void resetFuturePositions();
+    void resetSelectedPieceLocation();
     void resetSelectedSquare();
+
     void updateSelectedSquare(std::pair<int, int>);
 
-    void drawGrid(sf::RenderWindow*, sizeType, positionType);
-    void drawOutline(sf::RenderWindow*, sizeType, positionType);
-    void drawIndicators(sf::RenderWindow*, sizeType, positionType);
+    bool isInsideTable(std::pair<int,int>) const;
+    void drawGrid(sf::RenderWindow*, SizeType, std::pair<int,int>);
+    void drawOutline(sf::RenderWindow*, SizeType, std::pair<int,int>) const;
+    void drawIndicators(sf::RenderWindow*, SizeType, std::pair<int,int>) const;
 
-    std::pair<int, int> determineGridPosition(positionType);
+    std::pair<int, int> determineGridPosition(std::pair<int,int>) const;
 
 public:
     Table();
@@ -54,14 +61,14 @@ public:
     void digestAction(sf::Event);
 
     void draw(sf::RenderWindow*);
-    void drawPiece(sf::RenderWindow*, Piece*);
+    void drawPiece(sf::RenderWindow*, Piece*) const;
 
-    void setSize(sizeType);
-    void setPosition(positionType);
+    void setSize(SizeType);
+    void setPosition(std::pair<int,int>);
     void setDarkMode(bool);
 
-    bool getIsCheckMate();
-    int getWinnerPlayer();
+    bool getIsCheckMate() const;
+    int getWinnerPlayer() const;
 
     void resetGame();
     void undoMove();

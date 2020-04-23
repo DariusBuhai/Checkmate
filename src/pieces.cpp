@@ -154,18 +154,6 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
 
     switchPlayer();
     updateBoard();
-    std::cout<<"piesele albe\n";
-    for(int i = 0 ; i < 8 ; i++)
-    {
-        for(int j = 0 ; j < 8; j++)
-        {
-            if(board[0][j][i] != nullptr)
-                std::cout<<board[0][j][i] -> getType()<<" ";
-            else
-                std::cout<<" nimic ";
-        }
-        std::cout<<'\n';
-    }
 }
 
 void Pieces::movePiece(std::pair<int, int> old_position, std::pair<int, int> new_position)
