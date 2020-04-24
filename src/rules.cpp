@@ -1,6 +1,6 @@
 #include "../include/rules.h"
 #include "../include/table.h"
-#include "../include/types.h"
+#include "../include/utils.h"
 
 #include <string>
 #include <vector>

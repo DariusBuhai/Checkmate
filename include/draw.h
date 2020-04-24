@@ -8,7 +8,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+
 #include "../include/table.h"
+#include "../include/materials.h"
 
 class Draw{
 private:
@@ -18,24 +20,22 @@ private:
 
     Table table;
 
-    bool hoveringResetButton = false;
-    bool hoveringPreviousMoveButton = false;
-    bool hoveringPlayAiButton = false;
-    bool hoveringDarkModeButton = false;
     bool darkMode = false;
+    bool viewCredits = false;
+    bool resetGameGulp = false;
+    bool undoMoveGulp = false;
+    bool playAgainstAi = false;
 
-    bool mouseInsideLimits(std::pair<int, int>, std::pair<int, int>, std::pair<int,int>);
-    bool mouseInsideLimits(sf::Event, std::pair<int, int>, std::pair<int,int>);
+    Container<Button*> buttons;
 
     void draw(sf::RenderWindow*);
     void digestAction(sf::RenderWindow*, sf::Event);
 
-    void drawText(sf::RenderWindow*, std::string, sf::Color, std::pair<int, int>, int = 40);
+    void init();
+    void initComponents();
 
 public:
-    void init();
     Draw();
 };
-
 
 #endif //CHECKMATE_DRAW_H

@@ -6,7 +6,7 @@
 
 #include <vector>
 
-#include "types.h"
+#include "utils.h"
 #include "piece.h"
 #include "rules.h"
 #include "brain.h"
@@ -32,7 +32,7 @@ private:
     bool mouseButtonPressing = false;
 
     bool playAgainstAi = false;
-    bool darkMode = false;
+    bool *darkMode;
     bool checkMate = false;
     int winnerPlayer = -1;
 
@@ -65,7 +65,7 @@ public:
 
     void setSize(SizeType);
     void setPosition(std::pair<int,int>);
-    void setDarkMode(bool);
+    void setDarkMode(bool*);
 
     bool getIsCheckMate() const;
     int getWinnerPlayer() const;

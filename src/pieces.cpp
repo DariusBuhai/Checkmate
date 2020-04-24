@@ -4,7 +4,7 @@
 
 #include "../include/pieces.h"
 #include "../include/table.h"
-#include "../include/types.h"
+#include "../include/utils.h"
 
 Pieces::Pieces(){
 

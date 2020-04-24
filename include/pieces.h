@@ -10,7 +10,7 @@
  */
 
 #include "piece.h"
-#include "types.h"
+#include "utils.h"
 
 class Pieces{
     void resizeBoard();
