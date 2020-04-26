@@ -6,7 +6,7 @@
 * [x] Interfața grafica (**SFML**) cu API pentru C++
 * [x] RTTI (**dynamic_cast**)
 * [x] Abstract Classes (**in pieces**)
-* [ ] Operatori (***minim 12***) - **Momentan 3**
+* [ ] Operatori (***minim 12***) - **Momentan ~10**
 * [x] Heap Memory Allocation (**de facut la pieces**)
 * [x] Exceptions
 * [x] STL
