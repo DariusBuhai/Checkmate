@@ -8,7 +8,7 @@
 Piece::Piece(std::pair<int, int> pos, int player) : pos(pos), hasMoved(false), player(player) {}
 Piece::Piece() : pos({0,0}), hasMoved(false), player(0) {}
 
-std::vector<std::vector<std::pair<int, int>>> Piece::path(std :: pair <int,int>){
+std::vector<std::vector<std::pair<int, int>> >  Piece::path(std :: pair <int,int>){
     return std::vector<std::vector<std::pair<int,int>>>(0);
 }
 
@@ -53,8 +53,8 @@ bool Piece::isInTable(){
 }
 
 
-std::string Piece::getImage(){
-    return "resources/pieces/Bishop_black.png";
+std::string Piece::getImage(int type){
+    return "resources/pieces/"+std::to_string(type)+"/Bishop_black.png";
 }
 
 std::string Piece::getType(){
@@ -66,9 +66,9 @@ std::string Piece::getType(){
 Pawn::Pawn(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 Pawn::Pawn(Piece piece): Piece(piece.getPos(), piece.getPlayer()){}
 
-std::vector<std::vector<std::pair<int, int> > > Pawn::path(std::pair<int,int> position)
+std::vector<std::vector<std::pair<int, int>>>Pawn::path(std::pair<int,int> position)
 {
-    std::vector<std::vector< std::pair<int,int > > > p;
+    std::vector<std::vector< std::pair<int,int >>>p;
     p.resize(2);
     int posx, posy;
     posx = position.first;
@@ -97,8 +97,8 @@ std::vector<std::vector<std::pair<int, int> > > Pawn::path(std::pair<int,int> po
     return p;
 }
 
-std::string Pawn::getImage(){
-    std::string img_location = "resources/pieces/Pawn_";
+std::string Pawn::getImage(int type){
+    std::string img_location = "resources/pieces/"+std::to_string(type)+"/Pawn_";
     img_location += player==1 ? "black" : "white";
     img_location += ".png";
     return img_location;
@@ -113,9 +113,9 @@ std::string Pawn::getType(){
 Rook::Rook(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 Rook::Rook(Piece piece): Piece(piece.getPos(), piece.getPlayer()){}
 
-std::vector<std::vector<std::pair<int, int> > > Rook::path(std::pair<int,int> position)
+std::vector<std::vector<std::pair<int, int>>>Rook::path(std::pair<int,int> position)
 {
-    std::vector<std::vector< std::pair<int, int > > > p;
+    std::vector<std::vector< std::pair<int, int >>>p;
     p.resize(4);
     //it can go up, down, left, right;
     //---- first we go up
@@ -140,8 +140,8 @@ std::vector<std::vector<std::pair<int, int> > > Rook::path(std::pair<int,int> po
 
 }
 
-std::string Rook::getImage(){
-    std::string img_location = "resources/pieces/Rook_";
+std::string Rook::getImage(int type){
+    std::string img_location = "resources/pieces/"+std::to_string(type)+"/Rook_";
     img_location += player==1 ? "black" : "white";
     img_location += ".png";
     return img_location;
@@ -156,9 +156,9 @@ std::string Rook::getType(){
 Knight::Knight(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 Knight::Knight(Piece piece): Piece(piece.getPos(), piece.getPlayer()){}
 
-std::vector<std::vector<std::pair<int, int> > > Knight::path(std::pair<int,int> position)
+std::vector<std::vector<std::pair<int, int>>>Knight::path(std::pair<int,int> position)
 {
-    std::vector<std::vector< std::pair<int, int > > > p;
+    std::vector<std::vector< std::pair<int, int >>>p;
     p.resize(8);
     int dist_x[] = { -2, -1, 2, 1, -2, -1, 2, 1 };
     int dist_y[] = { -1, -2, -1, -2, 1, 2, 1, 2 };
@@ -169,8 +169,8 @@ std::vector<std::vector<std::pair<int, int> > > Knight::path(std::pair<int,int> 
 
 }
 
-std::string Knight::getImage(){
-    std::string img_location = "resources/pieces/Knight_";
+std::string Knight::getImage(int type){
+    std::string img_location = "resources/pieces/"+std::to_string(type)+"/Knight_";
     img_location += player==1 ? "black" : "white";
     img_location += ".png";
     return img_location;
@@ -186,9 +186,9 @@ std::string Knight::getType(){
 Bishop::Bishop(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 Bishop::Bishop(Piece piece): Piece(piece.getPos(), piece.getPlayer()){}
 
-std::vector<std::vector<std::pair<int, int> > > Bishop::path(std::pair<int,int> position)
+std::vector<std::vector<std::pair<int, int>>>Bishop::path(std::pair<int,int> position)
 {
-    std::vector<std::vector< std::pair<int, int > > > p;
+    std::vector<std::vector< std::pair<int, int >>>p;
     p.resize(4);
     int posx, posy;
     posx = position.first,posy = position.second;
@@ -221,8 +221,8 @@ std::vector<std::vector<std::pair<int, int> > > Bishop::path(std::pair<int,int> 
 }
 
 
-std::string Bishop::getImage(){
-    std::string img_location = "resources/pieces/Bishop_";
+std::string Bishop::getImage(int type){
+    std::string img_location = "resources/pieces/"+std::to_string(type)+"/Bishop_";
     img_location += player==1 ? "black" : "white";
     img_location += ".png";
     return img_location;
@@ -237,9 +237,9 @@ std::string Bishop::getType(){
 Queen::Queen(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 Queen::Queen(Piece piece): Piece(piece.getPos(), piece.getPlayer()){}
 
-std::vector<std::vector<std::pair<int, int> > > Queen::path(std::pair<int,int> position)
+std::vector<std::vector<std::pair<int, int>>>Queen::path(std::pair<int,int> position)
 {
-    std::vector<std::vector< std::pair<int, int > > > p;
+    std::vector<std::vector< std::pair<int, int >>>p;
     p.resize(8);
     int posx, posy;
     posx = position.first, posy = position.second;
@@ -289,8 +289,8 @@ std::vector<std::vector<std::pair<int, int> > > Queen::path(std::pair<int,int> p
 }
 
 
-std::string Queen::getImage(){
-    std::string img_location = "resources/pieces/Queen_";
+std::string Queen::getImage(int type){
+    std::string img_location = "resources/pieces/"+std::to_string(type)+"/Queen_";
     img_location += player==1 ? "black" : "white";
     img_location += ".png";
     return img_location;
@@ -306,9 +306,9 @@ std::string Queen::getType(){
 King::King(std::pair<int,int> pos, bool isBlack) : Piece(pos, isBlack){}
 King::King(Piece piece): Piece(piece.getPos(), piece.getPlayer()){}
 
-std::vector<std::vector<std::pair<int, int> > > King::path(std::pair<int,int> position)
+std::vector<std::vector<std::pair<int, int>>>King::path(std::pair<int,int> position)
 {
-    std::vector<std::vector< std::pair<int, int >>> p;
+    std::vector<std::vector< std::pair<int, int >> >  p;
     p.resize(9);
     int dist_x[] = { 1, 1, 1, 0, -1, -1, -1, 0};
     int dist_y[] = { -1, 0, 1, 1, 1, 0, -1, -1 };
@@ -320,8 +320,8 @@ std::vector<std::vector<std::pair<int, int> > > King::path(std::pair<int,int> po
     return p;
 }
 
-std::string King::getImage(){
-    std::string img_location = "resources/pieces/King_";
+std::string King::getImage(int type){
+    std::string img_location = "resources/pieces/"+std::to_string(type)+"/King_";
     img_location += player==1 ? "black" : "white";
     img_location += ".png";
     return img_location;

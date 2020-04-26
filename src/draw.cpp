@@ -30,11 +30,11 @@ void Draw::initComponents() {
     buttons.setDarkMode(&this->darkMode);
 
     buttons += new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 200, screenHeight - 300},&this->darkMode, "Dark\nMode", "Light\nMode");
-    buttons += new Button({screenWidth - 130, screenWidth - 20}, {350, 250}, &this->viewCredits, "Show\nCredits","Hide\nCredits");
+    buttons += new Button({screenWidth - 140, screenWidth - 10}, {350, 250}, &this->viewCredits, "Show\nCredits","Hide\nCredits");
 
-    buttons += {"chess", new Button({100, 320}, {120, 50}, &this->resetGameGulp, "Reset Game")};
-    buttons += {"chess", new Button({400, 620}, {120, 50}, &this->undoMoveGulp, "Undo Move")};
-    buttons += {"chess", new Button({700, 920}, {120, 50}, &this->playAgainstAi, "Play against AI", "Play with friend")};
+    buttons += {"chess", new Button({100, 320}, {120, 60}, &this->resetGameGulp, "Reset Game")};
+    buttons += {"chess", new Button({400, 620}, {120, 60}, &this->undoMoveGulp, "Undo Move")};
+    buttons += {"chess", new Button({700, 980}, {120, 60}, &this->playAgainstAi, "Play against AI", "Play with friend")};
 
     labels.setDarkMode(&this->darkMode);
 
@@ -46,10 +46,11 @@ void Draw::initComponents() {
     labels += {"checkmate", new Label({screenWidth - 90,400}, "x", 40, Color::Blue, Color::Blue)};
     labels += {"checkmate", new Label({screenWidth - 120,440}, "Wins", 40, Color::Blue, Color::Blue)};
 
-    labels += {"credits", new Label({100, 50}, "Credits", 50)};
+    labels += {"credits", new Label({100, 50}, "Credits:", 50)};
     labels += {"credits", new Label({100, 130}, "- Buhai Darius")};
     labels += {"credits", new Label({100, 200}, "- Vlad Cioraca")};
     labels += {"credits", new Label({100, 270}, "- Johnny")};
+    labels += {"credits", new Label({100, screenHeight-120}, "@ All rights reserved", 30)};
 }
 
 void Draw::init(){

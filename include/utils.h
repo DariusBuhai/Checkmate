@@ -12,6 +12,9 @@
 
 #include "piece.h"
 
+#define ScreenWidth 1100
+#define ScreenHeight 1100
+
 struct SizeType{
     double width, height;
     SizeType(double width = 0, double height = 0){
@@ -49,8 +52,8 @@ struct Evaluation{
 class Utils{
 public:
     static bool mouseInsideLimits(std::pair<int, int> location, std::pair<int, int> x, std::pair<int,int> y){
-        y.first = 1100 - y.first;
-        y.second = 1100 - y.second;
+        y.first = ScreenHeight - y.first;
+        y.second = ScreenHeight - y.second;
         return (location.first > x.first && location.first < x.second) &&
                (location.second > y.first && location.second < y.second);
     }
@@ -69,6 +72,16 @@ public:
         text.setFillColor(color);
         text.setPosition(position.first, position.second);
         window->draw(text);
+    }
+
+    static void drawBox(sf::RenderWindow* window, std::pair<int, int> x, std::pair<int, int> y, sf::Color borderColor = sf::Color::Black, sf::Color backgroundColor = sf::Color::Transparent){
+        sf::RectangleShape rectangle;
+        rectangle.setSize(sf::Vector2f(x.second-x.first, y.second-y.first));
+        rectangle.setOutlineColor(borderColor);
+        rectangle.setOutlineThickness(5);
+        rectangle.setPosition(x.first, ScreenHeight-y.second);
+        rectangle.setFillColor(backgroundColor);
+        window->draw(rectangle);
     }
 };
 

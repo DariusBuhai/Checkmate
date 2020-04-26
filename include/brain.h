@@ -15,8 +15,8 @@ private:
     Rules* rules;
     int player = 1;
     int moves = 0;
-    std::map<std::string, std::vector<std::vector<int>>> evaluation;
-    std::vector<std::vector<std::vector<Piece*>>> boardBrain;
+    std::map<std::string, std::vector<std::vector<int>> >  evaluation;
+    std::vector<std::vector<std::vector<Piece*>> >  boardBrain;
     static int getPointsEvaluation(Piece*);
     int getEvaluation(Piece*, std::pair<int,int>);
 

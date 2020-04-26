@@ -7,6 +7,9 @@
 #include "../include/utils.h"
 #include "../include/materials.h"
 
+#define ScreenWidth 1100
+#define ScreenHeight 1100
+
 using namespace std;
 using namespace sf;
 
@@ -37,7 +40,16 @@ void Button::draw(sf::RenderWindow* window, bool darkMode){
     if(*this->pressed && !this->disabledText.empty())
         t = this->disabledText;
 
-    Utils::drawText(window, t, hovering ? Color::Blue : (darkMode ? Color::White : Color::Black), {x.first,1100-(hovering ? y.first+5 : y.first)});
+    const int elevation = 6;
+
+    if(hovering){
+        Utils::drawBox(window, x, y, !darkMode ? Color::Black : Color::White, darkMode ? Color::Black : Color::White);
+        Utils::drawBox(window, {x.first+elevation, x.second+elevation}, {y.first+elevation, y.second+elevation}, !darkMode ? Color::Black : Color::White, darkMode ? Color::Black : Color::White);
+    } else
+        Utils::drawBox(window, x, y, !darkMode ? Color::Black : Color::White, darkMode ? Color::Black : Color::White);
+
+
+    Utils::drawText(window, t, darkMode ? Color::White : Color::Black, {hovering ? x.first+elevation : x.first,1100-(hovering ? y.first+elevation : y.first)});
 }
 
 Button &Button::operator=(std::pair<std::string, std::string> _texts) {

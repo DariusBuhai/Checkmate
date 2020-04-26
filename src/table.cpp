@@ -161,13 +161,26 @@ void Table::drawPiece(RenderWindow* window, Piece* piece) const{
 
     Texture piece_img;
 
-    if (!piece_img.loadFromFile(piece->getImage())) throw EXIT_FAILURE;
+    int piece_type = 1;
+    pair<double, double> origin, scale;
+    switch (piece_type) {
+        case 1:
+            origin = {-110, -50};
+            scale = {0.3, .3};
+            break;
+        case 2:
+            origin = {-110, -50};
+            scale = {0.35, .3};
+            break;
+    }
+
+    if (!piece_img.loadFromFile(piece->getImage(piece_type))) throw EXIT_FAILURE;
 
     Sprite item;
+    item.setScale(scale.first, scale.second);
+    item.setOrigin(origin.first, origin.second);
     item.setTexture(piece_img);
     item.setPosition(Vector2f(p.first, p.second));
-    item.setScale(0.3, .3);
-    item.setOrigin(-110, -50);
 
     window->draw(item);
 }

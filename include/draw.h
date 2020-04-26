@@ -12,11 +12,14 @@
 #include "../include/table.h"
 #include "../include/materials.h"
 
+#define ScreenWidth 1100
+#define ScreenHeight 1100
+
 class Draw{
 private:
 
-    const double screenWidth = 1100;
-    const double screenHeight = 1100;
+    const double screenWidth = ScreenWidth;
+    const double screenHeight = ScreenHeight;
 
     Table table;
 
