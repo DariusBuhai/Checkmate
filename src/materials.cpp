@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "../include/utils.h"
@@ -8,14 +9,6 @@
 
 using namespace std;
 using namespace sf;
-
-void Button::setBackgroundColor(sf::Color _background) {
-    this->backgroundColor = _background;
-}
-
-void Button::setColor(sf::Color _color) {
-    this->color = _color;
-}
 
 void Button::setCursorToHand(sf::RenderWindow* window) {
     sf::Cursor cursor;
@@ -45,4 +38,19 @@ void Button::draw(sf::RenderWindow* window, bool darkMode){
         t = this->disabledText;
 
     Utils::drawText(window, t, hovering ? Color::Blue : (darkMode ? Color::White : Color::Black), {x.first,1100-(hovering ? y.first+5 : y.first)});
+}
+
+Button &Button::operator=(std::pair<std::string, std::string> _texts) {
+    this->text = _texts.first;
+    this->disabledText = _texts.second;
+    return *this;
+}
+
+void Label::draw(sf::RenderWindow* window, bool darkMode){
+    Utils::drawText(window, text, darkMode ? oppositeColor : color, position, size);
+}
+
+Label &Label::operator=(std::string _text) {
+    this->text = std::move(_text);
+    return *this;
 }

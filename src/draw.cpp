@@ -1,12 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-#include <cstdlib>
 #include <iostream>
 
 #include "../include/piece.h"
 #include "../include/draw.h"
-#include "../include/utils.h"
 
 using namespace std;
 using namespace sf;
@@ -14,6 +12,14 @@ using namespace sf;
 Draw::Draw() {
     this->initComponents();
     this->init();
+}
+
+Draw::~Draw() {
+    /** Receiving malloc */
+    buttons.~Container();
+    labels.~Container();
+    table.~Table();
+    cout<<"Success";
 }
 
 void Draw::initComponents() {
@@ -26,9 +32,24 @@ void Draw::initComponents() {
     buttons += new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 200, screenHeight - 300},&this->darkMode, "Dark\nMode", "Light\nMode");
     buttons += new Button({screenWidth - 130, screenWidth - 20}, {350, 250}, &this->viewCredits, "Show\nCredits","Hide\nCredits");
 
-    buttons += new Button({100, 320}, {120, 50}, &this->resetGameGulp, "Reset Game");
-    buttons += new Button({400, 620}, {120, 50}, &this->undoMoveGulp, "Undo Move");
-    buttons += new Button({700, 920}, {120, 50}, &this->playAgainstAi, "Play against AI", "Play with friend");
+    buttons += {"chess", new Button({100, 320}, {120, 50}, &this->resetGameGulp, "Reset Game")};
+    buttons += {"chess", new Button({400, 620}, {120, 50}, &this->undoMoveGulp, "Undo Move")};
+    buttons += {"chess", new Button({700, 920}, {120, 50}, &this->playAgainstAi, "Play against AI", "Play with friend")};
+
+    labels.setDarkMode(&this->darkMode);
+
+    labels += {"ai", new Label({screenWidth - 100,50}, "AI", 40, Color::Magenta, Color::Magenta)};
+    labels += {"ai", new Label({screenWidth - 130,100}, "Active", 40, Color::Magenta, Color::Magenta)};
+
+    labels += {"checkmate", new Label({(screenWidth-150)/2-220,360}, "Checkmate", 100, Color::Red, Color::Red)};
+    labels += {"checkmate", new Label({screenWidth - 130,360}, "Player", 40, Color::Blue, Color::Blue)};
+    labels += {"checkmate", new Label({screenWidth - 90,400}, "x", 40, Color::Blue, Color::Blue)};
+    labels += {"checkmate", new Label({screenWidth - 120,440}, "Wins", 40, Color::Blue, Color::Blue)};
+
+    labels += {"credits", new Label({100, 50}, "Credits", 50)};
+    labels += {"credits", new Label({100, 130}, "- Buhai Darius")};
+    labels += {"credits", new Label({100, 200}, "- Vlad Cioraca")};
+    labels += {"credits", new Label({100, 270}, "- Johnny")};
 }
 
 void Draw::init(){
@@ -78,25 +99,19 @@ void Draw::draw(RenderWindow* window) {
     window->draw(fill);
 
     if(viewCredits){
-        Utils::drawText(window, "Credits:", (darkMode ? Color::White : Color::Black), {100, 50}, 50);
-        Utils::drawText(window, "- Buhai Darius", (darkMode ? Color::White : Color::Black), {100, 130});
-        Utils::drawText(window, "- Vlad Cioraca", (darkMode ? Color::White : Color::Black), {100, 200});
-        Utils::drawText(window, "- Johnny", (darkMode ? Color::White : Color::Black), {100, 270});
+        labels.draw(window, "credits");
+        buttons.draw(window, "credits");
     }else{
         table.draw(window);
 
-        if(table.isPlayingAgainstAi()){
-            Utils::drawText(window, "AI", Color::Magenta, {screenWidth - 100,50});
-            Utils::drawText(window, "Active", Color::Magenta, {screenWidth - 130,100});
-        }
+        if(table.isPlayingAgainstAi())
+            labels.draw(window, "ai");
 
         if(table.getIsCheckMate()){
-            Utils::drawText(window, "Checkmate!", Color::Red, {(screenWidth-150)/2-220,360}, 100);
-            Utils::drawText(window, "Player", Color::Blue, {screenWidth - 130,360});
-            Utils::drawText(window, ""+string(1, '1'+table.getWinnerPlayer()), Color::Blue, {screenWidth - 90,400});
-            Utils::drawText(window, "Wins", Color::Blue, {screenWidth - 120,440});
+            *labels["checkmate"][2] = ""+string(1, '1'+table.getWinnerPlayer());
+            labels.draw(window, "checkmate");
         }
+        buttons.draw(window, "chess");
     }
-    buttons.draw(window);
 }
 

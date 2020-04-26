@@ -27,6 +27,7 @@ private:
     bool playAgainstAi = false;
 
     Container<Button*> buttons;
+    Container<Label*> labels;
 
     void draw(sf::RenderWindow*);
     void digestAction(sf::RenderWindow*, sf::Event);
@@ -36,6 +37,7 @@ private:
 
 public:
     Draw();
+    ~Draw();
 };
 
 #endif //CHECKMATE_DRAW_H
