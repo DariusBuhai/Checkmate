@@ -13,7 +13,9 @@ Pieces::Pieces(){
     updateBoard();
 }
 
-std::vector<std::vector<std::vector<Piece*>> > Pieces::board;
+
+
+//std::vector<std::vector<std::vector<Piece*>> > Pieces::board;
 
 Pieces::~Pieces(){
     /** Clear history and pieces */

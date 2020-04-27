@@ -17,7 +17,7 @@ class Pieces{
     void initPieces();
     void updateBoard();
 protected:
-    static std::vector<std::vector<std::vector<Piece*>> >  board;
+    std::vector<std::vector<std::vector<Piece*>> >  board;
     std::deque<Move> history;
     std::vector<Piece*> pieces;
     int currentPlayer = 0;
