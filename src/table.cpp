@@ -8,10 +8,13 @@
 
 #include "../include/piece.h"
 #include "../include/table.h"
+#include "../include/materials.h"
+#include "../include/utils.h"
 
 using namespace std;
 using namespace sf;
 
+#include "pieces.cpp"
 Table::Table(){
     brain = new Brain(&rules);
 }

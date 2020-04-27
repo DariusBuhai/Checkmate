@@ -5,9 +5,12 @@
 
 #include "../include/piece.h"
 #include "../include/draw.h"
-
+#include "../include/materials.h"
+#include "../include/utils.h"
 using namespace std;
 using namespace sf;
+
+#include "table.cpp"
 
 Draw::Draw() {
     this->initComponents();
@@ -48,7 +51,7 @@ void Draw::initComponents() {
 
     labels += {"credits", new Label({100, 50}, "Credits:", 50)};
     labels += {"credits", new Label({100, 130}, "- Buhai Darius")};
-    labels += {"credits", new Label({100, 200}, "- Vlad Cioraca")};
+    labels += {"credits", new Label({100, 200}, "- Vlad Ciorica")};
     labels += {"credits", new Label({100, 270}, "- Johnny")};
     labels += {"credits", new Label({100, screenHeight-120}, "@ All rights reserved", 30)};
 }

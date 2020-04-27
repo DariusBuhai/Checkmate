@@ -5,6 +5,8 @@
 
 using namespace std;
 
+#include "draw.cpp"
+
 int main(){
 
 	Draw d;

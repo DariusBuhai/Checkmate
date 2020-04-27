@@ -6,6 +6,7 @@
 #include "../include/table.h"
 #include "../include/utils.h"
 
+#include "piece.cpp"
 Pieces::Pieces(){
 
     resizeBoard();
