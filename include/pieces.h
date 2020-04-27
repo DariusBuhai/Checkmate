@@ -17,13 +17,11 @@ class Pieces{
     void initPieces();
     void updateBoard();
 protected:
-    std::vector<std::vector<std::vector<Piece*>> >  board;
+    std::vector<std::vector<std::vector<Piece*>>> board;
     std::deque<Move> history;
     std::vector<Piece*> pieces;
     int currentPlayer = 0;
 public:
-
-    //std::vector<std::vector<std::vector<Piece*>> >  board;
     Pieces();
     ~Pieces();
 
