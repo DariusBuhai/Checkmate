@@ -46,8 +46,6 @@ void Button::draw(sf::RenderWindow* window, bool darkMode){
         Utils::drawBox(window, x, y, !darkMode ? Color::Black : Color::White, darkMode ? Color::Black : Color::White);
         Utils::drawBox(window, {x.first+elevation, x.second+elevation}, {y.first+elevation, y.second+elevation}, !darkMode ? Color::Black : Color::White, darkMode ? Color::Black : Color::White);
     }
-        //Utils::drawBox(window, x, y, !darkMode ? Color::Black : Color::White, darkMode ? Color::Black : Color::White);
-
 
     Utils::drawText(window, t, darkMode ? Color::White : Color::Black, {hovering ? x.first+elevation : x.first,1100-(hovering ? y.first+elevation : y.first)});
 }
