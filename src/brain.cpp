@@ -105,7 +105,7 @@ bool Brain :: isOkToMove(Piece* piece, std::pair<int,int> position){
 bool Brain :: canCheck(Piece* piece, std::pair<int,int> position){
     
     rules->getCurentBoard(board);
-    /*
+/*
     for (int i = 0; i < 8; i++)
     {
         std::cout<<"\n";
@@ -116,7 +116,7 @@ bool Brain :: canCheck(Piece* piece, std::pair<int,int> position){
                 std::cout << "nimic " ;
     }
     std::cout<<"\n\n";
-    */
+*/
 
     if(board[0][position.first][position.second] != nullptr){
         int eval = getPointsEvaluation(board[0][position.first][position.second]);
