@@ -208,8 +208,7 @@ Move Brain::determineBestMove()
                             }
                         }
                     }
-                    else
-                    {
+                    else{
                         Evaluation evalProtect = evalProtected(opPlayer,opPlayer -> getPos());
                         if(evalProtect.nr_pieces == 0)
                         {
@@ -223,7 +222,7 @@ Move Brain::determineBestMove()
     moves += 2;
     if(future_pos.empty()){
         cout << "No moves found! Checkmate\n";
-        return Move();
+        return {};
     }
     if(best_removed_move.piece != nullptr){
         cout<<"Found the best piece to remove\n";
