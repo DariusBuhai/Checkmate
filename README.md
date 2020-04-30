@@ -10,7 +10,7 @@
 * [x] Heap Memory Allocation (**de facut la pieces**)
 * [x] Exceptions
 * [x] STL
-* [x] Lambda expressions (**Johnny**) (e facuta doar 1 momentan)
+* [ ] Lambda expressions (**Johnny**) (e facuta doar 1 momentan ?)
 * [x] Templates
 * [x] Smart pointers (minim 1 tip / proiect)
 * [ ] Design patterns (minim 2 * numărul oamenilor din echipa)
