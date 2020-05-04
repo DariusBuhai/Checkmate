@@ -11,6 +11,17 @@ Rules::Rules()
     Pieces();
 }
 
+
+void Rules::getCurentBoard(std::vector<std::vector<std::vector<Piece*>> >& aux_board)
+{
+    for (int i = 0 ; i< 2; i++)
+        for (int j = 0 ; j < 8; j++)
+            for (int k = 0; k < 8; k++)
+                aux_board[i][j][k] = board[i][j][k];
+
+}
+
+
 Rules::~Rules() = default;
 
 std::vector<std::pair<int, int>> Rules::canAttackPos(Piece* pcs,std::pair<int,int> position)
@@ -90,6 +101,9 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
     Piece* aux_board[2][8][8];
     saveBoard(aux_board);
 
+    auto isInTable = [](int x, int y) {return ((x < 8 and x >= 0)and(y < 8 and y >= 0)); };
+
+
     int player = pcs->getPlayer();
     std::vector<std::pair<int, int>> ans;
     std::pair<int, int> pos = pcs->getPos();
@@ -97,7 +111,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
     int dst = -1;
     if (player == 1)
         dst = 1;
-    if((pos.first >= 0 and pos.first <=7) and (pos.second + dst <=7 and pos.second + dst >= 0))
+    if(isInTable(pos.first, pos.second+dst))
         if (board[0][pos.first][pos.second + dst] == nullptr or board[1][pos.first][pos.second + dst] == nullptr)
         {
 
@@ -118,7 +132,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
                 if (!(pcs->getHasMoved()))
                 {
                     dst *= 2;
-                    if((pos.first >= 0 and pos.first <=7) and (pos.second + dst <=7 and pos.second + dst >= 0))
+                    if(isInTable(pos.first, pos.second + dst))
                         if (board[0][pos.first][pos.second + dst] == nullptr and board[1][pos.first][pos.second + dst] == nullptr)
                         {
                             board[player][pos.first][pos.second + dst] = board[player][pos.first][pos.second];
@@ -136,7 +150,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
             int posx,posy;
             posx = pos.first + 1;
             posy = pos.second + dst;
-            if ((posx > -1 and posx < 8) and (posy > -1 and posy < 8))
+            if(isInTable(posx, posy))
                 if (board[!player][posx][posy] != nullptr)
                 {
                     board[!player][posx][posy] = nullptr;
@@ -148,7 +162,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
                 }
             posx = pos.first - 1;
             posy = pos.second + dst;
-            if ((posx > -1 and posx < 8) and (posy > -1 and posy < 8))
+            if(isInTable(posx, posy))
                 if (board[!player][posx][posy] != nullptr)
                 {
                     board[!player][posx][posy] = nullptr;

@@ -22,8 +22,6 @@ protected:
     std::vector<Piece*> pieces;
     int currentPlayer = 0;
 public:
-
-    //std::vector<std::vector<std::vector<Piece*>> >  board;
     Pieces();
     ~Pieces();
 
