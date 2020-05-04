@@ -7,6 +7,25 @@
 
 using namespace std;
 
+ostream& operator<<(ostream& out, const Brain& ob)
+{
+    out<<"Au fost efectuate " << ob.moves << " mutari\n";
+    out<<"Evaluarea pieselor este: \n";
+    for(auto x : ob.evaluation)
+    {
+        out << x.first << '\n';
+        for(auto v : x.second)
+        {
+            for(auto eval : v)
+            {
+                out << eval << " ";
+            }
+            out <<'\n';
+        }
+    }
+    return out;
+}
+
 Brain::Brain(Rules* r)
 {
     rules = r;

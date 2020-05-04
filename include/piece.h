@@ -33,6 +33,7 @@ public:
     void resetHasMoved();
 
     virtual std::string getImage(int = 1);
+    friend std::ostream& operator<<(std::ostream& , const Piece&);
 };
 
 class Pawn : public Piece

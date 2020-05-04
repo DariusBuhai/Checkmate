@@ -2,6 +2,7 @@
 #include <SFML/Audio.hpp>
 
 #include <iostream>
+#include <fstream>
 
 #include "../include/piece.h"
 #include "../include/draw.h"
@@ -11,6 +12,17 @@ using namespace std;
 using namespace sf;
 
 #include "table.cpp"
+
+ostream& operator<<(ostream& out, const Draw& ob)
+{
+    out<<"Tabla a fost initializata cu dimensiunile: " << ob.screenHeight << " " << ob.screenWidth << '\n';
+    if(ob.darkMode == false)
+        out<<"Dark mode-ul nu este activat\n";
+    else
+        out<<"Dark mode-ul este activat\n";
+    return out;
+}
+
 
 Draw::Draw() {
     this->initComponents();

@@ -4,6 +4,15 @@
 #include "../include/piece.h"
 #include "../include/table.h"
 
+
+ostream& operator<<(ostream& out, const Piece& ob)
+{
+    out<<"Piesa este de tipul: " << " " << (ob.player ? "alb" : "negru") << '\n';
+    out<<"Se afla la pozitia: " << ob.pos.first << " " << ob.pos.second<<'\n';
+    out<< (ob.hasMoved ? "Nu se afla pe pozitia initiala\n" : "Se afla pe pozitia initiala\n");
+    return out;
+}
+
 // ------------- piece methods ----------------
 Piece::Piece(std::pair<int, int> pos, int player) : pos(pos), hasMoved(false), player(player) {}
 Piece::Piece() : pos({0,0}), hasMoved(false), player(0) {}

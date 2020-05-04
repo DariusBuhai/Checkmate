@@ -8,10 +8,10 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 #include "../include/table.h"
 #include "../include/materials.h"
-
 #define ScreenWidth 1100
 #define ScreenHeight 1100
 
@@ -41,6 +41,7 @@ private:
 public:
     Draw();
     ~Draw();
+    friend std::ostream& operator<<(std::ostream& , const Draw&);
 };
 
 #endif //CHECKMATE_DRAW_H

@@ -30,6 +30,7 @@ public:
     int getmoves();
     void initializeEvaluation();
     inline void copyBoard();
+    friend std::ostream& operator<<(std::ostream& , const Brain&);
 };
 
 #endif //CHECKMATE_BRAIN_H

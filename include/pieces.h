@@ -41,6 +41,7 @@ public:
 
     void resetGame();
     void undoMove();
+    friend std::ostream& operator<<(std::ostream& , const Pieces&);
 };
 
 
