@@ -197,8 +197,7 @@ void Pieces::resetGame(){
 
 void Pieces::undoMove() {
     if(!history.empty()){
-        Move current_move = history.back();
-
+        auto current_move = history.back();
         if(current_move.updatedPiece!=nullptr){
             for(auto &piece: pieces)
                 if(piece==current_move.piece){
