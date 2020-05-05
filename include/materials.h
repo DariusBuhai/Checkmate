@@ -8,7 +8,6 @@
 #include <map>
 
 #include "../include/utils.h"
-
 class Button{
     std::pair<int,int> x, y;
     std::string text, disabledText = "";

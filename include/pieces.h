@@ -17,7 +17,7 @@ class Pieces{
     void initPieces();
     void updateBoard();
 protected:
-    std::vector<std::vector<std::vector<Piece*>>> board;
+    std::vector<std::vector<std::vector<Piece*>> >  board;
     std::deque<Move> history;
     std::vector<Piece*> pieces;
     int currentPlayer = 0;
@@ -41,6 +41,7 @@ public:
 
     void resetGame();
     void undoMove();
+    friend std::ostream& operator<<(std::ostream& , const Pieces&);
 };
 
 

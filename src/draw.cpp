@@ -9,6 +9,17 @@
 using namespace std;
 using namespace sf;
 
+ostream& operator<<(ostream& out, const Draw& ob)
+{
+    out<<"Tabla a fost initializata cu dimensiunile: " << ob.screenHeight << " " << ob.screenWidth << '\n';
+    if(ob.darkMode == false)
+        out<<"Dark mode-ul nu este activat\n";
+    else
+        out<<"Dark mode-ul este activat\n";
+    return out;
+}
+
+
 Draw::Draw() {
     this->initComponents();
     this->init();
@@ -48,7 +59,7 @@ void Draw::initComponents() {
 
     labels += {"credits", new Label({100, 50}, "Credits:", 50)};
     labels += {"credits", new Label({100, 130}, "- Buhai Darius")};
-    labels += {"credits", new Label({100, 200}, "- Vlad Cioraca")};
+    labels += {"credits", new Label({100, 200}, "- Vlad Ciorica")};
     labels += {"credits", new Label({100, 270}, "- Johnny")};
     labels += {"credits", new Label({100, screenHeight-120}, "@ All rights reserved", 30)};
 }

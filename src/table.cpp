@@ -1,6 +1,3 @@
-//
-// Created by Darius Buhai on 3/26/20.
-//
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 

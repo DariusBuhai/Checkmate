@@ -6,18 +6,51 @@
 #include "../include/table.h"
 #include "../include/utils.h"
 
-Pieces::Pieces(){
+std::ostream& operator<<(std::ostream& out, const Pieces& ob)
+{
+    out<<"In momentul actual tabla arata asa: \n";
+    for(int q = 0 ; q <= 1 ; q++)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            out<<"\n";
+            for (int j = 0; j < 8; j++)
+                if (ob.board[q][j][i] != nullptr)
+                    out << ob.board[q][j][i]->getType()<<" ";
+                else
+                    out << "nimic " ;
+        }
+        out<<"\n\n";
+    }
+    out<<"Mutarile efectuate sunt: \n";
+    for(auto x : ob.history)
+    {
+        out<<"Piesa " << x.piece -> getType() << " a mutat de la pozitia " << x.from.first << " " << x.from.second << " la pozitia " << x.to.first << " " << x.to.second << '\n';
+    }
+    out<<"Piesele se afla la pozitiile: \n";
+    for(auto x : ob.pieces)
+    {
+        std::pair<int,int> pos = x -> getPos();
+        out<<"Piesa " << x -> getType() << " se afla la pozitia " << pos.first << " " << pos.second << '\n';
+    }
+    return out;
+}
+
+Pieces::Pieces()
+{
 
     resizeBoard();
     initPieces();
     updateBoard();
 }
 
-Pieces::~Pieces(){
+Pieces::~Pieces()
+{
     /** Clear history and pieces */
     for(auto &piece: pieces)
         delete piece;
-    for(auto &move: history){
+    for(auto &move: history)
+    {
         delete move.updatedPiece;
         delete move.deletedPiece;
     }
@@ -93,7 +126,8 @@ Piece* Pieces::getPiece(int player, std::pair<int, int> position)
 }
 
 
-Piece* Pieces::operator[](std::pair<int, int> position){
+Piece* Pieces::operator[](std::pair<int, int> position)
+{
     if(board[1][position.first][position.second] != nullptr)
         return board[1][position.first][position.second];
     return board[0][position.first][position.second];
@@ -104,13 +138,15 @@ std::vector<std::vector<Piece*>> Pieces::operator[](int player)
     return this->board[player];
 }
 
-void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_taken_piece){
+void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_taken_piece)
+{
     Move current_move = Move(piece, piece->getPos(), new_position);
 
     std::cout<<current_move.from.first<<','<<current_move.from.second<<' ';
     std::cout<<current_move.to.first<<','<<current_move.to.second<<'\n';
 
-    if(board[piece->getPlayer()][new_position.first][new_position.second] != nullptr){
+    if(board[piece->getPlayer()][new_position.first][new_position.second] != nullptr)
+    {
         Piece* aux = board[piece->getPlayer()][new_position.first][new_position.second];
         aux->move(piece->getPosCastle());
         new_position.first -=1;
@@ -138,9 +174,11 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
     piece->move(new_position);
 
 
-    if(dynamic_cast<Pawn*>(piece) && ((piece->getPlayer()==1 && piece->getPos().second==7) || (piece->getPlayer()==0 && piece->getPos().second==0))){
-        for(unsigned int i=0;i<pieces.size();i++)
-            if(pieces[i]==piece){
+    if(dynamic_cast<Pawn*>(piece) && ((piece->getPlayer()==1 && piece->getPos().second==7) || (piece->getPlayer()==0 && piece->getPos().second==0)))
+    {
+        for(unsigned int i=0; i<pieces.size(); i++)
+            if(pieces[i]==piece)
+            {
                 current_move.updatedPiece = piece;
                 Piece * newPiece = new Queen(piece->getPos(), piece->getPlayer());
                 current_move.piece = newPiece;
@@ -179,11 +217,13 @@ void Pieces::switchPlayer()
 }
 
 
-void Pieces::resetGame(){
+void Pieces::resetGame()
+{
     /** Clear history and pieces */
     for(auto &piece: pieces)
         delete piece;
-    for(auto &move: history){
+    for(auto &move: history)
+    {
         delete move.updatedPiece;
         delete move.deletedPiece;
     }
@@ -195,12 +235,18 @@ void Pieces::resetGame(){
     currentPlayer = 0;
 }
 
-void Pieces::undoMove() {
-    if(!history.empty()){
-        auto current_move = history.back();
-        if(current_move.updatedPiece!=nullptr){
+void Pieces::undoMove()
+{
+    if(!history.empty())
+    {
+        Move current_move = history.back();
+
+        if(current_move.updatedPiece!=nullptr)
+        {
+
             for(auto &piece: pieces)
-                if(piece==current_move.piece){
+                if(piece==current_move.piece)
+                {
                     piece = current_move.updatedPiece;
                     break;
                 }
