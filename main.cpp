@@ -4,7 +4,8 @@ using namespace std;
 
 int main(){
 
-	Draw* d = Draw::getInstance();
+    unique_ptr<Draw> drawPtr(Draw::getInstance());
+    
 
     return 0;
 }
