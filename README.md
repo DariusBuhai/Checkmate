@@ -10,11 +10,11 @@
 * [x] Heap Memory Allocation (**de facut la pieces**)
 * [x] Exceptions
 * [x] STL
-* [ ] Lambda expressions (**Johnny**) (e facuta doar 1 momentan ?)
+* [x] Lambda expressions (**Johnny**) (**rules.cpp Rules::getFuturePawn()**)
 * [x] Templates
-* [x] Smart pointers (minim 1 tip / proiect)
-* [ ] Design patterns (maxim 4)
-* [ ] Features of C++17/20 (***constexpr, consteval, constinit, fold expressions, init statement for if/switch, etc***) (minim 1 / proiect)
+* [x] Smart pointers (**unique_pointer<>**)
+* [ ] Design patterns (maxim 4: )
+* [x] Features of C++17/20 (***constexpr, consteval, constinit, fold expressions, init statement for if/switch, etc***) (**brain.cpp -> isOkToMove()**)
 
 ### Opțional => Bonus:
 * [ ] Move semantics
