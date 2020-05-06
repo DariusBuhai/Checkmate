@@ -4,7 +4,7 @@ using namespace std;
 
 int main(){
 
-	Draw d;
+	Draw* d = Draw::getInstance();
 
     return 0;
 }

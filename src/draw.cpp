@@ -9,6 +9,15 @@
 using namespace std;
 using namespace sf;
 
+Draw* Draw::instance_ = nullptr;
+
+Draw* Draw::getInstance()
+{
+    if(instance_ == nullptr)
+        instance_ = new Draw;
+    return instance_;
+}
+
 ostream& operator<<(ostream& out, const Draw& ob)
 {
     out<<"Tabla a fost initializata cu dimensiunile: " << ob.screenHeight << " " << ob.screenWidth << '\n';
