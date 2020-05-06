@@ -115,9 +115,12 @@ Evaluation Brain :: evalProtected(Piece* piece,  std::pair<int,int> position)
 
 bool Brain :: isOkToMove(Piece* piece, std::pair<int,int> position)
 {
-    Evaluation evalProtect = evalProtected(piece,position);
+    /*Evaluation evalProtect = evalProtected(piece,position);
     Evaluation evalAttack = evalAttacked(piece,position);
     if(evalAttack.nr_pieces <= evalProtect.nr_pieces && evalAttack.eval <= evalProtect.eval)
+        return true;
+    return false;*/
+    if(auto evalProtect = evalProtected(piece,position), evalAttack = evalAttacked(piece,position);evalAttack.nr_pieces <= evalProtect.nr_pieces && evalAttack.eval <= evalProtect.eval)
         return true;
     return false;
 }

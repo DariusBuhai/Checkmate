@@ -41,9 +41,7 @@ private:
     Draw();
 
 public:
-    
     static Draw* getInstance();
-    ~Draw();
     friend std::ostream& operator<<(std::ostream& , const Draw&);
 };
 

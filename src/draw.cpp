@@ -34,14 +34,6 @@ Draw::Draw() {
     this->init();
 }
 
-Draw::~Draw() {
-    /** Receiving malloc */
-    //buttons.~Container();
-    //labels.~Container();
-    //table.~Table();
-    //cout<<"Success";
-}
-
 void Draw::initComponents() {
     table.setSize(SizeType(screenWidth - 150, screenHeight - 150));
     table.setPosition({0, 25});
