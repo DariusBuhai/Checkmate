@@ -79,7 +79,6 @@ Evaluation Brain :: evalAttacked(Piece* piece,  std::pair<int,int> position)
         if(current -> getPlayer() != piece -> getPlayer())
         {
             vector<pair<int, int>> futurePositions =rules->getFuturePositions(current,false);
-            std::pair<int,int> pos = current -> getPos();
             for(auto x : futurePositions)
                 if(x.first == position.first && x.second == position.second)
                 {
@@ -100,7 +99,6 @@ Evaluation Brain :: evalProtected(Piece* piece,  std::pair<int,int> position)
     for(Piece* current : rules->getPieces())
         if(current -> getPlayer() == piece -> getPlayer()){
             vector<pair<int, int>> protectedPositions = rules->getProtectedPositions(current);
-            std::pair<int,int> pos = current -> getPos();
             for(auto x : protectedPositions)
                 if(x.first == position.first && x.second == position.second){
                     cout<<current -> getType()<<'\n';
@@ -119,7 +117,6 @@ bool Brain :: isOkToMove(Piece* piece, std::pair<int,int> position)
 {
     Evaluation evalProtect = evalProtected(piece,position);
     Evaluation evalAttack = evalAttacked(piece,position);
-    int player = piece -> getPlayer();
     if(evalAttack.nr_pieces <= evalProtect.nr_pieces && evalAttack.eval <= evalProtect.eval)
         return true;
     return false;
@@ -217,7 +214,6 @@ Move Brain::determineBestMove(){
                 future_pos.emplace_back(Move(piece, pos));
                 //cout << pos.first + 1 << " " << 8 - pos.second<<'\n';
                 int eval = this->getEvaluation(piece, pos) * 10;
-                std::pair<int,int> position = piece -> getPos();
                 //cout<< piece -> getType() << " " <<position.first + 1<< " " <<  8 - position.second << " " << eval << '\n';
                 ///evaluarea dupa sah
                 ///sa nu muti piese in pozitiile unde ataca pisele adverse,facut
