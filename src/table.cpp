@@ -2,6 +2,7 @@
 #include <SFML/Audio.hpp>
 
 #include <iostream>
+#include <utility>
 
 #include "../include/piece.h"
 #include "../include/table.h"
@@ -13,7 +14,9 @@ Table::Table(){
     brain = new Brain(&rules);
 }
 
-Table::~Table(){};
+Table::~Table(){
+    delete brain;
+};
 
 /** Setters */
 void Table::setSize(SizeType s) {
@@ -25,7 +28,7 @@ void Table::setPosition(std::pair<int,int> p) {
 }
 
 void Table::setDarkMode(bool* _darkMode){
-    darkMode = _darkMode;
+    darkMode = std::move(_darkMode);
 }
 
 void Table::togglePlayAgainstAi(){
@@ -93,7 +96,7 @@ void Table::drawOutline(RenderWindow *window, SizeType s, std::pair<int,int> p) 
     RectangleShape fill(Vector2f(s.width - 2*borderWidth, s.height - 2*borderWidth));
     fill.setOutlineThickness((float)borderWidth);
     fill.setOutlineColor(*darkMode ? Color(50, 50, 50) : Color(120, 120, 120));
-    fill.setPosition(p.first + borderWidth, p.second + borderWidth);
+    fill.setPosition(static_cast<float>(p.first + borderWidth), static_cast<float>(p.second + borderWidth));
     window->draw(fill);
 }
 
@@ -103,11 +106,12 @@ void Table::drawGrid(RenderWindow *window, SizeType s, std::pair<int,int> p){
 
     for(int i=0;i<8;++i)
         for(int j=0;j<8;++j){
+            bool oddSquare = (i+j)%2 != 0;
             RectangleShape square;
             square.setSize(Vector2f(squareWidth, squareHeight));
-            square.setPosition(p.first +squareWidth*i, p.second + squareHeight*j);
+            square.setPosition(static_cast<float>(p.first +squareWidth*i), static_cast<float>(p.second + squareHeight*j));
 
-            if((i+j)%2!=0) square.setFillColor(*darkMode ? Color(50, 50, 50) : Color(120, 120, 120));
+            if(oddSquare) square.setFillColor(*darkMode ? Color(50, 50, 50) : Color(120, 120, 120));
             else square.setFillColor(*darkMode ? Color(150, 150, 150) : Color::White);
 
             pair<int, int> current_pos = {i, j};
@@ -117,9 +121,13 @@ void Table::drawGrid(RenderWindow *window, SizeType s, std::pair<int,int> p){
                 square.setOutlineThickness(4);
             }
             if(find(futurePositions.begin(), futurePositions.end(), current_pos)!=futurePositions.end()){
-                square.setOutlineColor(*darkMode ? Color::White : Color::Black);
-                square.setSize(Vector2f(squareWidth-4, squareHeight-4));
-                square.setOutlineThickness(4);
+                //square.setOutlineColor(Color::Black);
+                //square.setSize(Vector2f(squareWidth-2, squareHeight-2));
+                //square.setOutlineThickness(2);
+                if(oddSquare)
+                    square.setFillColor(*darkMode ? Color(5,5,5) : Color(45,45,45));
+                else
+                    square.setFillColor(*darkMode ? Color(105,105,105) : Color(180,180,180));
             }
             window->draw(square);
         }
@@ -160,14 +168,14 @@ void Table::drawPiece(RenderWindow* window, Piece* piece) const{
 
     int piece_type = 1;
     pair<double, double> origin, scale;
-    switch (piece_type) {
-        case 1:
-            origin = {-110, -50};
-            scale = {0.3, .3};
-            break;
+    switch(piece_type) {
         case 2:
             origin = {-110, -50};
             scale = {0.35, .3};
+            break;
+        default:
+            origin = {-110, -50};
+            scale = {0.3, .3};
             break;
     }
 

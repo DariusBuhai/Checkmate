@@ -1,6 +1,3 @@
-#include <iostream>
-#include <vector>
-
 #include "include/draw.h"
 
 using namespace std;

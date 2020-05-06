@@ -11,15 +11,11 @@ ostream& operator<<(ostream& out, const Brain& ob)
 {
     out<<"Au fost efectuate " << ob.moves << " mutari\n";
     out<<"Evaluarea pieselor este: \n";
-    for(auto x : ob.evaluation)
-    {
+    for(const auto& x : ob.evaluation){
         out << x.first << '\n';
-        for(auto v : x.second)
-        {
-            for(auto eval : v)
-            {
+        for(const auto& v : x.second){
+            for(const auto& eval : v)
                 out << eval << " ";
-            }
             out <<'\n';
         }
     }
@@ -35,14 +31,13 @@ Brain::Brain(Rules* r)
 void Brain::initializeEvaluation()
 {
     vector<string> pt = {"pawn", "bishop", "knight", "queen", "rook", "king"};
-    for(auto p: pt)
+    for(const auto& p: pt)
     {
         ifstream read("resources/evaluation/"+p+".txt");
         int x;
         evaluation[p].resize(8);
         for(int i=0; i<8; i++)
-            for (int j = 0; j < 8; j++)
-            {
+            for (int j = 0; j < 8; j++){
                 read>>x;
                 evaluation[p][i].push_back(x);
             }
@@ -76,7 +71,7 @@ int Brain::getEvaluation(Piece* piece, pair<int,int> pos)
 
 Evaluation Brain :: evalAttacked(Piece* piece,  std::pair<int,int> position)
 {
-    Evaluation evalAttack;
+    Evaluation evalAttack{};
     evalAttack.eval = 0;
     evalAttack.nr_pieces = 0;
     for(Piece* current : rules->getPieces())
@@ -98,19 +93,16 @@ Evaluation Brain :: evalAttacked(Piece* piece,  std::pair<int,int> position)
 
 Evaluation Brain :: evalProtected(Piece* piece,  std::pair<int,int> position)
 {
-    Evaluation evalProtect;
+    Evaluation evalProtect{};
     evalProtect.eval =  getPointsEvaluation(piece);
     evalProtect.nr_pieces = 1;
     int maxim = 0;
     for(Piece* current : rules->getPieces())
-    {
-        if(current -> getPlayer() == piece -> getPlayer())
-        {
+        if(current -> getPlayer() == piece -> getPlayer()){
             vector<pair<int, int>> protectedPositions = rules->getProtectedPositions(current);
             std::pair<int,int> pos = current -> getPos();
             for(auto x : protectedPositions)
-                if(x.first == position.first && x.second == position.second)
-                {
+                if(x.first == position.first && x.second == position.second){
                     cout<<current -> getType()<<'\n';
                     evalProtect.nr_pieces ++;
                     evalProtect.eval += getPointsEvaluation(current);
@@ -118,8 +110,6 @@ Evaluation Brain :: evalProtected(Piece* piece,  std::pair<int,int> position)
                     break;
                 }
         }
-
-    }
     evalProtect.nr_pieces--;
     evalProtect.eval -= maxim;
     return evalProtect;
@@ -135,9 +125,7 @@ bool Brain :: isOkToMove(Piece* piece, std::pair<int,int> position)
     return false;
 }
 
-bool Brain :: canCheck(Piece* piece, std::pair<int,int> position)
-{
-
+bool Brain :: canCheck(Piece* piece, std::pair<int,int> position){
     rules->getCurentBoard(board);
     /*
     for (int i = 0; i < 8; i++)
@@ -151,14 +139,12 @@ bool Brain :: canCheck(Piece* piece, std::pair<int,int> position)
     }
     std::cout<<"\n\n";
     */
-    if(board[0][position.first][position.second] != nullptr)
-    {
+    if(board[0][position.first][position.second] != nullptr){
         int eval = getPointsEvaluation(board[0][position.first][position.second]);
         int evalpiece = getPointsEvaluation(piece);
         if(eval < evalpiece)
             return false;
-        else
-        {
+        else{
             Evaluation evalProtect = evalProtected(board[0][position.first][position.second],board[0][position.first][position.second] -> getPos());
             Evaluation evalAttack = evalAttacked(board[0][position.first][position.second],board[0][position.first][position.second] -> getPos());
             if(evalAttack.nr_pieces <= evalProtect.nr_pieces && (evalAttack.nr_pieces <= evalProtect.nr_pieces || evalAttack.eval > evalProtect.eval) )
@@ -173,9 +159,7 @@ bool Brain :: canCheck(Piece* piece, std::pair<int,int> position)
     for (auto x : futurePositions)
         cout<< x.first + 1 << " " << 8 - x.second <<'\n';
     for(auto x : futurePositions)
-
-        if(board[0][x.first][x.second] != nullptr && board[0][x.first][x.second] -> getType() == "king")
-        {
+        if(board[0][x.first][x.second] != nullptr && board[0][x.first][x.second] -> getType() == "king"){
             board[1][position.first][position.second] = nullptr;
             board[1][pos.first][pos.second] = piece;
             return true;
@@ -184,12 +168,11 @@ bool Brain :: canCheck(Piece* piece, std::pair<int,int> position)
     board[1][pos.first][pos.second] = piece;
     return false;
 }
-int Brain :: getmoves()
-{
+int Brain :: getMoves(){
     return moves;
 }
 
-inline void Brain :: copyBoard()
+inline void Brain::copyBoard()
 {
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 8; j++)
@@ -199,8 +182,7 @@ inline void Brain :: copyBoard()
             }
 }
 
-Move Brain::determineBestMove()
-{
+Move Brain::determineBestMove(){
     if(rules == nullptr)
         throw EXIT_FAILURE;
 
@@ -215,8 +197,7 @@ Move Brain::determineBestMove()
     ///ma plimb prin piese
 
     rules->getCurentBoard(board);
-    for (int i = 0; i < 8; i++)
-    {
+    for (int i = 0; i < 8; i++){
         std::cout<<"\n";
         for (int j = 0; j < 8; j++)
             if (board[1][j][i] != nullptr)

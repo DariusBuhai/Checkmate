@@ -12,7 +12,7 @@ using namespace sf;
 ostream& operator<<(ostream& out, const Draw& ob)
 {
     out<<"Tabla a fost initializata cu dimensiunile: " << ob.screenHeight << " " << ob.screenWidth << '\n';
-    if(ob.darkMode == false)
+    if(!ob.darkMode)
         out<<"Dark mode-ul nu este activat\n";
     else
         out<<"Dark mode-ul este activat\n";
@@ -27,10 +27,10 @@ Draw::Draw() {
 
 Draw::~Draw() {
     /** Receiving malloc */
-    buttons.~Container();
-    labels.~Container();
-    table.~Table();
-    cout<<"Success";
+    //buttons.~Container();
+    //labels.~Container();
+    //table.~Table();
+    //cout<<"Success";
 }
 
 void Draw::initComponents() {
@@ -38,7 +38,7 @@ void Draw::initComponents() {
     table.setPosition({0, 25});
     table.setDarkMode(&this->darkMode);
 
-    buttons.setDarkMode(&this->darkMode);
+    buttons.setDarkMode((&this->darkMode));
 
     buttons += new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 200, screenHeight - 300},&this->darkMode, "Dark\nMode", "Light\nMode");
     buttons += new Button({screenWidth - 140, screenWidth - 10}, {350, 250}, &this->viewCredits, "Show\nCredits","Hide\nCredits");

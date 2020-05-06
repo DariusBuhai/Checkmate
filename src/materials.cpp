@@ -1,8 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
-#include <string>
+
 #include <utility>
-#include <vector>
 
 #include "../include/utils.h"
 #include "../include/materials.h"
@@ -50,7 +48,7 @@ void Button::draw(sf::RenderWindow* window, bool darkMode){
     Utils::drawText(window, t, darkMode ? Color::White : Color::Black, {hovering ? x.first+elevation : x.first,1100-(hovering ? y.first+elevation : y.first)});
 }
 
-Button &Button::operator=(std::pair<std::string, std::string> _texts) {
+Button &Button::operator=(const std::pair<std::string, std::string>& _texts) {
     this->text = _texts.first;
     this->disabledText = _texts.second;
     return *this;

@@ -27,7 +27,7 @@ public:
     bool isOkToMove(Piece*,std::pair<int,int>);
     bool canCheck(Piece*,std::pair<int,int>);
     Move determineBestMove();
-    int getmoves();
+    int getMoves();
     void initializeEvaluation();
     inline void copyBoard();
     friend std::ostream& operator<<(std::ostream& , const Brain&);
