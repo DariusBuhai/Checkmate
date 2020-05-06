@@ -22,6 +22,7 @@ private:
     const double screenHeight = ScreenHeight;
 
     Table table;
+    static Draw* instance_;
 
     bool darkMode = false;
     bool viewCredits = false;
@@ -37,9 +38,11 @@ private:
 
     void init();
     void initComponents();
+    Draw();
 
 public:
-    Draw();
+    
+    static Draw* getInstance();
     ~Draw();
     friend std::ostream& operator<<(std::ostream& , const Draw&);
 };

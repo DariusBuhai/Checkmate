@@ -11,6 +11,7 @@
 using namespace std;
 using namespace sf;
 
+
 void Button::setCursorToHand(sf::RenderWindow* window) {
     sf::Cursor cursor;
     cursor.loadFromSystem(sf::Cursor::Hand);

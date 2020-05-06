@@ -17,7 +17,7 @@ class Button{
 
     static void setCursorToHand(sf::RenderWindow*);
 public:
-    Button(std::pair<int, int> _x, std::pair<int, int> _y, bool* _pressed, std::string _text, std::string _disabledText = ""): x(_x), y(_y), pressed(_pressed), text(_text), disabledText(_disabledText){}
+    Button(std::pair<int, int> _x, std::pair<int, int> _y, bool* _pressed, std::string _text, std::string _disabledText = ""): x(_x), y(_y), pressed(_pressed), text(_text), disabledText(_disabledText), hovering(false){}
 
     void draw(sf::RenderWindow*, bool = false);
     void digestAction(sf::Event, sf::RenderWindow*);
