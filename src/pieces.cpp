@@ -4,7 +4,6 @@
 
 #include "../include/pieces.h"
 #include "../include/table.h"
-#include "../include/utils.h"
 
 std::ostream& operator<<(std::ostream& out, const Pieces& ob)
 {
