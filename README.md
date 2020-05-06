@@ -4,14 +4,14 @@
 ### Cerințe obligatorii
 
 * [x] Interfața grafica (**SFML**) cu API pentru C++
-* [x] RTTI (**dynamic_cast**)
+* [x] RTTI (**dynamic_cast si static_cast**)
 * [x] Abstract Classes (**in pieces**)
 * [x] Operatori (***minim 12***)
-* [x] Heap Memory Allocation (**de facut la pieces**)
-* [x] Exceptions
-* [x] STL
-* [x] Lambda expressions (**Johnny**) (**rules.cpp Rules::getFuturePawn()**)
-* [x] Templates
+* [x] Heap Memory Allocation (**in pieces**)
+* [x] Exceptions (**catch in table.cpp, throw in brain.cpp**)
+* [x] STL (**vectors**)
+* [x] Lambda expressions (**rules.cpp Rules::getFuturePawn()**)
+* [x] Templates (**materials.h**)
 * [x] Smart pointers (**unique_pointer<>**)
 * [ ] Design patterns (maxim 4: )
 * [x] Features of C++17/20 (***constexpr, consteval, constinit, fold expressions, init statement for if/switch, etc***) (**brain.cpp -> isOkToMove()**)
