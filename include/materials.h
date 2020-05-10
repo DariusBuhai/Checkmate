@@ -8,20 +8,21 @@
 #include <map>
 
 #include "../include/utils.h"
+
 class Button{
     std::pair<int,int> x, y;
     std::string text, disabledText = "";
-    bool *pressed;
+    bool* pressed;
     bool hovering;
 
     static void setCursorToHand(sf::RenderWindow*);
 public:
-    Button(std::pair<int, int> _x, std::pair<int, int> _y, bool *_pressed, std::string _text, std::string _disabledText = ""): x(_x), y(_y), pressed(_pressed), text(_text), disabledText(_disabledText){}
+    Button(std::pair<int, int> _x, std::pair<int, int> _y, bool* _pressed, std::string _text, std::string _disabledText = ""): x(_x), y(_y), pressed(_pressed), text(_text), disabledText(_disabledText), hovering(false){}
 
     void draw(sf::RenderWindow*, bool = false);
     void digestAction(sf::Event, sf::RenderWindow*);
 
-    Button &operator=(std::pair<std::string, std::string>);
+    Button &operator=(const std::pair<std::string, std::string>&);
 };
 
 class Label{
@@ -40,7 +41,7 @@ public:
 template <class T>
 class Container{
     std::vector<std::pair<std::string, T>> childs;
-    bool *darkMode;
+    bool* darkMode;
     double screenWidth, screenHeight;
 public:
 

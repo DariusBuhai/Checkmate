@@ -21,6 +21,16 @@ std::vector<std::vector<std::pair<int, int>> >  Piece::path(std :: pair <int,int
     return std::vector<std::vector<std::pair<int,int>>>(0);
 }
 
+void Piece::TemplateMethod()
+{
+    this->path(this->getPos());
+}
+
+void Piece_Code(Piece *piece_)
+{
+    piece_->TemplateMethod();
+}
+
 void Piece::move(std::pair<int, int> position){
     hasMoved = true;
     pos = position;

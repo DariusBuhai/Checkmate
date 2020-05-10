@@ -2,10 +2,10 @@
 #include <vector>
 #include <utility>
 
-#include "../include/pieces.h"
-#include "../include/table.h"
+
 #include "../include/utils.h"
 #include "piece.cpp"
+
 std::ostream& operator<<(std::ostream& out, const Pieces& ob)
 {
     out<<"In momentul actual tabla arata asa: \n";

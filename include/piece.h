@@ -16,6 +16,8 @@ protected:
 
     void setPosition(int, int);
 public:
+
+    void TemplateMethod();
     Piece(std::pair<int, int>, int);
     Piece();
     virtual ~Piece(){};

@@ -32,7 +32,7 @@ private:
     bool mouseButtonPressing = false;
 
     bool playAgainstAi = false;
-    bool *darkMode;
+    bool* darkMode;
     bool checkMate = false;
     int winnerPlayer = -1;
 
