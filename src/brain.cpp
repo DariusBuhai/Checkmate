@@ -130,7 +130,7 @@ bool Brain :: isOkToMove(Piece* piece, std::pair<int,int> position)
     Evaluation evalProtect = evalProtected(piece,position);
     Evaluation evalAttack = evalAttacked(piece,position);
     int player = piece -> getPlayer();
-    if(evalAttack.nr_pieces <= evalProtect.nr_pieces && evalAttack.eval <= evalProtect.eval)
+    if( evalAttack.nr_pieces <= evalProtect.nr_pieces && evalAttack.eval <= evalProtect.eval)
         return true;
     return false;
 }
