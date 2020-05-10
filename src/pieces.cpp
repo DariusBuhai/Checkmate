@@ -148,8 +148,16 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
     if(board[piece->getPlayer()][new_position.first][new_position.second] != nullptr)
     {
         Piece* aux = board[piece->getPlayer()][new_position.first][new_position.second];
-        aux->move(piece->getPosCastle());
-        new_position.first -=1;
+        if(new_position.first > piece->getPos().first)
+        {
+            aux->move(piece->getPosCastleShort());
+            new_position.first -=1;
+        }
+        else
+        {
+            aux->move(piece->getPosCastleLong());
+            new_position.first +=2;
+        }
         piece->move(new_position);
         switchPlayer();
         updateBoard();

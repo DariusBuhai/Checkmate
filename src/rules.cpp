@@ -232,7 +232,7 @@ std::vector<std::pair<int, int>> Rules::canCastle(Piece* pcs)
             }
         }
         pos = pcs->getPos();
-        while (pos.first > 1)
+        while (pos.first > 0)
         {
             pos.first --;
             if (board[!player][pos.first][pos.second] != nullptr)
@@ -285,7 +285,6 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs, bool chec
     {
         if (dynamic_cast<King*>(board[player][pos.first][pos.second]))
             ans = canCastle(board[player][pos.first][pos.second]);
-
         attack_pos = canAttackPos(pcs,pos);
         for (auto& next_pos : attack_pos)
         {

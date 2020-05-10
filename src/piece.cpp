@@ -40,8 +40,13 @@ std::pair<int,int> Piece::getPos(){
     return this->pos;
 }
 
-std::pair<int,int> Piece::getPosCastle(){
+std::pair<int,int> Piece::getPosCastleShort(){
     pos.first += 1;
+    return this->pos;
+}
+
+std::pair<int,int> Piece::getPosCastleLong(){
+    pos.first -= 1;
     return this->pos;
 }
 
