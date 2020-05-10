@@ -145,6 +145,12 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
     std::cout<<current_move.from.first<<','<<current_move.from.second<<' ';
     std::cout<<current_move.to.first<<','<<current_move.to.second<<'\n';
 
+    int player = piece->getPlayer();
+    //if we go up or down
+    int dst = 1;
+    if (player == 1)
+        dst = -1;
+    ///castle
     if(board[piece->getPlayer()][new_position.first][new_position.second] != nullptr)
     {
         Piece* aux = board[piece->getPlayer()][new_position.first][new_position.second];
@@ -163,13 +169,12 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
         updateBoard();
         return;
     }
-
+    ///take piece
     if(board[!piece->getPlayer()][new_position.first][new_position.second]!=nullptr)
     {
         Piece* piece_to_delete = board[!piece->getPlayer()][new_position.first][new_position.second];
         /// Remember the address of the piece, but don't delete it
         current_move.deletedPiece = piece_to_delete;
-
         unsigned int i = 0;
         for(; i<pieces.size(); i++)
             if(pieces[i]==piece_to_delete)
@@ -178,9 +183,20 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
         pieces.erase(pieces.begin() + i);
         board[!piece->getPlayer()][new_position.first][new_position.second] = nullptr;
     }
+    ///en passant
+    else if(board[!piece->getPlayer()][new_position.first][new_position.second] == nullptr && piece->getType() == "pawn" && ((piece->getPos().first == new_position.first + 1) || (piece->getPos().first == new_position.first - 1)) )
+    {
+        Piece* piece_to_delete = board[!piece->getPlayer()][new_position.first][new_position.second + dst];
+        current_move.deletedPiece = piece_to_delete;
 
+        unsigned int i = 0;
+        for(; i<pieces.size(); i++)
+            if(pieces[i]==piece_to_delete)
+                break;
+        pieces.erase(pieces.begin() + i);
+        board[!piece->getPlayer()][new_position.first][new_position.second + dst] = nullptr;
+    }
     piece->move(new_position);
-
 
     if(dynamic_cast<Pawn*>(piece) && ((piece->getPlayer()==1 && piece->getPos().second==7) || (piece->getPlayer()==0 && piece->getPos().second==0)))
     {
@@ -200,6 +216,16 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
 
     switchPlayer();
     updateBoard();
+    for (int i = 0; i < 8; i++)
+    {
+        std::cout<<"\n";
+        for (int j = 0; j < 8; j++)
+            if (board[piece->getPlayer()][j][i] != nullptr)
+                std::cout << board[piece->getPlayer()][j][i]->getType()<<" ";
+            else
+                std::cout << "nimic " ;
+    }
+    std::cout<<"\n\n";
 }
 
 void Pieces::movePiece(std::pair<int, int> old_position, std::pair<int, int> new_position)
