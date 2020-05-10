@@ -226,6 +226,7 @@ Move Brain::determineBestMove(){
                 ///sa nu muti cu aceeasi piesa de mai multe ori in primele 10 mutari
                 ///sa muti piesele atacate
                 ///sa isi apere piesele atacate
+                ///sa dea mat
                 if(canCheck(piece,pos) == 1 && isOkToMove(piece,pos) == 1)
                 {
                     if(eval > best_eval_check)
