@@ -216,16 +216,6 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
 
     switchPlayer();
     updateBoard();
-    for (int i = 0; i < 8; i++)
-    {
-        std::cout<<"\n";
-        for (int j = 0; j < 8; j++)
-            if (board[piece->getPlayer()][j][i] != nullptr)
-                std::cout << board[piece->getPlayer()][j][i]->getType()<<" ";
-            else
-                std::cout << "nimic " ;
-    }
-    std::cout<<"\n\n";
 }
 
 void Pieces::movePiece(std::pair<int, int> old_position, std::pair<int, int> new_position)
