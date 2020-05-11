@@ -8,27 +8,20 @@
 std::ostream& operator<<(std::ostream& out, const Pieces& ob)
 {
     out<<"In momentul actual tabla arata asa: \n";
-    for(int q = 0 ; q <= 1 ; q++)
-    {
-        for (int i = 0; i < 8; i++)
-        {
+    for(int q = 0 ; q <= 1 ; q++){
+        for (int i = 0; i < 8; i++){
             out<<"\n";
             for (int j = 0; j < 8; j++)
                 if (ob.board[q][j][i] != nullptr)
                     out << ob.board[q][j][i]->getType()<<" ";
-                else
-                    out << "nimic " ;
         }
         out<<"\n\n";
     }
     out<<"Mutarile efectuate sunt: \n";
     for(auto x : ob.history)
-    {
         out<<"Piesa " << x.piece -> getType() << " a mutat de la pozitia " << x.from.first << " " << x.from.second << " la pozitia " << x.to.first << " " << x.to.second << '\n';
-    }
     out<<"Piesele se afla la pozitiile: \n";
-    for(auto x : ob.pieces)
-    {
+    for(auto x : ob.pieces){
         std::pair<int,int> pos = x -> getPos();
         out<<"Piesa " << x -> getType() << " se afla la pozitia " << pos.first << " " << pos.second << '\n';
     }
