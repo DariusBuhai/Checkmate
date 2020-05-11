@@ -19,17 +19,19 @@ private:
     std::vector<std::vector<std::vector<Piece*>> >  boardBrain;
     static int getPointsEvaluation(Piece*);
     int getEvaluation(Piece*, std::pair<int,int>);
-
+    std::vector<Move>last_AI_moves;
 public:
     Brain(Rules*);
     Evaluation evalAttacked(Piece*,std::pair<int,int>);
     Evaluation evalProtected(Piece*,std::pair<int,int>);
     bool isOkToMove(Piece*,std::pair<int,int>);
     bool canCheck(Piece*,std::pair<int,int>);
+    bool Piece_Is_Attacked(Piece*,std::pair<int,int>);
     Move determineBestMove();
     int getMoves();
     void initializeEvaluation();
     inline void copyBoard();
+    bool check_last_3_moves(Move);
     friend std::ostream& operator<<(std::ostream& , const Brain&);
 };
 

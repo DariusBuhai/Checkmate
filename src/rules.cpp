@@ -26,7 +26,7 @@ Rules::~Rules() = default;
 
 std::vector<std::pair<int, int>> Rules::canAttackPos(Piece* pcs,std::pair<int,int> position)
 {
-    //returns where a position can move without considering check.
+    //returns where a piece can move without considering check.
     std::vector<std::pair<int, int>> ans;
     for(auto l: pcs->path(position))
     {
@@ -101,12 +101,15 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
     Piece* aux_board[2][8][8];
     saveBoard(aux_board);
 
-    auto isInTable = [](int x, int y) {return ((x < 8 and x >= 0)and(y < 8 and y >= 0)); };
+    auto isInTable = [](int x, int y)
+    {
+        return ((x < 8 and x >= 0)and(y < 8 and y >= 0));
+    };
 
 
-    int player = pcs->getPlayer();
     std::vector<std::pair<int, int>> ans;
     std::pair<int, int> pos = pcs->getPos();
+    int player = pcs->getPlayer();
     //if we go up or down
     int dst = -1;
     if (player == 1)
@@ -172,6 +175,42 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
                         ans.push_back(std::make_pair(posx, posy));
                     getBoard(aux_board);
                 }
+            ///check if it can take a pawn en passant
+            Move misc;
+            if(history.size() > 0)
+            {
+                int n = history.size();
+                misc = history[n - 1];
+                if(misc.piece->getType() == "pawn" && abs(misc.from.second - misc.to.second) == 2 )
+                {
+                    if((misc.to.first == pos.first + 1 || misc.to.first == pos.first - 1) && (misc.to.second == pos.second))
+                    {
+                        std::cout<<"Pionul curent se afla la " << pos.first + 1 << " " << 8 - pos.second << '\n';
+                        std::cout<<"Pionul advers se afla la " << misc.to.first + 1 << " " << 8 - misc.to.second << '\n';
+                        std::cout<<"ANA ARE MERE \n";
+                        if(misc.to.first == pos.first + 1)
+                        {
+                            posx = pos.first + 1;
+                            posy = pos.second + dst;
+                        }
+                        else
+                        {
+                            posx = pos.first - 1;
+                            posy = pos.second + dst;
+                        }
+                        std::cout<<"Pionul unde muta se afla la " << posx + 1<< " " << 8 - posy << '\n';
+                        if(isInTable(posx, posy))
+                        {
+                            board[!player][posx][posy + dst] = nullptr;
+                            board[player][posx][posy] = board[player][pos.first][pos.second];
+                            board[player][pos.first][pos.second] = nullptr;
+                            if (!isInCheck(player))
+                                ans.push_back(std::make_pair(posx, posy));
+                            getBoard(aux_board);
+                        }
+                    }
+                }
+            }
         }
     return ans;
 }
@@ -232,7 +271,7 @@ std::vector<std::pair<int, int>> Rules::canCastle(Piece* pcs)
             }
         }
         pos = pcs->getPos();
-        while (pos.first > 1)
+        while (pos.first > 0)
         {
             pos.first --;
             if (board[!player][pos.first][pos.second] != nullptr)
@@ -285,7 +324,6 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs, bool chec
     {
         if (dynamic_cast<King*>(board[player][pos.first][pos.second]))
             ans = canCastle(board[player][pos.first][pos.second]);
-
         attack_pos = canAttackPos(pcs,pos);
         for (auto& next_pos : attack_pos)
         {
@@ -301,7 +339,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs, bool chec
     return ans;
 }
 
-std::vector<std::pair<int, int>> Rules::getFuturePositions2(Piece* pcs, std::pair<int, int> position , bool checkPlayer)
+std::vector<std::pair<int, int>> Rules::getFuturePositions2(Piece* pcs, std::pair<int, int> position, bool checkPlayer)
 {
     //returns the position that a piece can move.
     int player = pcs->getPlayer();
@@ -343,18 +381,11 @@ std::vector<std::pair<int, int>> Rules::getProtectedPositions(Piece* pcs)
     {
         for (auto p : l)
         {
-            if (board[pcs->getPlayer()][p.first][p.second] != nullptr)
-            {
-                /*
-                int player = pcs -> getPlayer();
-                if(player == 0)
-                    std::cout<<pcs->getType()<<" alb apara " << board[pcs->getPlayer()][p.first][p.second] -> getType() << " " << p.first + 1 << " " << 8 - p.second  <<'\n';
-                else
-                    std::cout<<pcs->getType()<<" negru apara " << board[pcs->getPlayer()][p.first][p.second] -> getType() << " " << p.first + 1<< " " << 8 - p.second <<'\n';
-                    */
-                ans.emplace_back(p);
+            if (board[!pcs->getPlayer()][p.first][p.second] != nullptr)
                 break;
-            }
+            ans.emplace_back(p);
+            if (board[pcs->getPlayer()][p.first][p.second] != nullptr)
+                break;
         }
     }
     return ans;

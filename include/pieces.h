@@ -29,7 +29,6 @@ public:
     Piece* getPiece(int, std::pair<int, int>);
     Piece* operator[](std::pair<int, int>);
     std::vector<std::vector<Piece*>> operator[](int);
-
     void setPieces(const std::vector<Piece*>&);
 
     void movePiece(Piece*, std::pair<int, int>, bool = false);

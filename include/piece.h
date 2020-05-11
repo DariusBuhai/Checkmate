@@ -16,6 +16,8 @@ protected:
 
     void setPosition(int, int);
 public:
+
+    void TemplateMethod();
     Piece(std::pair<int, int>, int);
     Piece();
     virtual ~Piece(){};
@@ -23,7 +25,8 @@ public:
     bool isInTable();
 
     std::pair<int,int> getPos();
-    std::pair<int,int> getPosCastle();
+    std::pair<int,int> getPosCastleShort();
+    std::pair<int,int> getPosCastleLong();
     int getPlayer();
 	bool getHasMoved();
 
