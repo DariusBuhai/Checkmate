@@ -2,9 +2,8 @@
 #include <vector>
 #include <utility>
 
-
 #include "../include/utils.h"
-#include "piece.cpp"
+#include "../include/pieces.h"
 
 std::ostream& operator<<(std::ostream& out, const Pieces& ob)
 {

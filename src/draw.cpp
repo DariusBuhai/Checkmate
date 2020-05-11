@@ -5,7 +5,7 @@
 
 #include "../include/piece.h"
 #include "../include/draw.h"
-#include "table.cpp"
+
 using namespace std;
 using namespace sf;
 
