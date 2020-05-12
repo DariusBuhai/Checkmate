@@ -9,8 +9,8 @@
 #include "piece.h"
 
 #if defined(_WIN32)
-    #define ScreenWidth 900
-    #define ScreenHeight 900
+    #define ScreenWidth 1100
+    #define ScreenHeight 1100
 #else
     #define ScreenWidth 1100
     #define ScreenHeight 1100

@@ -155,7 +155,7 @@ void Table::drawGrid(RenderWindow *window, SizeType s, std::pair<int,int> p){
         try{
             hoveringSquare = determineGridPosition(selectedPieceCurrentLocation);
         } catch (...) {
-            //cout<<"Not hovering any square!";
+            //cout<<"Not hovering any square!\n";
         }
     }
 
@@ -171,13 +171,7 @@ void Table::drawGrid(RenderWindow *window, SizeType s, std::pair<int,int> p){
 
             pair<int, int> current_pos = {i, j};
             if(selectedSquare==current_pos) {
-                square.setFillColor(oddSquare ? Color(189, 202, 83) : Color(247,247,139));
-            }
-            if(hoveringSquare.first==i && hoveringSquare.second==j){
-                square.setOutlineColor(darkMode ? Color::White : Color::Black);
-                square.setOutlineThickness(4);
-                square.setSize(Vector2f(squareWidth-8, squareHeight-8));
-                square.setPosition(square.getPosition().x+4, square.getPosition().y+4);
+                square.setFillColor(oddSquare ? Color(189, 202, 83) : Color(247, 247, 139));
             }
 
             window->draw(square);
@@ -196,6 +190,16 @@ void Table::drawGrid(RenderWindow *window, SizeType s, std::pair<int,int> p){
                     insideCircle.setFillColor(*darkMode ? Color(255,255,255) : Color(50,50,50));
                     window->draw(insideCircle);
                 }
+            }
+
+            if(hoveringSquare.first==i && hoveringSquare.second==j){
+                RectangleShape insideRectangle;
+                insideRectangle.setFillColor(Color::Transparent);
+                insideRectangle.setOutlineColor(darkMode ? Color::White : Color::Black);
+                insideRectangle.setOutlineThickness(4);
+                insideRectangle.setSize(Vector2f(squareWidth-8, squareHeight-8));
+                insideRectangle.setPosition(square.getPosition().x+4, square.getPosition().y+4);
+                window->draw(insideRectangle);
             }
         }
 }
