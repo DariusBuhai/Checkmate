@@ -13,6 +13,8 @@ std::ostream& operator<<(std::ostream& out, const Piece& ob)
     return out;
 }
 
+
+
 // ------------- piece methods ----------------
 Piece::Piece(std::pair<int, int> pos, int player) : pos(pos), hasMoved(false), player(player) {}
 Piece::Piece() : pos({0,0}), hasMoved(false), player(0) {}
@@ -379,4 +381,17 @@ Piece* PieceFactory::createElement(std::string name, std::pair<int, int> pos, bo
     }
 
     return nullptr;
+}
+
+std::vector<std::vector<std::pair<int, int>> >NullPiece::path(std::pair<int,int>)
+{
+    std::vector<std::vector<std::pair<int, int>> > v(0);
+    return v;
+
+}
+
+std::string NullPiece::getType()
+{
+    std::string type = "Null";
+    return type;
 }

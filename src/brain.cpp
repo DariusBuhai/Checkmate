@@ -121,13 +121,7 @@ Evaluation Brain :: evalProtected(Piece* piece,  std::pair<int,int> position)
 
             vector<pair<int, int>> protectedPositions = rules->getProtectedPositions(current);
 
-            /*if(current -> getType() == "rook" && position.first == 0 && position.second == 2)
-            {
-                for(auto x : protectedPositions)
-                    cout<<x.first + 1 << " " << 8 - x.second << " ";
-                cout<<'\n';
-            }
-            */
+
             for(auto x : protectedPositions)
                 if(x.first == position.first && x.second == position.second)
                 {
@@ -146,40 +140,24 @@ bool Brain :: isOkToMove(Piece* piece, std::pair<int,int> position)
 {
     rules -> getCurentBoard(board);
     board[piece -> getPlayer()][position.first][position.second] = piece;
-    board[piece -> getPlayer()][piece -> getPos().first][piece -> getPos().second] = nullptr;
+    board[piece -> getPlayer()][piece -> getPos().first][piece -> getPos().second] = nullPiece;
 
     Evaluation evalProtect = evalProtected(piece,position);
     Evaluation evalAttack = evalAttacked(piece,position);
-    //cout<<piece->getType() << " " << position.first + 1 << " "  << 8 - position.second << " " << evalProtect.eval << " " << evalAttack.eval << '\n';
-    board[piece -> getPlayer()][position.first][position.second] = nullptr;
+    
+    board[piece -> getPlayer()][position.first][position.second] = nullPiece;
     board[piece -> getPlayer()][piece -> getPos().first][piece -> getPos().second] = piece;
     if(evalAttack.nr_pieces <= evalProtect.nr_pieces && evalAttack.eval <= evalProtect.eval)
         return true;
     return false;
-    ///init statement
-    /*
-    if(auto evalProtect = evalProtected(piece,position), evalAttack = evalAttacked(piece,position);evalAttack.nr_pieces <= evalProtect.nr_pieces && evalAttack.eval <= evalProtect.eval)
-        return true;
-    return false;
-    */
+
 }
 
 bool Brain :: canCheck(Piece* piece, std::pair<int,int> position)
 {
     rules->getCurentBoard(board);
-    /*
-    for (int i = 0; i < 8; i++)
-    {
-        std::cout<<"\n";
-        for (int j = 0; j < 8; j++)
-            if (board[piece->getPlayer()][j][i] != nullptr)
-                std::cout << board[piece->getPlayer()][j][i]->getType()<<" ";
-            else
-                std::cout << "nimic " ;
-    }
-    std::cout<<"\n\n";
-    */
-    if(board[0][position.first][position.second] != nullptr)
+
+    if(board[0][position.first][position.second] ->getType() != "Null")
     {
         int eval = getPointsEvaluation(board[0][position.first][position.second]);
         int evalpiece = getPointsEvaluation(piece);
@@ -194,18 +172,18 @@ bool Brain :: canCheck(Piece* piece, std::pair<int,int> position)
         }
     }
     std::pair<int,int> pos = piece -> getPos();
-    //cout<< piece -> getType()<< " " << pos.first + 1 << " " << 8-  pos.second << " " << 1 + position.first << " " << 8 - position.second << '\n';
+
     board[1][position.first][position.second] = piece;
-    board[1][pos.first][pos.second] = nullptr;
+    board[1][pos.first][pos.second] = nullPiece;
     vector<pair<int, int>> futurePositions =rules->getFuturePositions2(board[1][position.first][position.second],position,false);
     for(auto x : futurePositions)
-        if(board[0][x.first][x.second] != nullptr && board[0][x.first][x.second] -> getType() == "king")
+        if(board[0][x.first][x.second] ->getType() != "Null" && board[0][x.first][x.second] -> getType() == "king")
         {
-            board[1][position.first][position.second] = nullptr;
+            board[1][position.first][position.second] = nullPiece;
             board[1][pos.first][pos.second] = piece;
             return true;
         }
-    board[1][position.first][position.second] = nullptr;
+    board[1][position.first][position.second] = nullPiece;
     board[1][pos.first][pos.second] = piece;
     return false;
 }
@@ -295,19 +273,19 @@ Move Brain::determineBrainBestMove()
                 }
                 else
                 {
-                    if(opPlayer == nullptr && eval > best_current_eval && isOkToMove(piece,pos) == 1)
+                    if(opPlayer ->getType() == "Null" && eval > best_current_eval && isOkToMove(piece,pos) == 1)
                     {
                         best_current_eval = eval;
                         best_current_eval_move = Move(piece,pos);
                     }
-                    if(opPlayer == nullptr && eval > best_eval && isOkToMove(piece,pos) == 1)
+                    if(opPlayer ->getType() == "Null" && eval > best_eval && isOkToMove(piece,pos) == 1)
                     {
                         best_eval = eval;
                         best_eval_move = Move(piece, pos);
                     }
                 }
 
-                if(opPlayer != nullptr && opPlayer -> getType() != "king"){
+                if(opPlayer ->getType() != "Null" && opPlayer -> getType() != "king"){
                     if(piece -> getType() != "king"){
                         getPointsEvaluation(opPlayer);
                         int evalpiece_me = getPointsEvaluation(piece);
@@ -355,25 +333,25 @@ Move Brain::determineBrainBestMove()
         cout << "No moves found! Checkmate\n";
         return {};
     }
-    if(best_removed_move.piece != nullptr)
+    if(best_removed_move.piece != nullptr && best_removed_move.piece ->getType() != "Null")
     {
         cout<<"Found the best piece to remove\n";
         last_AI_moves.push_back(best_removed_move);
         return best_removed_move;
     }
-    if(best_attacked_move.piece != nullptr)
+    if(best_attacked_move.piece != nullptr && best_attacked_move.piece ->getType() != "Null")
     {
         cout<<"Found the best piece under attack to move u\n";
         last_AI_moves.push_back(best_attacked_move);
         return best_attacked_move;
     }
-    if(best_eval_check_move.piece != nullptr && checkLast3Moves(best_eval_check_move) == false)
+    if(best_eval_check_move.piece != nullptr && best_eval_check_move.piece ->getType() != "Null" && checkLast3Moves(best_eval_check_move) == false)
     {
         cout<<"Moving based on check\n";
         last_AI_moves.push_back(best_eval_check_move);
         return best_eval_check_move;
     }
-    if(best_eval_move.piece!= nullptr && checkLast3Moves(best_eval_move) == false)
+    if(best_eval_move.piece != nullptr && best_eval_move.piece->getType() != "Null" && checkLast3Moves(best_eval_move) == false)
     {
         cout<<"Moving based on evaluation\n";
         last_AI_moves.push_back(best_eval_move);

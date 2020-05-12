@@ -6,9 +6,9 @@
 #include <vector>
 #include <iostream>
 
-Rules::Rules()
+Rules::Rules() : Pieces()
 {
-    Pieces();
+
 }
 
 
@@ -32,10 +32,10 @@ std::vector<std::pair<int, int>> Rules::canAttackPos(Piece* pcs,std::pair<int,in
     {
         for (auto p : l)
         {
-            if (board[pcs->getPlayer()][p.first][p.second] != nullptr)
+            if (board[pcs->getPlayer()][p.first][p.second] -> getType() != "Null")
                 break;
             ans.emplace_back(p);
-            if (board[!pcs->getPlayer()][p.first][p.second] != nullptr)
+            if (board[!pcs->getPlayer()][p.first][p.second] -> getType() != "Null")
                 break;
         }
     }
@@ -55,7 +55,7 @@ bool Rules::isInCheck(int player)
             mat[i][j] = 0;
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++)
-            if (board[!player][i][j] != nullptr)
+            if (board[!player][i][j] -> getType() != "Null")
             {
                 if (dynamic_cast<King*>(board[!player][i][j]))
                     haveKing = 1;
@@ -69,7 +69,7 @@ bool Rules::isInCheck(int player)
         return 1;
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++)
-            if (board[player][i][j] != nullptr)
+            if (board[player][i][j] -> getType() != "Null")
                 if (dynamic_cast<King*>(board[player][i][j]))
                     return mat[i][j];
     return false;
@@ -115,15 +115,15 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
     if (player == 1)
         dst = 1;
     if(isInTable(pos.first, pos.second+dst))
-        if (board[0][pos.first][pos.second + dst] == nullptr or board[1][pos.first][pos.second + dst] == nullptr)
+        if (board[0][pos.first][pos.second + dst] -> getType() == "Null" or board[1][pos.first][pos.second + dst] -> getType() == "Null")
         {
 
             //make a virtual move of the piece and check if valid
-            if( board[player][pos.first][pos.second + dst] == nullptr && board[!player][pos.first][pos.second + dst] == nullptr)
+            if( board[player][pos.first][pos.second + dst] -> getType() == "Null" && board[!player][pos.first][pos.second + dst] -> getType() == "Null")
             {
                 //std::cout<<"e pion"<<'\n';
                 board[player][pos.first][pos.second + dst] = board[player][pos.first][pos.second];
-                board[player][pos.first][pos.second] = nullptr;
+                board[player][pos.first][pos.second] = nullPiece;
                 if (!isInCheck(player))
                     ans.emplace_back(std::make_pair(pos.first, pos.second + dst));
 
@@ -136,10 +136,10 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
                 {
                     dst *= 2;
                     if(isInTable(pos.first, pos.second + dst))
-                        if (board[0][pos.first][pos.second + dst] == nullptr and board[1][pos.first][pos.second + dst] == nullptr)
+                        if (board[0][pos.first][pos.second + dst] -> getType() == "Null" and board[1][pos.first][pos.second + dst] -> getType() == "Null")
                         {
                             board[player][pos.first][pos.second + dst] = board[player][pos.first][pos.second];
-                            board[player][pos.first][pos.second] = nullptr;
+                            board[player][pos.first][pos.second] = nullPiece;
                             if (!isInCheck(player))
                                 ans.emplace_back(std::make_pair(pos.first, pos.second + dst));
                             getBoard(aux_board);
@@ -154,11 +154,11 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
             posx = pos.first + 1;
             posy = pos.second + dst;
             if(isInTable(posx, posy))
-                if (board[!player][posx][posy] != nullptr)
+                if (board[!player][posx][posy] -> getType() != "Null")
                 {
-                    board[!player][posx][posy] = nullptr;
+                    board[!player][posx][posy] = nullPiece;
                     board[player][posx][posy] = board[player][pos.first][pos.second];
-                    board[player][pos.first][pos.second] = nullptr;
+                    board[player][pos.first][pos.second] = nullPiece;
                     if (!isInCheck(player))
                         ans.push_back(std::make_pair(posx, posy));
                     getBoard(aux_board);
@@ -166,11 +166,11 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
             posx = pos.first - 1;
             posy = pos.second + dst;
             if(isInTable(posx, posy))
-                if (board[!player][posx][posy] != nullptr)
+                if (board[!player][posx][posy] -> getType() != "Null")
                 {
-                    board[!player][posx][posy] = nullptr;
+                    board[!player][posx][posy] = nullPiece;
                     board[player][posx][posy] = board[player][pos.first][pos.second];
-                    board[player][pos.first][pos.second] = nullptr;
+                    board[player][pos.first][pos.second] = nullPiece;
                     if (!isInCheck(player))
                         ans.push_back(std::make_pair(posx, posy));
                     getBoard(aux_board);
@@ -201,9 +201,9 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
                         std::cout<<"Pionul unde muta se afla la " << posx + 1<< " " << 8 - posy << '\n';
                         if(isInTable(posx, posy))
                         {
-                            board[!player][posx][posy + dst] = nullptr;
+                            board[!player][posx][posy + dst] = nullPiece;
                             board[player][posx][posy] = board[player][pos.first][pos.second];
-                            board[player][pos.first][pos.second] = nullptr;
+                            board[player][pos.first][pos.second] = nullPiece;
                             if (!isInCheck(player))
                                 ans.push_back(std::make_pair(posx, posy));
                             getBoard(aux_board);
@@ -225,7 +225,7 @@ void Rules::getAttackedPositions(bool mat[8][8], int player)
             mat[i][j] = 0;
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++)
-            if (board[!player][i][j] != nullptr)
+            if (board[!player][i][j] -> getType() != "Null")
             {
                 std :: pair<int,int> position = board[!player][i][j] -> getPos();
                 pos = canAttackPos(board[!player][i][j],position);
@@ -253,11 +253,11 @@ std::vector<std::pair<int, int>> Rules::canCastle(Piece* pcs)
         while (pos.first < 7)
         {
             pos.first ++ ;
-            if (board[!player][pos.first][pos.second] != nullptr)
+            if (board[!player][pos.first][pos.second] -> getType() != "Null")
                 break;
             if (isAttacked[pos.first][pos.second])
                 break;
-            if (board[player][pos.first][pos.second] != nullptr)
+            if (board[player][pos.first][pos.second] -> getType() != "Null")
             {
                 if (dynamic_cast<Rook*> (board[player][pos.first][pos.second]))
                 {
@@ -274,11 +274,11 @@ std::vector<std::pair<int, int>> Rules::canCastle(Piece* pcs)
         while (pos.first > 0)
         {
             pos.first --;
-            if (board[!player][pos.first][pos.second] != nullptr)
+            if (board[!player][pos.first][pos.second] -> getType() != "Null")
                 break;
             if (isAttacked[pos.first][pos.second])
                 break;
-            if (board[player][pos.first][pos.second] != nullptr)
+            if (board[player][pos.first][pos.second] -> getType() != "Null")
             {
                 if (dynamic_cast<Rook*> (board[player][pos.first][pos.second]))
                 {
@@ -329,8 +329,8 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs, bool chec
         {
             board[player][next_pos.first][next_pos.second] =
                 board[player][pos.first][pos.second];
-            board[!player][next_pos.first][next_pos.second] = nullptr;
-            board[player][pos.first][pos.second] = nullptr;
+            board[!player][next_pos.first][next_pos.second] = nullPiece;
+            board[player][pos.first][pos.second] = nullPiece;
             if(!isInCheck(player))
                 ans.push_back(next_pos);
             getBoard(aux_board);
@@ -381,10 +381,10 @@ std::vector<std::pair<int, int>> Rules::getProtectedPositions(Piece* pcs)
     {
         for (auto p : l)
         {
-            if (board[!pcs->getPlayer()][p.first][p.second] != nullptr)
+            if (board[!pcs->getPlayer()][p.first][p.second] -> getType() != "Null")
                 break;
             ans.emplace_back(p);
-            if (board[pcs->getPlayer()][p.first][p.second] != nullptr)
+            if (board[pcs->getPlayer()][p.first][p.second] -> getType() != "Null")
                 break;
         }
     }

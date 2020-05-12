@@ -82,7 +82,7 @@ void Table::draw(RenderWindow *window) {
         else containsSelectedPiece = true;
 
     /** Draw the selected piece at the end, to be above */
-    if(selectedPiece!= nullptr && containsSelectedPiece)
+    if(selectedPiece != nullptr && selectedPiece->getType() != "Null" && containsSelectedPiece)
         drawPiece(window, selectedPiece);
 
     /** Draw timers */
@@ -177,7 +177,7 @@ void Table::drawGrid(RenderWindow *window, SizeType s, std::pair<int,int> p){
             window->draw(square);
 
             if(find(futurePositions.begin(), futurePositions.end(), current_pos)!=futurePositions.end()){
-                if(rules[current_pos]!= nullptr && rules[selectedSquare]!= nullptr && rules[current_pos]->getPlayer()!=rules[selectedSquare]->getPlayer()){
+                if(rules[current_pos]->getType() != "Null" && rules[selectedSquare]->getType() != "Null" && rules[current_pos]->getPlayer()!=rules[selectedSquare]->getPlayer()){
                     RectangleShape insideRectangle;
                     insideRectangle.setSize(Vector2f(squareWidth, squareHeight));
                     insideRectangle.setPosition(static_cast<float>(p.first +squareWidth*i), static_cast<float>(p.second + squareHeight*j));
@@ -336,7 +336,7 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
         resetSelectedPieceLocation();
     }
     if(mousePressing && mousePressingTimeout.getElapsedTime().asMilliseconds()>100){
-        if(selectedPiece != nullptr && selectedPiece->getPlayer()==rules.getCurrentPlayer() && isInsideTable({event.mouseMove.x, event.mouseMove.y})){
+        if(selectedPiece ->getType() != "Null" && selectedPiece->getPlayer()==rules.getCurrentPlayer() && isInsideTable({event.mouseMove.x, event.mouseMove.y})){
             selectedPieceCurrentLocation = {Mouse::getPosition(*window).x,Mouse::getPosition(*window).y};
         }
     }
@@ -356,7 +356,7 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
     }
     if(rules.getCurrentPlayer()==1 && playAgainstAi){
         Move m = brain->determineBestMove();
-        if(m.piece!=nullptr && m.piece->isInTable())
+        if(m.piece->getType() != "Null" && m.piece->isInTable())
             rules.movePiece(m.piece, m.to);
     }
     /** Update timers */

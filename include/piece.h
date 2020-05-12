@@ -108,5 +108,9 @@ public:
     Piece* createElement(std::string, std::pair<int, int>, bool) const;
 };
 
+class NullPiece: public Piece{
+    std::vector<std::vector<std::pair<int, int>> >  path(std::pair<int,int>);
+    std::string getType();
+};
 
 #endif //CHECKMATE_PIECE_H

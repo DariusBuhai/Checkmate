@@ -13,10 +13,12 @@
  */
 
 class Pieces{
+private:
     void resizeBoard();
     void initPieces();
     void updateBoard();
 protected:
+    Piece* nullPiece;
     std::vector<std::vector<std::vector<Piece*>> >  board;
     std::deque<Move> history;
     std::vector<Piece*> pieces;

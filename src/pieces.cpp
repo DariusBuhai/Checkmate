@@ -17,7 +17,7 @@ std::ostream& operator<<(std::ostream& out, const Pieces& ob)
         for (int i = 0; i < 8; i++){
             out<<"\n";
             for (int j = 0; j < 8; j++)
-                if (ob.board[q][j][i] != nullptr)
+                if (ob.board[q][j][i] -> getType() != "Null")
                     out << ob.board[q][j][i]->getType()<<" ";
         }
         out<<"\n\n";
@@ -35,7 +35,7 @@ std::ostream& operator<<(std::ostream& out, const Pieces& ob)
 
 Pieces::Pieces()
 {
-
+    nullPiece = new NullPiece;
     resizeBoard();
     initPieces();
     updateBoard();
@@ -53,6 +53,7 @@ Pieces::~Pieces()
     }
     history.clear();
     pieces.clear();
+    delete nullPiece;
 }
 
 std::string Pieces::get_history()
@@ -130,7 +131,7 @@ void Pieces::updateBoard()
     for(int i=0; i<2; i++)
         for(int j=0; j<8; j++)
             for(int k=0; k<8; k++)
-                board[i][j][k] = nullptr;
+                board[i][j][k] = nullPiece;
 
     for(auto & piece : pieces)
         {
@@ -163,7 +164,7 @@ Piece* Pieces::getPiece(int player, std::pair<int, int> position)
 
 Piece* Pieces::operator[](std::pair<int, int> position)
 {
-    if(board[1][position.first][position.second] != nullptr)
+    if(board[1][position.first][position.second] -> getType() != "Null")
         return board[1][position.first][position.second];
     return board[0][position.first][position.second];
 }
@@ -186,7 +187,7 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
     if (player == 1)
         dst = -1;
     ///castle
-    if(board[piece->getPlayer()][new_position.first][new_position.second] != nullptr)
+    if(board[piece->getPlayer()][new_position.first][new_position.second] -> getType() != "Null")
     {
         Piece* aux = board[piece->getPlayer()][new_position.first][new_position.second];
         if(new_position.first > piece->getPos().first)
@@ -205,7 +206,7 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
         return;
     }
     ///take piece
-    if(board[!piece->getPlayer()][new_position.first][new_position.second]!=nullptr)
+    if(board[!piece->getPlayer()][new_position.first][new_position.second]-> getType() != "Null")
     {
         Piece* piece_to_delete = board[!piece->getPlayer()][new_position.first][new_position.second];
         /// Remember the address of the piece, but don't delete it
@@ -216,10 +217,10 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
                 break;
 
         pieces.erase(pieces.begin() + i);
-        board[!piece->getPlayer()][new_position.first][new_position.second] = nullptr;
+        board[!piece->getPlayer()][new_position.first][new_position.second] = nullPiece;
     }
     ///en passant
-    else if(board[!piece->getPlayer()][new_position.first][new_position.second] == nullptr && piece->getType() == "pawn" && ((piece->getPos().first == new_position.first + 1) || (piece->getPos().first == new_position.first - 1)) )
+    else if(board[!piece->getPlayer()][new_position.first][new_position.second] -> getType() == "Null" && piece->getType() == "pawn" && ((piece->getPos().first == new_position.first + 1) || (piece->getPos().first == new_position.first - 1)) )
     {
         Piece* piece_to_delete = board[!piece->getPlayer()][new_position.first][new_position.second + dst];
         current_move.deletedPiece = piece_to_delete;
@@ -229,7 +230,7 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
             if(pieces[i]==piece_to_delete)
                 break;
         pieces.erase(pieces.begin() + i);
-        board[!piece->getPlayer()][new_position.first][new_position.second + dst] = nullptr;
+        board[!piece->getPlayer()][new_position.first][new_position.second + dst] = nullPiece;
     }
     piece->move(new_position);
     if(dynamic_cast<Pawn*>(piece) && ((piece->getPlayer()==1 && piece->getPos().second==7) || (piece->getPlayer()==0 && piece->getPos().second==0)))
@@ -255,7 +256,7 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
 void Pieces::movePiece(std::pair<int, int> old_position, std::pair<int, int> new_position)
 {
     Piece* piece = operator[](old_position);
-    if(piece!= nullptr)
+    if(piece -> getType() != "Null")
         movePiece(piece, new_position);
 }
 
@@ -279,6 +280,10 @@ void Pieces::resetGame()
 {
     /** Clear history and pieces */
     for(auto &piece: pieces)
+    {
+        std::cout << (piece == nullPiece) <<"\n\n";
+    }
+    for(auto &piece: pieces)
         delete piece;
     for(auto &move: history)
     {
@@ -299,7 +304,7 @@ void Pieces::undoMove()
     {
         Move current_move = history.back();
 
-        if(current_move.updatedPiece!=nullptr)
+        if(current_move.updatedPiece != nullptr && current_move.updatedPiece-> getType() != "Null")
         {
 
             for(auto &piece: pieces)
@@ -317,7 +322,7 @@ void Pieces::undoMove()
         if(dynamic_cast<Pawn*>(current_move.piece) && ((current_move.piece->getPlayer()==0 && current_move.piece->getPos().second==6) || (current_move.piece->getPlayer()==1 && current_move.piece->getPos().second==1)))
             current_move.piece->resetHasMoved();
 
-        if(current_move.deletedPiece!= nullptr)
+        if(current_move.deletedPiece != nullptr && current_move.deletedPiece-> getType() != "Null")
             this->pieces.push_back(current_move.deletedPiece);
 
         updateBoard();
