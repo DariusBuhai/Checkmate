@@ -15,7 +15,7 @@ using namespace std;
 using namespace sf;
 
 Table::Table(){
-    brain = new Brain(&rules);
+    brain = new Brain(&rules, &playAgainstStockFish);
 }
 
 Table::~Table(){
@@ -55,11 +55,11 @@ bool Table::isPlayingAgainstAi() const{
 }
 
 void Table::togglePlayAgainstStockfish(){
-    playAgainstStockfish = !playAgainstStockfish;
+    playAgainstStockFish = !playAgainstStockFish;
 }
 
 bool Table::isPlayingAgainstStockfish() const{
-    return playAgainstStockfish;
+    return playAgainstStockFish;
 }
 
 bool Table::getIsCheckMate() const {
@@ -92,9 +92,9 @@ void Table::draw(RenderWindow *window) {
     int mins2 = static_cast<int>(timer2.GetElapsedSeconds())/60;
     int secs2 = static_cast<int>(timer2.GetElapsedSeconds())-mins2*60;
 
-    if(!playAgainstAi) *labels["timer"][0] = to_string(29-mins1)+":"+to_string(60-secs1);
+    if(!playAgainstAi) *labels["timer"][0] = (29-mins1<10 ? "0" : "")+to_string(29-mins1)+":"+(59-secs1<10 ? "0" : "")+to_string(59-secs1);
     else *labels["timer"][0] = "";
-    *labels["timer"][1] = to_string(29-mins2)+":"+to_string(60-secs2);
+    *labels["timer"][1] = (29-mins2<10 ? "0" : "")+to_string(29-mins2)+":"+(59-secs2<10 ? "0" : "")+to_string(59-secs2);
 
     labels["timer"][!rules.getCurrentPlayer()]->setColor(Color(80,102,47), Color(105,127,72));
     labels["timer"][rules.getCurrentPlayer()]->setColor(Color::Black, Color::White);
@@ -237,9 +237,10 @@ void Table::drawPiece(RenderWindow* window, Piece* piece) const{
 
     Texture piece_img;
 
-    int piece_type = 1;
-    pair<double, double> origin, scale;
-    switch(piece_type) {
+    pair<double, double> origin = {-110,-50}, scale = {.3,.3};
+    /// Deprecated
+    /// int piece_type = 1;
+    /**switch(piece_type) {
         case 2:
             origin = {-110, -50};
             scale = {0.35, .3};
@@ -248,8 +249,8 @@ void Table::drawPiece(RenderWindow* window, Piece* piece) const{
             origin = {-110, -50};
             scale = {0.3, .3};
             break;
-    }
-    if (!piece_img.loadFromFile(piece->getImage(piece_type))) throw EXIT_FAILURE;
+    }*/
+    if (!piece_img.loadFromFile(piece->getImage())) throw EXIT_FAILURE;
 
     Sprite item;
     item.setScale(scale.first, scale.second);
@@ -315,11 +316,6 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
         try{
             if(!checkMate){
                 pair<int, int> grid_position = this->determineGridPosition(std::pair<int,int>(event.mouseButton.x, event.mouseButton.y));
-                /// Deprecated, may cause problems with drag&drop
-                /**if(grid_position==selectedSquare){
-                    resetFuturePositions();
-                    return resetSelectedSquare();
-                }*/
                 updateSelectedSquare(grid_position);
             }
         }catch (int e){
@@ -358,15 +354,8 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
         else if(event.key.code==Keyboard::Down)
             updateSelectedSquare({selectedSquare.first, selectedSquare.second+1});
     }
-    if(rules.getCurrentPlayer()==1 && playAgainstStockfish && playAgainstAi){
-        Move M = brain -> determineBestStockfishMove();
-        cout<<M.piece -> getType() << " " << 1 + M.from.first << " " << 8 - M.from.second << " a mutat la " << 1 + M.to.first << " " << 8 - M.to.second<<'\n';
-        if(M.piece!=nullptr && M.piece->isInTable())
-            rules.movePiece(M.piece, M.to);
-    }
-
-     if(rules.getCurrentPlayer()==1 && playAgainstAi && !playAgainstStockfish){
-        Move m = brain -> determineBestMove();
+    if(rules.getCurrentPlayer()==1 && playAgainstAi){
+        Move m = brain->determineBestMove();
         if(m.piece!=nullptr && m.piece->isInTable())
             rules.movePiece(m.piece, m.to);
     }

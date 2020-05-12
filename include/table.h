@@ -46,7 +46,7 @@ private:
     bool *cursorHand = new bool(false);
 
     bool playAgainstAi = false;
-    bool playAgainstStockfish = false;
+    bool playAgainstStockFish = false;
 
     bool checkMate = false;
     int winnerPlayer = -1;

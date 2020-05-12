@@ -26,12 +26,13 @@ ostream& operator<<(ostream& out, const Brain& ob)
     return out;
 }
 
-Brain::Brain(Rules* r)
-{
+Brain::Brain(Rules* _rules, bool *_playAgainstStockFish){
     #if defined(_WIN32)
         ConnectToEngine("stockfish.exe");
     #endif
-    rules = r;
+    this->rules = _rules;
+    this->playAgainstStockFish = _playAgainstStockFish;
+
     initializeEvaluation();
 }
 Brain::~Brain()
@@ -246,7 +247,7 @@ bool Brain :: checkLast3Moves(Move check_move)
 }
 
 
-Move Brain::determineBestMove()
+Move Brain::determineBrainBestMove()
 {
     if(rules == nullptr)
         throw EXIT_FAILURE;
@@ -264,17 +265,6 @@ Move Brain::determineBestMove()
     ///ma plimb prin piese
 
     rules->getCurentBoard(board);
-    /*for (int i = 0; i < 8; i++)
-    {
-        std::cout<<"\n";
-        for (int j = 0; j < 8; j++)
-            if (board[1][j][i] != nullptr)
-                std::cout << board[1][j][i]->getType()<<" ";
-            else
-                std::cout << "nimic " ;
-    }
-    std::cout<<"\n\n";
-    */
     for(Piece* piece: rules->getPieces())
         if(piece -> getPlayer() == 1)
         {
@@ -317,40 +307,31 @@ Move Brain::determineBestMove()
                     }
                 }
 
-                if(opPlayer != nullptr && opPlayer -> getType() != "king")
-                {
-                    if(piece -> getType() != "king")
-                    {
+                if(opPlayer != nullptr && opPlayer -> getType() != "king"){
+                    if(piece -> getType() != "king"){
                         getPointsEvaluation(opPlayer);
                         int evalpiece_me = getPointsEvaluation(piece);
-                        if(evalpiece_me <= evalpiece_AI)
-                        {
-                            if (evalpiece_AI > best_removed)
-                            {
+                        if(evalpiece_me <= evalpiece_AI){
+                            if (evalpiece_AI > best_removed){
                                 best_removed = evalpiece_AI;
                                 best_removed_move = Move(piece, pos);
                             }
                         }
-                        else
-                        {
+                        else{
                             Evaluation evalProtect = evalProtected(opPlayer,opPlayer -> getPos());
                             Evaluation evalAttack = evalAttacked(opPlayer,opPlayer -> getPos());
-                            if(evalAttack.nr_pieces > evalProtect.nr_pieces || (evalAttack.nr_pieces > evalProtect.nr_pieces && evalAttack.eval <= evalProtect.eval) )
-                            {
+                            if(evalAttack.nr_pieces > evalProtect.nr_pieces || (evalAttack.nr_pieces > evalProtect.nr_pieces && evalAttack.eval <= evalProtect.eval) ){
                                 //int eval = evalAttack.eval - evalProtect.eval;
-                                if(evalpiece_AI > best_removed)
-                                {
+                                if(evalpiece_AI > best_removed){
                                     best_removed = evalpiece_AI;
                                     best_removed_move = Move(piece, pos);
                                 }
                             }
                         }
                     }
-                    else
-                    {
+                    else{
                         Evaluation evalProtect = evalProtected(opPlayer,opPlayer -> getPos());
-                        if(evalProtect.nr_pieces == 0)
-                        {
+                        if(evalProtect.nr_pieces == 0){
                             best_removed = 999;
                             best_removed_move = Move(piece,pos);
                         }
@@ -402,26 +383,30 @@ Move Brain::determineBestMove()
     return future_pos[rand() % future_pos.size()];
 }
 
-Move Brain::determineBestStockfishMove()
-{
-#if defined(_WIN32)
-    rules->getCurentBoard(board);
-    std::string best_move;
-    Move Best_move;
-    best_move = rules -> get_history();
-    best_move = getNextMove(best_move);
-    std::pair<int,int> pos_best_move;
-    std::pair<int,int> pos_piece;
-    pos_piece.first = int(best_move[0] - 97);
-    pos_piece.second = 8 - (best_move[1] - '0');
-    pos_best_move.first = int(best_move[2] - 97);
-    pos_best_move.second = 8 - (best_move[3] - '0');
-    cout<<best_move<<" cea mai buna mutare " << '\n';
-    Piece* piece = board[1][pos_piece.first][pos_piece.second];
-    Best_move = Move(piece,pos_best_move);
-    //cout<<Best_move.piece -> getType() << " " << 1 + Best_move.from.first << " " << 8 - Best_move.from.second << " a mutat la " << 1 + Best_move.to.first << " " << 8 - Best_move.to.second<<'\n';
-    return Best_move;
-#else
-    return this->determineBestMove();
-#endif
+Move Brain::determineStockFishBestMove(){
+    #if defined(_WIN32)
+        rules->getCurentBoard(board);
+        std::string best_move;
+        Move Best_move;
+        best_move = rules -> get_history();
+        best_move = getNextMove(best_move);
+        std::pair<int,int> pos_best_move;
+        std::pair<int,int> pos_piece;
+        pos_piece.first = int(best_move[0] - 97);
+        pos_piece.second = 8 - (best_move[1] - '0');
+        pos_best_move.first = int(best_move[2] - 97);
+        pos_best_move.second = 8 - (best_move[3] - '0');
+        cout<<best_move<<" cea mai buna mutare " << '\n';
+        Piece* piece = board[1][pos_piece.first][pos_piece.second];
+        Best_move = Move(piece,pos_best_move);
+        return Best_move;
+    #else
+        return this->determineBrainBestMove();
+    #endif
+}
+
+Move Brain::determineBestMove(){
+    if(*playAgainstStockFish)
+        return determineStockFishBestMove();
+    return determineBrainBestMove();
 }

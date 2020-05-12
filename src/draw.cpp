@@ -51,11 +51,13 @@ void Draw::initComponents()
     buttons += new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 200, screenHeight - 300},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
     buttons += new Button({screenWidth - 140, screenWidth - 10}, {350, 250}, &this->viewCredits,&this->cursorHand, "Show\nCredits","Hide\nCredits");
 
-    buttons += {"ai", new Button({screenWidth - 140, screenWidth - 10}, {500, 400}, &this->playAgainstStockfish,&this->cursorHand, "Stock\nFish","Brain")};
+    #if defined(_WIN32)
+        buttons += {"ai", new Button({screenWidth - 140, screenWidth - 10}, {500, 400}, &this->playAgainstStockFish,&this->cursorHand, "Stock\nFish","Brain")};
+    #endif
+
     buttons += {"chess", new Button({100, 320}, {120, 60}, &this->resetGameGulp,&this->cursorHand, "Reset Game")};
     buttons += {"chess", new Button({400, 620}, {120, 60}, &this->undoMoveGulp,&this->cursorHand, "Undo Move")};
     buttons += {"chess", new Button({700, 980}, {120, 60}, &this->playAgainstAi,&this->cursorHand, "Play against AI", "Play with friend")};
-
 
     labels.setDarkMode(&this->darkMode);
 
@@ -82,9 +84,8 @@ void Draw::init()
     window.setVerticalSyncEnabled(true);
     window.setActive(true);
 
-    while(window.isOpen())
-    {
-        Event event;
+    while(window.isOpen()){
+        Event event{};
         window.clear();
         this->draw(&window);
         while (window.pollEvent(event))
@@ -98,40 +99,36 @@ void Draw::init()
 
 }
 
-void Draw::digestAction(RenderWindow* window, Event event)
-{
-
+void Draw::digestAction(RenderWindow* window, Event event){
     cursorHand = false;
 
-    buttons.digestAction(event, window);
-
-    if(viewCredits)
+    if(viewCredits){
+        buttons.digestAction(event, window, "credits");
         table.toggleTimers(true);
-    else
+    }
+    else{
+        buttons.digestAction(event, window);
         table.digestAction(event, window);
+    }
 
-    if(undoMoveGulp)
-    {
+    if(undoMoveGulp){
         undoMoveGulp = false;
         table.undoMove();
     }
-    if(resetGameGulp)
-    {
+    if(resetGameGulp){
         resetGameGulp = false;
         table.resetGame();
     }
 
-    if(table.isPlayingAgainstStockfish() != playAgainstStockfish)
+    if(table.isPlayingAgainstStockfish() != playAgainstStockFish)
         table.togglePlayAgainstStockfish();
 
     if(table.isPlayingAgainstAi() != playAgainstAi)
         table.togglePlayAgainstAi();
 
+    /** Load determined cursor */
     Cursor cursor;
-    if(cursorHand)
-        cursor.loadFromSystem(Cursor::Hand);
-    else
-        cursor.loadFromSystem(Cursor::Arrow);
+    cursor.loadFromSystem(cursorHand ? Cursor::Hand : Cursor::Arrow);
     window->setMouseCursor(cursor);
 }
 
@@ -142,23 +139,19 @@ void Draw::draw(RenderWindow* window)
     fill.setFillColor(darkMode ? Color(46,47,49) : Color(236,236,236));
     window->draw(fill);
 
-    if(viewCredits)
-    {
+    if(viewCredits){
         labels.draw(window, "credits");
         buttons.draw(window, "credits");
     }
-    else
-    {
+    else{
         table.draw(window);
 
-        if(table.isPlayingAgainstAi())
-        {
+        if(table.isPlayingAgainstAi()){
             labels.draw(window, "ai");
             buttons.draw(window,"ai");
         }
 
-        if(table.getIsCheckMate())
-        {
+        if(table.getIsCheckMate()){
             *labels["checkmate"][2] = ""+string(1, '1'+table.getWinnerPlayer());
             labels.draw(window, "checkmate");
         }

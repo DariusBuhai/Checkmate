@@ -86,10 +86,12 @@ public:
     }
 };
 
-struct Timer {
+class Timer {
+private:
     sf::Clock mC;
     float runTime;
     bool bPaused;
+public:
 
     Timer() {
         bPaused = false;

@@ -32,7 +32,7 @@ private:
     bool darkMode = true;
     bool viewCredits = false;
     bool resetGameGulp = false;
-    bool playAgainstStockfish = false;
+    bool playAgainstStockFish = false;
     bool undoMoveGulp = false;
     bool playAgainstAi = false;
 

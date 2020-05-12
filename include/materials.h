@@ -9,13 +9,18 @@
 
 #include "../include/utils.h"
 
+/*class Image{
+    std::pair<int,int> x, y;
+    std::string image_path;
+    double
+};*/
+
 class Button{
     std::pair<int,int> x, y;
     std::string text, disabledText = "";
     bool* pressed;
     bool* cursorHand = new bool(false);
     bool hovering;
-
 public:
     Button(std::pair<int, int> _x, std::pair<int, int> _y, bool* _pressed, bool* _cursorHand, std::string _text, std::string _disabledText = ""): x(_x), y(_y), pressed(_pressed), text(_text), disabledText(_disabledText), hovering(false), cursorHand(_cursorHand){}
 
@@ -52,15 +57,15 @@ public:
         childs.clear();
     }
 
-    void draw(sf::RenderWindow * window, std::string screen = "") {
+    void draw(sf::RenderWindow * window, std::string category = "") {
         for(auto child: this->childs)
-            if(screen=="" || child.first=="default" || child.first==screen)
+            if(category=="" || child.first=="default" || child.first==category)
                 child.second->draw(window, *this->darkMode);
     }
 
-    void digestAction(sf::Event event, sf::RenderWindow * window, std::string screen = "") {
+    void digestAction(sf::Event event, sf::RenderWindow * window, std::string category = "") {
         for(auto child: this->childs)
-            if(screen=="" || child.first=="default" || child.first==screen)
+            if(category=="" || child.first=="default" || child.first==category)
                 child.second->digestAction(event, window);
     }
 
@@ -68,10 +73,10 @@ public:
         this->darkMode = _darkMode;
     }
 
-    std::vector<T> operator[](std::string screen){
+    std::vector<T> operator[](std::string category){
         std::vector<T> res;
         for(auto child: childs)
-            if(child.first==screen)
+            if(child.first==category)
                 res.push_back(child.second);
         return res;
     }
