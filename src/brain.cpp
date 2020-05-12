@@ -28,7 +28,7 @@ ostream& operator<<(ostream& out, const Brain& ob)
 
 Brain::Brain(Rules* r)
 {
-    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+    #if defined(_WIN32)
     ConnectToEngine("stockfish.exe");
     #endif
     rules = r;
@@ -36,7 +36,7 @@ Brain::Brain(Rules* r)
 }
 Brain::~Brain()
 {
-    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+    #if defined(_WIN32)
     CloseConnection();
     #endif
 }
@@ -404,7 +404,7 @@ Move Brain::determineBestMove()
 
 Move Brain::determine_Best_Stockfish_Move()
 {
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+#if defined(_WIN32)
     rules->getCurentBoard(board);
     std::string best_move;
     Move Best_move;

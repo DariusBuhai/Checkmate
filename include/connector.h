@@ -1,7 +1,7 @@
-
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+#if defined(_WIN32)
     #ifndef CONNECTOR_H
     #define CONNECTOR_H
+
 
     #include <windows.h>
     #include <stdio.h>
