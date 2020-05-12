@@ -12,8 +12,8 @@
 * [x] STL (**vectors**)
 * [x] Lambda expressions (**rules.cpp Rules::getFuturePawn()**)
 * [x] Templates (**materials.h**)
-* [x] Smart pointers (**unique_pointer<>**)
-* [ ] Design patterns (maxim 4: )
+* [ ] Smart pointers (**unique_pointer<>** + de adaugat inca unul)
+* [x] Design patterns (maxim 4: Factory, Template Method, Singleton, Null Object)
 * [x] Features of C++17/20 (***constexpr, consteval, constinit, fold expressions, init statement for if/switch, etc***) (**brain.cpp -> isOkToMove()**)
 
 ### Opțional => Bonus:
