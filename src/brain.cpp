@@ -1,4 +1,6 @@
 #include "../include/brain.h"
+#include <time.h>
+#include "../include/Connector.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -26,8 +28,13 @@ ostream& operator<<(ostream& out, const Brain& ob)
 
 Brain::Brain(Rules* r)
 {
+    ConnectToEngine("stockfish.exe");
     rules = r;
     initializeEvaluation();
+}
+Brain::~Brain()
+{
+    CloseConnection();
 }
 
 void Brain::initializeEvaluation()
@@ -138,7 +145,7 @@ bool Brain :: isOkToMove(Piece* piece, std::pair<int,int> position)
 
     Evaluation evalProtect = evalProtected(piece,position);
     Evaluation evalAttack = evalAttacked(piece,position);
-    cout<<piece->getType() << " " << position.first + 1 << " "  << 8 - position.second << " " << evalProtect.eval << " " << evalAttack.eval << '\n';
+    //cout<<piece->getType() << " " << position.first + 1 << " "  << 8 - position.second << " " << evalProtect.eval << " " << evalAttack.eval << '\n';
     board[piece -> getPlayer()][position.first][position.second] = nullptr;
     board[piece -> getPlayer()][piece -> getPos().first][piece -> getPos().second] = piece;
     if(evalAttack.nr_pieces <= evalProtect.nr_pieces && evalAttack.eval <= evalProtect.eval)
@@ -225,11 +232,11 @@ inline void Brain::copyBoard()
 bool Brain :: check_last_3_moves(Move check_move)
 {
     int n = last_AI_moves.size();
-    if(last_AI_moves[n - 1].to == check_move.to && last_AI_moves[n - 1].from == check_move.from && n > 0)
+    if(n > 0 && last_AI_moves[n - 1].to == check_move.to && last_AI_moves[n - 1].from == check_move.from)
         return true;
-    if( last_AI_moves[n - 2].to == check_move.to && last_AI_moves[n - 2].from == check_move.from && n > 1)
+    if(n > 1  && last_AI_moves[n - 2].to == check_move.to && last_AI_moves[n - 2].from == check_move.from)
         return true;
-    if (last_AI_moves[n - 3].to == check_move.to && last_AI_moves[n - 3].from == check_move.from && n > 2)
+    if ( n > 2 && last_AI_moves[n - 3].to == check_move.to && last_AI_moves[n - 3].from == check_move.from)
         return true;
     return false;
 }
@@ -381,7 +388,7 @@ Move Brain::determineBestMove()
         last_AI_moves.push_back(best_eval_check_move);
         return best_eval_check_move;
     }
-    if(best_eval_move.piece!= nullptr)
+    if(best_eval_move.piece!= nullptr && check_last_3_moves(best_eval_move) == false)
     {
         cout<<"Moving based on evaluation\n";
         last_AI_moves.push_back(best_eval_move);
@@ -391,3 +398,22 @@ Move Brain::determineBestMove()
     return future_pos[rand() % future_pos.size()];
 }
 
+Move Brain::determine_Best_Stockfish_Move()
+{
+    rules->getCurentBoard(board);
+    std::string best_move;
+    Move Best_move;
+    best_move = rules -> get_history();
+    best_move = getNextMove(best_move);
+    std::pair<int,int> pos_best_move;
+    std::pair<int,int> pos_piece;
+    pos_piece.first = int(best_move[0] - 97);
+    pos_piece.second = 8 - (best_move[1] - '0');
+    pos_best_move.first = int(best_move[2] - 97);
+    pos_best_move.second = 8 - (best_move[3] - '0');
+    cout<<best_move<<" cea mai buna mutare " << '\n';
+    Piece* piece = board[1][pos_piece.first][pos_piece.second];
+    Best_move = Move(piece,pos_best_move);
+    //cout<<Best_move.piece -> getType() << " " << 1 + Best_move.from.first << " " << 8 - Best_move.from.second << " a mutat la " << 1 + Best_move.to.first << " " << 8 - Best_move.to.second<<'\n';
+    return Best_move;
+}

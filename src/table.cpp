@@ -279,9 +279,11 @@ void Table::digestAction(Event event){
             updateSelectedSquare({selectedSquare.first, selectedSquare.second+1});
     }
     if(rules.getCurrentPlayer()==1 && playAgainstAi){
-        Move m = brain->determineBestMove();
-        if(m.piece!=nullptr && m.piece->isInTable())
-            rules.movePiece(m.piece, m.to);
+        Move M = brain -> determine_Best_Stockfish_Move();
+        Move m = brain -> determineBestMove();
+        cout<<M.piece -> getType() << " " << 1 + M.from.first << " " << 8 - M.from.second << " a mutat la " << 1 + M.to.first << " " << 8 - M.to.second<<'\n';
+        if(M.piece!=nullptr && M.piece->isInTable())
+            rules.movePiece(M.piece, M.to);
     }
 }
 

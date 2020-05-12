@@ -6,6 +6,9 @@
 #include "../include/piece.h"
 #include "../include/draw.h"
 #include "table.cpp"
+//#include <time.h>
+//#include "../include/Connector.hpp"
+
 using namespace std;
 using namespace sf;
 
@@ -43,10 +46,10 @@ void Draw::initComponents() {
 
     buttons += new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 200, screenHeight - 300},&this->darkMode, "Dark\nMode", "Light\nMode");
     buttons += new Button({screenWidth - 140, screenWidth - 10}, {350, 250}, &this->viewCredits, "Show\nCredits","Hide\nCredits");
-
-    buttons += {"chess", new Button({100, 320}, {120, 60}, &this->resetGameGulp, "Reset Game")};
-    buttons += {"chess", new Button({400, 620}, {120, 60}, &this->undoMoveGulp, "Undo Move")};
-    buttons += {"chess", new Button({700, 980}, {120, 60}, &this->playAgainstAi, "Play against AI", "Play with friend")};
+    buttons += {"chess", new Button({550, 220}, {150,60}, &this->playAgainstAi, "Play Against\nStockfish", "Play with friend")};
+    buttons += {"chess", new Button({10, 320}, {150, 60}, &this->resetGameGulp, "Reset Game")};
+    buttons += {"chess", new Button({300, 620}, {150, 60}, &this->undoMoveGulp, "Undo Move")};
+    buttons += {"chess", new Button({800, 980}, {150, 60}, &this->playAgainstAi, "Play against AI", "Play with friend")};
 
     labels.setDarkMode(&this->darkMode);
 
@@ -68,6 +71,9 @@ void Draw::initComponents() {
 void Draw::init(){
     /** Create the window of the application */
     RenderWindow window(VideoMode((unsigned int)screenWidth, (unsigned int)screenHeight, 32), "AI Chess",Style::Titlebar | Style::Close);
+
+    //ConnectToEngine("stockfish.exe");
+
     window.setVerticalSyncEnabled(true);
     window.setActive(true);
 
@@ -82,6 +88,8 @@ void Draw::init(){
         }
         window.display();
     }
+
+    //CloseConnection();
 }
 
 void Draw::digestAction(RenderWindow* window, Event event){

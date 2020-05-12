@@ -30,7 +30,7 @@ public:
     Piece* operator[](std::pair<int, int>);
     std::vector<std::vector<Piece*>> operator[](int);
     void setPieces(const std::vector<Piece*>&);
-
+    std::string get_history();
     void movePiece(Piece*, std::pair<int, int>, bool = false);
     void movePiece(std::pair<int, int>, std::pair<int, int>);
 

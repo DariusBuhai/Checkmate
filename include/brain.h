@@ -32,7 +32,9 @@ public:
     void initializeEvaluation();
     inline void copyBoard();
     bool check_last_3_moves(Move);
+    Move determine_Best_Stockfish_Move();
     friend std::ostream& operator<<(std::ostream& , const Brain&);
+    ~Brain();
 };
 
 #endif //CHECKMATE_BRAIN_H

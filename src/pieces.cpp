@@ -58,6 +58,26 @@ Pieces::~Pieces()
     pieces.clear();
 }
 
+std::string Pieces::get_history()
+{
+    std::string moves = "";
+    for(auto x : history)
+    {
+        char c1 = char(x.from.first + 97);
+        char c2 = 8 - x.from.second + '0';
+        char c3 = char(x.to.first + 97);
+        char c4 = 8 - x.to.second + '0';
+        moves += c1;
+        moves += c2;
+        moves += c3;
+        moves += c4;
+        moves += " ";
+        //std::cout<< c1 << c2 << c3 << c4 << '\n';
+    }
+    std::cout<<moves<<'\n';
+    return moves;
+}
+
 void Pieces::resizeBoard()
 {
     board.resize(2);
@@ -101,7 +121,10 @@ void Pieces::updateBoard()
                 board[i][j][k] = nullptr;
 
     for(auto & piece : pieces)
-        board[piece->getPlayer()][piece->getPos().first][piece->getPos().second] = piece;
+        {
+            //std::cout<<piece -> getType() << " " << piece ->getPos().first << " " << piece ->getPos().second << '\n';
+            board[piece->getPlayer()][piece->getPos().first][piece->getPos().second] = piece;
+        }
 }
 
 void Pieces::setPieces(const std::vector<Piece*>& new_pieces)
@@ -197,7 +220,6 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
         board[!piece->getPlayer()][new_position.first][new_position.second + dst] = nullptr;
     }
     piece->move(new_position);
-
     if(dynamic_cast<Pawn*>(piece) && ((piece->getPlayer()==1 && piece->getPos().second==7) || (piece->getPlayer()==0 && piece->getPos().second==0)))
     {
         for(unsigned int i=0; i<pieces.size(); i++)
