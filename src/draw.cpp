@@ -7,7 +7,9 @@
 
 #include "../include/piece.h"
 #include "../include/draw.h"
-
+#if defined(_WIN32)
+#include "table.cpp"
+#endif // defined
 using namespace std;
 using namespace sf;
 

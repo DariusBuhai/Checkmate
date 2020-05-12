@@ -2,6 +2,10 @@
 
 using namespace std;
 
+#if defined(_WIN32)
+#include "draw.cpp"
+
+#endif // defined
 
 int main(){
 

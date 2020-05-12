@@ -1,5 +1,3 @@
-
-#if defined(_WIN32)
 #ifndef CONNECTOR_H
 #define CONNECTOR_H
 
@@ -7,6 +5,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+
 
 STARTUPINFO sti = {0};
 SECURITY_ATTRIBUTES sats = {0};
@@ -69,7 +68,5 @@ void CloseConnection()
     if(pi.hProcess != NULL) CloseHandle(pi.hProcess);
     if(pi.hThread != NULL) CloseHandle(pi.hThread);
 }
+
 #endif CONNECTOR_H
-#else
-#include <unistd.h>
-#endif

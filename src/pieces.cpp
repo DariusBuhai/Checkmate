@@ -6,6 +6,10 @@
 #include "../include/pieces.h"
 #include "../include/piece.h"
 
+#if defined(_WIN32)
+#include "piece.cpp"
+#endif // defined
+
 std::ostream& operator<<(std::ostream& out, const Pieces& ob)
 {
     out<<"In momentul actual tabla arata asa: \n";
