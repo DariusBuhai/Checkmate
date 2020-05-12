@@ -5,8 +5,13 @@
 #include "../include/utils.h"
 #include "../include/materials.h"
 
-#define ScreenWidth 1100
-#define ScreenHeight 1100
+#if defined(_WIN32)
+    #define ScreenWidth 900
+    #define ScreenHeight 900
+#else
+    #define ScreenWidth 1100
+    #define ScreenHeight 1100
+#endif
 
 using namespace std;
 using namespace sf;

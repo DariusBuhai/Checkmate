@@ -1,7 +1,3 @@
-//
-// Created by Darius Buhai on 4/24/20.
-//
-
 #ifndef CHECKMATE_UTILS_H
 #define CHECKMATE_UTILS_H
 
@@ -12,8 +8,13 @@
 
 #include "piece.h"
 
-#define ScreenWidth 1100
-#define ScreenHeight 1100
+#if defined(_WIN32)
+    #define ScreenWidth 900
+    #define ScreenHeight 900
+#else
+    #define ScreenWidth 1100
+    #define ScreenHeight 1100
+#endif
 
 struct SizeType{
     double width, height;

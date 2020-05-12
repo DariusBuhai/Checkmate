@@ -5,12 +5,12 @@
 #include <deque>
 #include <string>
 
-/**
- * This is a subclass of rules! do not instanciate
- */
-
 #include "piece.h"
 #include "utils.h"
+
+/**
+ * This is a subclass of rules! do not instantiate
+ */
 
 class Pieces{
     void resizeBoard();

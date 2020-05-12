@@ -1,6 +1,5 @@
-//
-// Created by Darius Buhai on 3/26/20.
-//
+#ifndef CHECKMATE_TABLE_H
+#define CHECKMATE_TABLE_H
 
 #include <SFML/Graphics.hpp>
 
@@ -13,11 +12,13 @@
 
 #include "../include/materials.h"
 
-#define ScreenWidth 1100
-#define ScreenHeight 1100
-
-#ifndef CHECKMATE_TABLE_H
-#define CHECKMATE_TABLE_H
+#if defined(_WIN32)
+    #define ScreenWidth 900
+    #define ScreenHeight 900
+#else
+    #define ScreenWidth 1100
+    #define ScreenHeight 1100
+#endif
 
 class Table{
 private:

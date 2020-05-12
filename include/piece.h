@@ -1,13 +1,8 @@
-//
-// Created by Darius Buhai on 3/26/20.
-//
-
 #ifndef CHECKMATE_PIECE_H
 #define CHECKMATE_PIECE_H
+
 #include <vector>
 #include <string>
-
-// factory class to produce piece obj
 
 class Piece{
 protected:

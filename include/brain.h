@@ -1,7 +1,3 @@
-//
-// Created by Darius Buhai on 4/10/20.
-//
-
 #ifndef CHECKMATE_BRAIN_H
 #define CHECKMATE_BRAIN_H
 
@@ -26,13 +22,13 @@ public:
     Evaluation evalProtected(Piece*,std::pair<int,int>);
     bool isOkToMove(Piece*,std::pair<int,int>);
     bool canCheck(Piece*,std::pair<int,int>);
-    bool Piece_Is_Attacked(Piece*,std::pair<int,int>);
+    bool pieceIsAttacked(Piece*,std::pair<int,int>);
     Move determineBestMove();
     int getMoves();
     void initializeEvaluation();
     inline void copyBoard();
-    bool check_last_3_moves(Move);
-    Move determine_Best_Stockfish_Move();
+    bool checkLast3Moves(Move);
+    Move determineBestStockfishMove();
     friend std::ostream& operator<<(std::ostream& , const Brain&);
     ~Brain();
 };

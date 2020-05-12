@@ -209,7 +209,7 @@ bool Brain :: canCheck(Piece* piece, std::pair<int,int> position)
     return false;
 }
 
-bool Brain :: Piece_Is_Attacked(Piece* piece, std::pair<int,int> position)
+bool Brain :: pieceIsAttacked(Piece* piece, std::pair<int,int> position)
 {
     Evaluation evalProtect = evalProtected(piece,position);
     Evaluation evalAttack = evalAttacked(piece,position);
@@ -233,7 +233,7 @@ inline void Brain::copyBoard()
             }
 }
 
-bool Brain :: check_last_3_moves(Move check_move)
+bool Brain :: checkLast3Moves(Move check_move)
 {
     int n = last_AI_moves.size();
     if(n > 0 && last_AI_moves[n - 1].to == check_move.to && last_AI_moves[n - 1].from == check_move.from)
@@ -358,7 +358,7 @@ Move Brain::determineBestMove()
                 }
             }
             ///verific daca piesa e atacata
-            if(Piece_Is_Attacked(piece,piece->getPos()) == 1)
+            if(pieceIsAttacked(piece,piece->getPos()) == 1)
             {
                 int evalPiece = getPointsEvaluation(piece);
                 if(evalPiece > best_eval_attacked_piece)
@@ -386,13 +386,13 @@ Move Brain::determineBestMove()
         last_AI_moves.push_back(best_attacked_move);
         return best_attacked_move;
     }
-    if(best_eval_check_move.piece != nullptr && check_last_3_moves(best_eval_check_move) == false)
+    if(best_eval_check_move.piece != nullptr && checkLast3Moves(best_eval_check_move) == false)
     {
         cout<<"Moving based on check\n";
         last_AI_moves.push_back(best_eval_check_move);
         return best_eval_check_move;
     }
-    if(best_eval_move.piece!= nullptr && check_last_3_moves(best_eval_move) == false)
+    if(best_eval_move.piece!= nullptr && checkLast3Moves(best_eval_move) == false)
     {
         cout<<"Moving based on evaluation\n";
         last_AI_moves.push_back(best_eval_move);
@@ -402,7 +402,7 @@ Move Brain::determineBestMove()
     return future_pos[rand() % future_pos.size()];
 }
 
-Move Brain::determine_Best_Stockfish_Move()
+Move Brain::determineBestStockfishMove()
 {
 #if defined(_WIN32)
     rules->getCurentBoard(board);
