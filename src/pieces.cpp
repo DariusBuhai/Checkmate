@@ -7,7 +7,7 @@
 #include "../include/piece.h"
 
 #if defined(_WIN32)
-#include "piece.cpp"
+    #include "piece.cpp"
 #endif // defined
 
 std::ostream& operator<<(std::ostream& out, const Pieces& ob)

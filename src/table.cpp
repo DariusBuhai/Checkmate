@@ -6,10 +6,10 @@
 
 #include "../include/piece.h"
 #include "../include/table.h"
-#if defined(_WIN32)
-#include "pieces.cpp"
 
-#endif // defined
+#if defined(_WIN32)
+    #include "pieces.cpp"
+#endif
 
 using namespace std;
 using namespace sf;

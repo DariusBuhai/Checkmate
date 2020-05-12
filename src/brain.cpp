@@ -29,7 +29,7 @@ ostream& operator<<(ostream& out, const Brain& ob)
 Brain::Brain(Rules* r)
 {
     #if defined(_WIN32)
-    ConnectToEngine("stockfish.exe");
+        ConnectToEngine("stockfish.exe");
     #endif
     rules = r;
     initializeEvaluation();
@@ -37,7 +37,7 @@ Brain::Brain(Rules* r)
 Brain::~Brain()
 {
     #if defined(_WIN32)
-    CloseConnection();
+        CloseConnection();
     #endif
 }
 

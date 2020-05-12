@@ -3,9 +3,8 @@
 using namespace std;
 
 #if defined(_WIN32)
-#include "draw.cpp"
-
-#endif // defined
+    #include "draw.cpp"
+#endif
 
 int main(){
 
