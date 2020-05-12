@@ -307,10 +307,11 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
         try{
             if(!checkMate){
                 pair<int, int> grid_position = this->determineGridPosition(std::pair<int,int>(event.mouseButton.x, event.mouseButton.y));
-                if(grid_position==selectedSquare){
+                /// Deprecated, may cause problems with drag&drop
+                /**if(grid_position==selectedSquare){
                     resetFuturePositions();
                     return resetSelectedSquare();
-                }
+                }*/
                 updateSelectedSquare(grid_position);
             }
         }catch (int e){
