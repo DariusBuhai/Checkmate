@@ -261,7 +261,7 @@ void Table::digestAction(Event event){
         resetSelectedPieceLocation();
     }
     if(event.type==Event::MouseMoved && mouseButtonPressing){
-        if(selectedPiece != nullptr && selectedPiece->getPlayer()==rules.getCurrentPlayer() && gameClock.getElapsedTime().asMilliseconds()>=100 && isInsideTable({event.mouseMove.x, event.mouseMove.y}))
+        if(selectedPiece != nullptr && selectedPiece->getPlayer()==rules.getCurrentPlayer() && gameClock.getElapsedTime().asMilliseconds()>=20 && isInsideTable({event.mouseMove.x, event.mouseMove.y}))
             selectedPieceCurrentLocation = {event.mouseMove.x, event.mouseMove.y};
     }
     if(event.type==Event::KeyPressed){
