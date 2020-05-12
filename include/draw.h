@@ -28,7 +28,7 @@ private:
 
     bool cursorHand = false;
 
-    bool darkMode = false;
+    bool darkMode = true;
     bool viewCredits = false;
     bool resetGameGulp = false;
     bool playAgainstStockfish = false;

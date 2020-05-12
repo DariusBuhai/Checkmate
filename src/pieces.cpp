@@ -5,7 +5,6 @@
 #include "../include/utils.h"
 #include "../include/pieces.h"
 #include "../include/piece.h"
-#include "piece.cpp"
 
 std::ostream& operator<<(std::ostream& out, const Pieces& ob)
 {
