@@ -38,16 +38,18 @@ void Draw::initComponents() {
     table.setSize(SizeType(screenWidth - 150, screenHeight - 150));
     table.setPosition({0, 25});
     table.setDarkMode(&this->darkMode);
+    table.setCursorHand(&this->cursorHand);
     table.initComponents();
 
     buttons.setDarkMode((&this->darkMode));
 
-    buttons += new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 200, screenHeight - 300},&this->darkMode, "Dark\nMode", "Light\nMode");
-    buttons += new Button({screenWidth - 140, screenWidth - 10}, {350, 250}, &this->viewCredits, "Show\nCredits","Hide\nCredits");
+    buttons += new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 200, screenHeight - 300},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
+    buttons += new Button({screenWidth - 140, screenWidth - 10}, {350, 250}, &this->viewCredits,&this->cursorHand, "Show\nCredits","Hide\nCredits");
 
-    buttons += {"chess", new Button({100, 320}, {120, 60}, &this->resetGameGulp, "Reset Game")};
-    buttons += {"chess", new Button({400, 620}, {120, 60}, &this->undoMoveGulp, "Undo Move")};
-    buttons += {"chess", new Button({700, 980}, {120, 60}, &this->playAgainstAi, "Play against AI", "Play with friend")};
+    buttons += {"ai", new Button({screenWidth - 140, screenWidth - 10}, {500, 400}, &this->viewCredits,&this->activateStockfishGulp, "Stock\nFish","Brain")};
+    buttons += {"chess", new Button({100, 320}, {120, 60}, &this->resetGameGulp,&this->cursorHand, "Reset Game")};
+    buttons += {"chess", new Button({400, 620}, {120, 60}, &this->undoMoveGulp,&this->cursorHand, "Undo Move")};
+    buttons += {"chess", new Button({700, 980}, {120, 60}, &this->playAgainstAi,&this->cursorHand, "Play against AI", "Play with friend")};
 
     labels.setDarkMode(&this->darkMode);
 
@@ -86,16 +88,15 @@ void Draw::init(){
 }
 
 void Draw::digestAction(RenderWindow* window, Event event){
-    Cursor cursor;
-    cursor.loadFromSystem(Cursor::Arrow);
-    window->setMouseCursor(cursor);
+
+    cursorHand = false;
 
     buttons.digestAction(event, window);
 
     if(viewCredits)
         table.toggleTimers(true);
     else
-        table.digestAction(event);
+        table.digestAction(event, window);
 
     if(undoMoveGulp){
         undoMoveGulp = false;
@@ -105,14 +106,28 @@ void Draw::digestAction(RenderWindow* window, Event event){
         resetGameGulp = false;
         table.resetGame();
     }
+    if(activateStockfishGulp){
+        /// To be implemented
+        //table.setStockfish(false);
+    }else{
+        /// To be implemented
+        //table.setStockfish(true);
+    }
     if(table.isPlayingAgainstAi() != playAgainstAi)
         table.togglePlayAgainstAi();
+
+    Cursor cursor;
+    if(cursorHand)
+        cursor.loadFromSystem(Cursor::Hand);
+    else
+        cursor.loadFromSystem(Cursor::Arrow);
+    window->setMouseCursor(cursor);
 }
 
 void Draw::draw(RenderWindow* window) {
 
     RectangleShape fill = RectangleShape(Vector2f(screenWidth, screenHeight));
-    fill.setFillColor(darkMode ? Color::Black : Color::White);
+    fill.setFillColor(darkMode ? Color(46,47,49) : Color(236,236,236));
     window->draw(fill);
 
     if(viewCredits){
@@ -121,8 +136,10 @@ void Draw::draw(RenderWindow* window) {
     }else{
         table.draw(window);
 
-        if(table.isPlayingAgainstAi())
+        if(table.isPlayingAgainstAi()){
             labels.draw(window, "ai");
+            buttons.draw(window,"ai");
+        }
 
         if(table.getIsCheckMate()){
             *labels["checkmate"][2] = ""+string(1, '1'+table.getWinnerPlayer());

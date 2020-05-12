@@ -24,7 +24,7 @@ private:
     /** General settings */
     const double screenWidth = ScreenWidth;
     const double screenHeight = ScreenHeight;
-    bool* darkMode;
+    bool* darkMode{new bool(false)};
 
     /** Custom table sizes */
     const double padding = 10;
@@ -39,7 +39,10 @@ private:
     Piece* selectedPiece = nullptr;
     std::vector<std::pair<int, int>> futurePositions;
 
-    bool mouseButtonPressing = false;
+    bool mousePressing = false;
+    sf::Clock mousePressingTimeout;
+
+    bool *cursorHand = new bool(false);
 
     bool playAgainstAi = false;
     bool checkMate = false;
@@ -72,7 +75,7 @@ public:
 
     ~Table();
 
-    void digestAction(sf::Event);
+    void digestAction(sf::Event, sf::RenderWindow*);
 
     void draw(sf::RenderWindow*);
     void drawPiece(sf::RenderWindow*, Piece*) const;
@@ -80,6 +83,7 @@ public:
     void setSize(SizeType);
     void setPosition(std::pair<int,int>);
     void setDarkMode(bool*);
+    void setCursorHand(bool*);
 
     void toggleTimers(bool = false, bool = false);
 

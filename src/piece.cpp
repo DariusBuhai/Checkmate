@@ -62,7 +62,6 @@ void Piece::resetHasMoved() {
     hasMoved = false;
 }
 
-
 void Piece::setPosition(int x_next, int y_next){
     pos.first = x_next;
     pos.second = y_next;

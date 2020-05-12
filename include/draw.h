@@ -26,9 +26,12 @@ private:
 
     static Draw* instance_;
 
+    bool cursorHand = false;
+
     bool darkMode = false;
     bool viewCredits = false;
     bool resetGameGulp = false;
+    bool activateStockfishGulp = false;
     bool undoMoveGulp = false;
     bool playAgainstAi = false;
 
