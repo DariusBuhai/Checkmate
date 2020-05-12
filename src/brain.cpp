@@ -1,6 +1,6 @@
 #include "../include/brain.h"
 #include <time.h>
-#include "../include/Connector.hpp"
+#include "../include/connector.h"
 
 #include <iostream>
 #include <fstream>
@@ -28,13 +28,17 @@ ostream& operator<<(ostream& out, const Brain& ob)
 
 Brain::Brain(Rules* r)
 {
+    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
     ConnectToEngine("stockfish.exe");
+    #endif
     rules = r;
     initializeEvaluation();
 }
 Brain::~Brain()
 {
+    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
     CloseConnection();
+    #endif
 }
 
 void Brain::initializeEvaluation()
@@ -400,6 +404,7 @@ Move Brain::determineBestMove()
 
 Move Brain::determine_Best_Stockfish_Move()
 {
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
     rules->getCurentBoard(board);
     std::string best_move;
     Move Best_move;
@@ -416,4 +421,7 @@ Move Brain::determine_Best_Stockfish_Move()
     Best_move = Move(piece,pos_best_move);
     //cout<<Best_move.piece -> getType() << " " << 1 + Best_move.from.first << " " << 8 - Best_move.from.second << " a mutat la " << 1 + Best_move.to.first << " " << 8 - Best_move.to.second<<'\n';
     return Best_move;
+#else
+    return this->determineBestMove();
+#endif
 }

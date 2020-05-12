@@ -7,10 +7,6 @@
 
 #include "../include/piece.h"
 #include "../include/draw.h"
-#include "../include/utils.h"
-#include "../include/materials.h"
-#include "table.cpp"
-
 
 using namespace std;
 using namespace sf;
