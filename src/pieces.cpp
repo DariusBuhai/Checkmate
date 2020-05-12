@@ -44,6 +44,7 @@ Pieces::Pieces()
 Pieces::~Pieces()
 {
     /** Clear history and pieces */
+    delete nullPiece;
     for(auto &piece: pieces)
         delete piece;
     for(auto &move: history)
@@ -53,7 +54,7 @@ Pieces::~Pieces()
     }
     history.clear();
     pieces.clear();
-    delete nullPiece;
+    
 }
 
 std::string Pieces::get_history()
@@ -279,10 +280,6 @@ void Pieces::switchPlayer()
 void Pieces::resetGame()
 {
     /** Clear history and pieces */
-    for(auto &piece: pieces)
-    {
-        std::cout << (piece == nullPiece) <<"\n\n";
-    }
     for(auto &piece: pieces)
         delete piece;
     for(auto &move: history)
