@@ -13,11 +13,11 @@ class Button{
     std::pair<int,int> x, y;
     std::string text, disabledText = "";
     bool* pressed;
+    bool* cursorHand = new bool(false);
     bool hovering;
 
-    static void setCursorToHand(sf::RenderWindow*);
 public:
-    Button(std::pair<int, int> _x, std::pair<int, int> _y, bool* _pressed, std::string _text, std::string _disabledText = ""): x(_x), y(_y), pressed(_pressed), text(_text), disabledText(_disabledText), hovering(false){}
+    Button(std::pair<int, int> _x, std::pair<int, int> _y, bool* _pressed, bool* _cursorHand, std::string _text, std::string _disabledText = ""): x(_x), y(_y), pressed(_pressed), text(_text), disabledText(_disabledText), hovering(false), cursorHand(_cursorHand){}
 
     void draw(sf::RenderWindow*, bool = false);
     void digestAction(sf::Event, sf::RenderWindow*);
@@ -34,6 +34,7 @@ public:
     Label(std::pair<int, int> _position, std::string _text, int _size = 40, sf::Color _color = sf::Color::Black, sf::Color _oppositeColor = sf::Color::White): position(_position), text(_text), size(_size), color(_color), oppositeColor(_oppositeColor){}
 
     void draw(sf::RenderWindow*, bool = false);
+    void setColor(sf::Color = sf::Color::Black, sf::Color = sf::Color::White);
 
     Label &operator=(std::string);
 };

@@ -2,17 +2,26 @@
 #include <SFML/Audio.hpp>
 
 #include <iostream>
+#include <utility>
+#include <string>
 
 #include "../include/piece.h"
 #include "../include/draw.h"
+#include "../include/utils.h"
+#include "../include/materials.h"
 #include "table.cpp"
-//#include <time.h>
-//#include "../include/Connector.hpp"
+
 
 using namespace std;
 using namespace sf;
 
 Draw* Draw::instance_ = nullptr;
+
+Draw::Draw()
+{
+    this->initComponents();
+    this->init();
+}
 
 Draw* Draw::getInstance()
 {
@@ -31,25 +40,24 @@ ostream& operator<<(ostream& out, const Draw& ob)
     return out;
 }
 
-
-Draw::Draw() {
-    this->initComponents();
-    this->init();
-}
-
-void Draw::initComponents() {
+void Draw::initComponents()
+{
     table.setSize(SizeType(screenWidth - 150, screenHeight - 150));
     table.setPosition({0, 25});
     table.setDarkMode(&this->darkMode);
+    table.setCursorHand(&this->cursorHand);
+    table.initComponents();
 
     buttons.setDarkMode((&this->darkMode));
 
-    buttons += new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 200, screenHeight - 300},&this->darkMode, "Dark\nMode", "Light\nMode");
-    buttons += new Button({screenWidth - 140, screenWidth - 10}, {350, 250}, &this->viewCredits, "Show\nCredits","Hide\nCredits");
-    buttons += {"chess", new Button({550, 220}, {150,60}, &this->playAgainstAi, "Play Against\nStockfish", "Play with friend")};
-    buttons += {"chess", new Button({10, 320}, {150, 60}, &this->resetGameGulp, "Reset Game")};
-    buttons += {"chess", new Button({300, 620}, {150, 60}, &this->undoMoveGulp, "Undo Move")};
-    buttons += {"chess", new Button({800, 980}, {150, 60}, &this->playAgainstAi, "Play against AI", "Play with friend")};
+    buttons += new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 200, screenHeight - 300},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
+    buttons += new Button({screenWidth - 140, screenWidth - 10}, {350, 250}, &this->viewCredits,&this->cursorHand, "Show\nCredits","Hide\nCredits");
+
+    buttons += {"ai", new Button({screenWidth - 140, screenWidth - 10}, {500, 400}, &this->playAgainstStockfish,&this->cursorHand, "Stock\nFish","Brain")};
+    buttons += {"chess", new Button({100, 320}, {120, 60}, &this->resetGameGulp,&this->cursorHand, "Reset Game")};
+    buttons += {"chess", new Button({400, 620}, {120, 60}, &this->undoMoveGulp,&this->cursorHand, "Undo Move")};
+    buttons += {"chess", new Button({700, 980}, {120, 60}, &this->playAgainstAi,&this->cursorHand, "Play against AI", "Play with friend")};
+
 
     labels.setDarkMode(&this->darkMode);
 
@@ -68,20 +76,21 @@ void Draw::initComponents() {
     labels += {"credits", new Label({100, screenHeight-120}, "@ All rights reserved", 30)};
 }
 
-void Draw::init(){
+void Draw::init()
+{
     /** Create the window of the application */
     RenderWindow window(VideoMode((unsigned int)screenWidth, (unsigned int)screenHeight, 32), "AI Chess",Style::Titlebar | Style::Close);
-
-    //ConnectToEngine("stockfish.exe");
 
     window.setVerticalSyncEnabled(true);
     window.setActive(true);
 
-    while(window.isOpen()){
+    while(window.isOpen())
+    {
         Event event;
         window.clear();
         this->draw(&window);
-        while (window.pollEvent(event)){
+        while (window.pollEvent(event))
+        {
             if (event.type == Event::Closed)
                 window.close();
             digestAction(&window, event);
@@ -89,46 +98,69 @@ void Draw::init(){
         window.display();
     }
 
-    //CloseConnection();
 }
 
-void Draw::digestAction(RenderWindow* window, Event event){
+void Draw::digestAction(RenderWindow* window, Event event)
+{
 
-    Cursor cursor;
-    cursor.loadFromSystem(Cursor::Arrow);
-    window->setMouseCursor(cursor);
+    cursorHand = false;
 
-    table.digestAction(event);
     buttons.digestAction(event, window);
 
-    if(undoMoveGulp){
+    if(viewCredits)
+        table.toggleTimers(true);
+    else
+        table.digestAction(event, window);
+
+    if(undoMoveGulp)
+    {
         undoMoveGulp = false;
         table.undoMove();
     }
-    if(resetGameGulp){
+    if(resetGameGulp)
+    {
         resetGameGulp = false;
         table.resetGame();
     }
+
+    if(table.isPlayingAgainstStockfish() != playAgainstStockfish)
+        table.togglePlayAgainstStockfish();
+
     if(table.isPlayingAgainstAi() != playAgainstAi)
         table.togglePlayAgainstAi();
+
+    Cursor cursor;
+    if(cursorHand)
+        cursor.loadFromSystem(Cursor::Hand);
+    else
+        cursor.loadFromSystem(Cursor::Arrow);
+    window->setMouseCursor(cursor);
 }
 
-void Draw::draw(RenderWindow* window) {
+void Draw::draw(RenderWindow* window)
+{
 
     RectangleShape fill = RectangleShape(Vector2f(screenWidth, screenHeight));
-    fill.setFillColor(darkMode ? Color::Black : Color::White);
+    fill.setFillColor(darkMode ? Color(46,47,49) : Color(236,236,236));
     window->draw(fill);
 
-    if(viewCredits){
+    if(viewCredits)
+    {
         labels.draw(window, "credits");
         buttons.draw(window, "credits");
-    }else{
+    }
+    else
+    {
         table.draw(window);
 
         if(table.isPlayingAgainstAi())
+        {
             labels.draw(window, "ai");
+            buttons.draw(window,"ai");
+        }
 
-        if(table.getIsCheckMate()){
+        if(table.getIsCheckMate())
+        {
             *labels["checkmate"][2] = ""+string(1, '1'+table.getWinnerPlayer());
             labels.draw(window, "checkmate");
         }
