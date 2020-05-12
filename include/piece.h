@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 
+// factory class to produce piece obj
 
 class Piece{
 protected:
@@ -99,5 +100,18 @@ public:
     std::string getImage(int = 1);
     std::string getType();
 };
+
+class Factory{
+public:
+    Factory(){}
+    virtual ~Factory(){}
+    virtual Piece* createElement(std::string ,std::pair<int, int>, bool) const = 0;
+};
+
+class PieceFactory : public Factory{
+public:
+    Piece* createElement(std::string, std::pair<int, int>, bool) const;
+};
+
 
 #endif //CHECKMATE_PIECE_H

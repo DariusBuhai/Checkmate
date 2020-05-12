@@ -354,3 +354,30 @@ std::string King::getImage(int type){
 std::string King::getType(){
     return "king";
 }
+
+Piece* PieceFactory::createElement(std::string name, std::pair<int, int> pos, bool colour) const
+{
+
+    if(name == "Pawn"){
+ 
+        return new Pawn(pos, colour);
+    }
+    if (name == "Rook"){
+
+        return new Rook(pos, colour);
+    }
+    if (name == "Knight"){
+        return new Knight(pos, colour);
+    }
+    if (name == "Bishop"){
+        return new Bishop(pos, colour);
+    }
+    if (name == "Queen"){
+        return (new Queen(pos, colour));
+    }
+    if(name == "King"){
+        return (new King(pos, colour));
+    }
+
+    return nullptr;
+}
