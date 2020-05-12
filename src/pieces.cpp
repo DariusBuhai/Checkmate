@@ -4,6 +4,8 @@
 
 #include "../include/utils.h"
 #include "../include/pieces.h"
+#include "../include/piece.h"
+
 
 std::ostream& operator<<(std::ostream& out, const Pieces& ob)
 {
@@ -63,26 +65,41 @@ void Pieces::resizeBoard()
 
 void Pieces::initPieces()
 {
-    pieces.push_back(new Rook({0, 7}, 0));
-    pieces.push_back(new Knight({1,7},0));
-    pieces.push_back(new Bishop({2,7},0));
-    pieces.push_back(new Queen({3,7},0));
-    pieces.push_back(new King({4,7},0));
-    pieces.push_back(new Bishop({5,7},0));
-    pieces.push_back(new Knight({6,7},0));
-    pieces.push_back(new Rook({7,7},0));
+    PieceFactory newElement;
+  
+    pieces.push_back(newElement.createElement("Rook", {0, 7}, 0));
+    pieces.push_back(newElement.createElement("Knight", {1, 7}, 0));
+    pieces.push_back(newElement.createElement("Bishop", {2, 7}, 0));
+    pieces.push_back(newElement.createElement("Queen", {3, 7}, 0));
+    pieces.push_back(newElement.createElement("King", {4, 7}, 0));
+    pieces.push_back(newElement.createElement("Bishop", {5, 7}, 0));
+    pieces.push_back(newElement.createElement("Knight", {6, 7}, 0));
+    pieces.push_back(newElement.createElement("Rook", {7, 7}, 0));
+
+    // pieces.push_back(new Knight({1,7},0));
+    // pieces.push_back(new Bishop({2,7},0));
+    // pieces.push_back(new Queen({3,7},0));
+    // pieces.push_back(new King({4,7},0));
+    // pieces.push_back(new Bishop({5,7},0));
+    // pieces.push_back(new Knight({6,7},0));
+    // pieces.push_back(new Rook({7,7},0));
+
     for(int i = 0 ; i < 8 ; i ++ )
-        pieces.push_back(new Pawn({i,6},0));
-    pieces.push_back(new Rook({0,0},1));
-    pieces.push_back(new Knight({1,0},1));
-    pieces.push_back(new Bishop({2,0},1));
-    pieces.push_back(new Queen({3,0},1));
-    pieces.push_back(new King({4,0},1));
-    pieces.push_back(new Bishop({5,0},1));
-    pieces.push_back(new Knight({6,0},1));
-    pieces.push_back(new Rook({7,0},1));
+        pieces.push_back(newElement.createElement("Pawn", {i, 6}, 0));
+
+    pieces.push_back(newElement.createElement("Rook", {0, 0}, 1));
+    pieces.push_back(newElement.createElement("Knight", {1, 0}, 1));
+    pieces.push_back(newElement.createElement("Bishop", {2, 0}, 1));
+    pieces.push_back(newElement.createElement("Queen", {3, 0}, 1));
+    pieces.push_back(newElement.createElement("King", {4, 0}, 1));
+    pieces.push_back(newElement.createElement("Bishop", {5, 0}, 1));
+    pieces.push_back(newElement.createElement("Knight", {6, 0}, 1));
+    pieces.push_back(newElement.createElement("Rook", {7, 0}, 1));
+
     for(int i = 0 ; i < 8 ; i ++ )
-        pieces.push_back(new Pawn({i, 1}, 1));
+        pieces.push_back(newElement.createElement("Pawn", {i, 1}, 1));
+    
+
 }
 
 void Pieces::updateBoard()
