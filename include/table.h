@@ -11,15 +11,25 @@
 #include "rules.h"
 #include "brain.h"
 
+#include "../include/materials.h"
+
+#define ScreenWidth 1100
+#define ScreenHeight 1100
+
 #ifndef CHECKMATE_TABLE_H
 #define CHECKMATE_TABLE_H
 
 class Table{
 private:
-    /// Settings
+    /** General settings */
+    const double screenWidth = ScreenWidth;
+    const double screenHeight = ScreenHeight;
+    bool* darkMode;
+
+    /** Custom table sizes */
     const double padding = 10;
     const double borderWidth = 10;
-    const double indicatorSpacing = 100;
+    double indicatorSpacing = 100;
 
     SizeType size;
     std::pair<int,int> position;
@@ -32,9 +42,13 @@ private:
     bool mouseButtonPressing = false;
 
     bool playAgainstAi = false;
-    bool* darkMode;
     bool checkMate = false;
     int winnerPlayer = -1;
+
+    Timer timer1;
+    Timer timer2;
+
+    Container<Label*> labels;
 
     Rules rules;
     Brain* brain;
@@ -53,9 +67,9 @@ private:
     void drawIndicators(sf::RenderWindow*, SizeType, std::pair<int,int>) const;
 
     std::pair<int, int> determineGridPosition(std::pair<int,int>) const;
-
 public:
     Table();
+
     ~Table();
 
     void digestAction(sf::Event);
@@ -66,6 +80,10 @@ public:
     void setSize(SizeType);
     void setPosition(std::pair<int,int>);
     void setDarkMode(bool*);
+
+    void toggleTimers(bool = false, bool = false);
+
+    void initComponents();
 
     bool getIsCheckMate() const;
     int getWinnerPlayer() const;

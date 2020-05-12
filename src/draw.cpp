@@ -2,6 +2,8 @@
 #include <SFML/Audio.hpp>
 
 #include <iostream>
+#include <utility>
+#include <string>
 
 #include "../include/piece.h"
 #include "../include/draw.h"
@@ -11,8 +13,12 @@ using namespace sf;
 
 Draw* Draw::instance_ = nullptr;
 
-Draw* Draw::getInstance()
-{
+Draw::Draw() {
+    this->initComponents();
+    this->init();
+}
+
+Draw* Draw::getInstance(){
     if(instance_ == nullptr)
         instance_ = new Draw;
     return instance_;
@@ -28,16 +34,11 @@ ostream& operator<<(ostream& out, const Draw& ob)
     return out;
 }
 
-
-Draw::Draw() {
-    this->initComponents();
-    this->init();
-}
-
 void Draw::initComponents() {
     table.setSize(SizeType(screenWidth - 150, screenHeight - 150));
     table.setPosition({0, 25});
     table.setDarkMode(&this->darkMode);
+    table.initComponents();
 
     buttons.setDarkMode((&this->darkMode));
 
@@ -85,13 +86,16 @@ void Draw::init(){
 }
 
 void Draw::digestAction(RenderWindow* window, Event event){
-
     Cursor cursor;
     cursor.loadFromSystem(Cursor::Arrow);
     window->setMouseCursor(cursor);
 
-    table.digestAction(event);
     buttons.digestAction(event, window);
+
+    if(viewCredits)
+        table.toggleTimers(true);
+    else
+        table.digestAction(event);
 
     if(undoMoveGulp){
         undoMoveGulp = false;

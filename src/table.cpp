@@ -18,17 +18,24 @@ Table::~Table(){
     delete brain;
 };
 
+void Table::initComponents(){
+    labels.setDarkMode(this->darkMode);
+
+    labels += {"timer", new Label({screenWidth - 135,400}, "00:00", 43)};
+    labels += {"timer", new Label({screenWidth - 135,460}, "00:00", 43)};
+}
+
 /** Setters */
+void Table::setDarkMode(bool* _darkMode){
+    darkMode = std::move(_darkMode);
+}
+
 void Table::setSize(SizeType s) {
     this->size = s;
 }
 
 void Table::setPosition(std::pair<int,int> p) {
     this->position = p;
-}
-
-void Table::setDarkMode(bool* _darkMode){
-    darkMode = std::move(_darkMode);
 }
 
 void Table::togglePlayAgainstAi(){
@@ -61,6 +68,20 @@ void Table::draw(RenderWindow *window) {
     /** Draw the selected piece at the end, to be above */
     if(selectedPiece!= nullptr && containsSelectedPiece)
         drawPiece(window, selectedPiece);
+
+    /** Draw timers */
+    int mins1 = static_cast<int>(timer1.GetElapsedSeconds())/60;
+    int secs1 = static_cast<int>(timer1.GetElapsedSeconds())-mins1*60;
+
+    int mins2 = static_cast<int>(timer2.GetElapsedSeconds())/60;
+    int secs2 = static_cast<int>(timer2.GetElapsedSeconds())-mins2*60;
+
+    if(!playAgainstAi) *labels["timer"][0] = to_string(29-mins1)+":"+to_string(60-secs1);
+    else *labels["timer"][0] = "";
+    *labels["timer"][1] = to_string(29-mins2)+":"+to_string(60-secs2);
+
+    labels.draw(window, "timer");
+
 }
 
 void Table::drawIndicators(RenderWindow *window, SizeType s, std::pair<int,int> p) const{
@@ -178,7 +199,6 @@ void Table::drawPiece(RenderWindow* window, Piece* piece) const{
             scale = {0.3, .3};
             break;
     }
-
     if (!piece_img.loadFromFile(piece->getImage(piece_type))) throw EXIT_FAILURE;
 
     Sprite item;
@@ -211,7 +231,6 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
         rules.movePiece(selectedPiece, new_position);
         resetFuturePositions();
         resetSelectedSquare();
-
         if(rules.isCheckMate(!selectedPiece->getPlayer())){
             winnerPlayer = selectedPiece->getPlayer();
             resetSelectedSquare();
@@ -261,7 +280,7 @@ void Table::digestAction(Event event){
         resetSelectedPieceLocation();
     }
     if(event.type==Event::MouseMoved && mouseButtonPressing){
-        if(selectedPiece != nullptr && selectedPiece->getPlayer()==rules.getCurrentPlayer() && gameClock.getElapsedTime().asMilliseconds()>=20 && isInsideTable({event.mouseMove.x, event.mouseMove.y}))
+        if(selectedPiece != nullptr && selectedPiece->getPlayer()==rules.getCurrentPlayer() && gameClock.getElapsedTime().asMilliseconds()>=100 && isInsideTable({event.mouseMove.x, event.mouseMove.y}))
             selectedPieceCurrentLocation = {event.mouseMove.x, event.mouseMove.y};
     }
     if(event.type==Event::KeyPressed){
@@ -283,6 +302,27 @@ void Table::digestAction(Event event){
         if(m.piece!=nullptr && m.piece->isInTable())
             rules.movePiece(m.piece, m.to);
     }
+    /** Update timers */
+    toggleTimers();
+}
+
+void Table::toggleTimers(bool pause, bool reset){
+    if(pause){
+        timer1.Pause();
+        timer2.Pause();
+    }else{
+        if(rules.getCurrentPlayer()==0){
+            timer1.Pause();
+            timer2.Start();
+        }else{
+            timer2.Pause();
+            timer1.Start();
+        }
+    }
+    if(reset){
+        timer1.Reset();
+        timer2.Reset();
+    }
 }
 
 /** Button actions */
@@ -291,6 +331,8 @@ void Table::resetGame() {
     rules.resetGame();
     resetSelectedSquare();
     resetFuturePositions();
+    /** Stop timers */
+    toggleTimers(true, true);
 }
 
 void Table::undoMove() {

@@ -12,6 +12,7 @@
 
 #include "../include/table.h"
 #include "../include/materials.h"
+
 #define ScreenWidth 1100
 #define ScreenHeight 1100
 
@@ -22,6 +23,7 @@ private:
     const double screenHeight = ScreenHeight;
 
     Table table;
+
     static Draw* instance_;
 
     bool darkMode = false;
@@ -42,7 +44,9 @@ private:
 
 public:
     static Draw* getInstance();
+
     friend std::ostream& operator<<(std::ostream& , const Draw&);
+    friend Table;
 };
 
 #endif //CHECKMATE_DRAW_H
