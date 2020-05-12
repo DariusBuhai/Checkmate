@@ -12,7 +12,6 @@ SECURITY_ATTRIBUTES sats = {0};
 PROCESS_INFORMATION pi = {0};
 HANDLE pipin_w, pipin_r, pipout_w, pipout_r;
 BYTE buffer[2048];
-//DWORD writ, excode, read, available;
 DWORD writ,available,Read,excode;
 
 void ConnectToEngine(char* path)
