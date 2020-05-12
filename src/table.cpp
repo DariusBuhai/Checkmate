@@ -388,6 +388,7 @@ void Table::resetGame() {
     rules.resetGame();
     resetSelectedSquare();
     resetFuturePositions();
+    selectedPiece = rules.getPiece(0, {6, 6});
     /** Stop timers */
     toggleTimers(true, true);
 }
