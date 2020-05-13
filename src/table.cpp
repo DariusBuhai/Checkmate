@@ -71,7 +71,7 @@ int Table::getWinnerPlayer() const {
 }
 
 /** Content generators */
-void Table::draw(RenderWindow *window) {
+void Table::updateFrame(RenderWindow *window) {
 
     /** Called on each frame */
     if(rules.getCurrentPlayer()==1 && playAgainstAi && !awaitNextMove){

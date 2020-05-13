@@ -84,7 +84,7 @@ public:
 
     void digestAction(sf::Event, sf::RenderWindow*);
 
-    void draw(sf::RenderWindow*);
+    void updateFrame(sf::RenderWindow*);
     void drawPiece(sf::RenderWindow*, Piece*) const;
 
     void setSize(SizeType);
