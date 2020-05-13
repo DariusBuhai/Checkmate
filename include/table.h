@@ -48,6 +48,8 @@ private:
     bool playAgainstAi = false;
     bool playAgainstStockFish = false;
 
+    bool awaitNextMove = false;
+
     bool checkMate = false;
     int winnerPlayer = -1;
 

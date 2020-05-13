@@ -82,6 +82,7 @@ void Table::draw(RenderWindow *window) {
         else containsSelectedPiece = true;
 
     /** Draw the selected piece at the end, to be above */
+    awaitNextMove = false;
     if(selectedPiece != nullptr && selectedPiece->getType() != "Null" && containsSelectedPiece)
         drawPiece(window, selectedPiece);
 
@@ -280,6 +281,7 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
     Piece* current = rules[new_position];
     if(find(futurePositions.begin(), futurePositions.end(), new_position)!=futurePositions.end()){
         rules.movePiece(selectedPiece, new_position);
+        awaitNextMove = true;
         resetFuturePositions();
         resetSelectedSquare();
         if(rules.isCheckMate(!selectedPiece->getPlayer())){
@@ -305,10 +307,12 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
 void Table::digestAction(Event event, sf::RenderWindow* window){
 
     /** Call on frame begin */
-    if(rules.getCurrentPlayer()==1 && playAgainstAi){
+    if(rules.getCurrentPlayer()==1 && playAgainstAi && !awaitNextMove){
         Move m = brain->determineBestMove();
-        if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable())
+        if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable()){
+            awaitNextMove = true;
             rules.movePiece(m.piece, m.to);
+        }
     }
 
     Vector2i pos = Mouse::getPosition(*window);
