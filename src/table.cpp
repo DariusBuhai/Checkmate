@@ -179,7 +179,14 @@ void Table::drawGrid(RenderWindow *window, SizeType s, std::pair<int,int> p){
 
             if (showBestMove)
             {
-                std::cout<<"so far so good\n";
+                if (current_pos == bestMove.from or current_pos == bestMove.to)
+                {
+                    RectangleShape insideRectangle;
+                    insideRectangle.setSize(Vector2f(squareWidth, squareHeight));
+                    insideRectangle.setPosition(static_cast<float>(p.first +squareWidth*i), static_cast<float>(p.second + squareHeight*j));
+                    insideRectangle.setFillColor(Color(178,65,55));
+                    window->draw(insideRectangle);
+                }
             }
 
             if(find(futurePositions.begin(), futurePositions.end(), current_pos)!=futurePositions.end()){
@@ -345,10 +352,10 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
         try{
             pair<int, int> grid_position = this->determineGridPosition(std::pair<int,int>(selectedPieceCurrentLocation.first, selectedPieceCurrentLocation.second));
             updateSelectedSquare(grid_position);
-            calculateBestMove = true;
         } catch (int e) {
             cout<<"Moved piece outside the table"<<'\n';
         }
+        calculateBestMove = true;
         mousePressing = false;
         resetSelectedPieceLocation();
     }
@@ -371,12 +378,15 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
         else if(event.key.code==Keyboard::Down)
             updateSelectedSquare({selectedSquare.first, selectedSquare.second+1});
     }
-    if (rules.getCurrentPlayer() == 0 && calculateBestMove)
+
+
+    if (rules.getCurrentPlayer() == 0 && showBestMove && calculateBestMove)
     {
+        
         calculateBestMove = false;
         bestMove = brain->determineBestMove();
     }
-
+    
     if(rules.getCurrentPlayer()==1 && playAgainstAi){
         Move m = brain->determineBestMove();
         if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable())

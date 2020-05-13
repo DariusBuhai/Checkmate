@@ -54,7 +54,8 @@ void Draw::initComponents()
 
     buttons.setDarkMode((&this->darkMode));
 
-    buttons += new Button({screenWidth - 137, screenWidth - 20}, {screenHeight - 200, screenHeight - 300},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
+    buttons += new Button({screenWidth - 137, screenWidth - 20}, {screenHeight - 50, screenHeight - 195},&this->showBestMove, &this->cursorHand, "Show\nBest\nMove");
+    buttons += new Button({screenWidth - 137, screenWidth - 20}, {screenHeight - 230, screenHeight - 330},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
     buttons += new Button({screenWidth - 145, screenWidth - 15}, {350, 250}, &this->viewCredits,&this->cursorHand, "Show\nCredits","Close\nCredits");
 
     buttons += {"ai", new Button({screenWidth - 145, screenWidth - 15}, {500, 400}, &this->playAgainstStockFish,&this->cursorHand, "Stock\nFish","Brain")};
