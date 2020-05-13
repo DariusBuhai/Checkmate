@@ -35,6 +35,7 @@ private:
     bool playAgainstStockFish = false;
     bool undoMoveGulp = false;
     bool playAgainstAi = false;
+    bool showBestMove = false;
 
     Container<Button*> buttons;
     Container<Label*> labels;

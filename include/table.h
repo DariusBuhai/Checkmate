@@ -47,9 +47,13 @@ private:
 
     bool playAgainstAi = false;
     bool playAgainstStockFish = false;
+    bool showBestMove = false;
 
     bool checkMate = false;
     int winnerPlayer = -1;
+
+    Move bestMove;
+    bool calculateBestMove = true;
 
     Timer timer1;
     Timer timer2;
@@ -101,6 +105,8 @@ public:
     bool isPlayingAgainstAi() const;
     void togglePlayAgainstStockfish();
     bool isPlayingAgainstStockfish() const;
+    void toggleShowBestMove();
+    bool isShowingBestMove() const;
 };
 
 #endif //CHECKMATE_TABLE_H

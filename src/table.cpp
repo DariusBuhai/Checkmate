@@ -176,6 +176,11 @@ void Table::drawGrid(RenderWindow *window, SizeType s, std::pair<int,int> p){
 
             window->draw(square);
 
+            if (showBestMove)
+            {
+                std::cout<<"so far so good\n";
+            }
+
             if(find(futurePositions.begin(), futurePositions.end(), current_pos)!=futurePositions.end()){
                 if(rules[current_pos]->getType() != "Null" && rules[selectedSquare]->getType() != "Null" && rules[current_pos]->getPlayer()!=rules[selectedSquare]->getPlayer()){
                     RectangleShape insideRectangle;
@@ -329,6 +334,7 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
         try{
             pair<int, int> grid_position = this->determineGridPosition(std::pair<int,int>(selectedPieceCurrentLocation.first, selectedPieceCurrentLocation.second));
             updateSelectedSquare(grid_position);
+            calculateBestMove = true;
         } catch (int e) {
             cout<<"Moved piece outside the table"<<'\n';
         }
@@ -354,6 +360,12 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
         else if(event.key.code==Keyboard::Down)
             updateSelectedSquare({selectedSquare.first, selectedSquare.second+1});
     }
+    if (rules.getCurrentPlayer() == 0 && calculateBestMove)
+    {
+        calculateBestMove = false;
+        bestMove = brain->determineBestMove();
+    }
+
     if(rules.getCurrentPlayer()==1 && playAgainstAi){
         Move m = brain->determineBestMove();
         if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable())
@@ -402,3 +414,11 @@ void Table::undoMove() {
     resetFuturePositions();
 }
 
+void Table::toggleShowBestMove()
+{
+    showBestMove = !showBestMove;
+}
+bool Table::isShowingBestMove() const
+{
+    return showBestMove;
+}

@@ -54,7 +54,8 @@ void Draw::initComponents()
 
     buttons.setDarkMode((&this->darkMode));
 
-    buttons += new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 200, screenHeight - 300},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
+    buttons += new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 240, screenHeight - 340},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
+    buttons += {"chess", new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 50, screenHeight - 190}, &this->showBestMove, &this->cursorHand, "Show\nBest\nMove")};
     buttons += new Button({screenWidth - 140, screenWidth - 10}, {350, 250}, &this->viewCredits,&this->cursorHand, "Show\nCredits","Hide\nCredits");
 
     #if defined(_WIN32)
@@ -93,6 +94,7 @@ void Draw::init()
         Event event{};
         window.clear();
         this->draw(&window);
+        //std::cout << this->showBestMove<<"\n";
         while (window.pollEvent(event))
         {
             if (event.type == Event::Closed)
@@ -130,6 +132,9 @@ void Draw::digestAction(RenderWindow* window, Event event){
 
     if(table.isPlayingAgainstAi() != playAgainstAi)
         table.togglePlayAgainstAi();
+
+    if(table.isShowingBestMove() != showBestMove)
+        table.toggleShowBestMove();
 
     /** Load determined cursor */
     Cursor cursor;
