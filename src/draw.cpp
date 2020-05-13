@@ -20,6 +20,10 @@ Draw* Draw::instance_ = nullptr;
 Draw::Draw()
 {
     this->initComponents();
+}
+
+void Draw::startGame()
+{
     this->init();
 }
 
