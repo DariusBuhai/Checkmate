@@ -34,7 +34,7 @@
     }
 
 
-    std::string getNextMove(const std::string position)
+    std::string getNextMove(std::string position)
     {
         std::string str;
         position = "position startpos moves "+position+"\ngo\n";
@@ -92,6 +92,5 @@
 
         return s;
     }
-
 #endif
 #endif //CONNECTOR_H
