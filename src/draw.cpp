@@ -54,12 +54,11 @@ void Draw::initComponents()
 
     buttons.setDarkMode((&this->darkMode));
 
-    buttons += new Button({screenWidth - 137, screenWidth - 20}, {screenHeight - 200, screenHeight - 300},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
+    buttons += {"chess", new Button({screenWidth - 137, screenWidth - 20}, {screenHeight - 50, screenHeight - 195},&this->showBestMove, &this->cursorHand, "Show\nBest\nMove", "Hide\nBest\nMove")};
+    buttons += new Button({screenWidth - 137, screenWidth - 20}, {screenHeight - 230, screenHeight - 330},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
     buttons += new Button({screenWidth - 145, screenWidth - 15}, {350, 250}, &this->viewCredits,&this->cursorHand, "Show\nCredits","Close\nCredits");
 
-    //#if defined(_WIN32)
-    buttons += {"ai", new Button({screenWidth - 140, screenWidth - 10}, {500, 400}, &this->playAgainstStockFish,&this->cursorHand, "Stock\nFish","Brain")};
-
+    buttons += {"ai", new Button({screenWidth - 145, screenWidth - 15}, {500, 400}, &this->playAgainstStockFish,&this->cursorHand, "Stock\nFish","Brain")};
 
     buttons += {"chess", new Button({100, 320}, {100, 40}, &this->resetGameGulp,&this->cursorHand, "Reset Game")};
     buttons += {"chess", new Button({400, 620}, {100, 40}, &this->undoMoveGulp,&this->cursorHand, "Undo Move")};
@@ -67,12 +66,10 @@ void Draw::initComponents()
 
     labels.setDarkMode(&this->darkMode);
 
-    images += {"ai", new ImageLabel({screenWidth - 135,50}, "resources/images/brain.png", {.12,.12})};
+    images += {"ai", new ImageLabel({screenWidth - 135,360}, "resources/images/brain.png", {.12,.12})};
 
     labels += {"checkmate", new Label({(screenWidth-150)/2-220,360}, "Checkmate", 100, Color::Red, Color::Red)};
-    labels += {"checkmate", new Label({screenWidth - 130,360}, "Player", 40, Color::Blue, Color::Blue)};
-    labels += {"checkmate", new Label({screenWidth - 90,400}, "x", 40, Color::Blue, Color::Blue)};
-    labels += {"checkmate", new Label({screenWidth - 120,440}, "Wins", 40, Color::Blue, Color::Blue)};
+    labels += {"checkmate", new Label({(screenWidth-150)/2-100,500}, "Player x wins", 40, Color::White, Color::White)};
 
     labels += {"credits", new Label({screenWidth/2-100, 50}, "Credits", 70)};
     labels += {"credits", new Label({100, 160}, "Buhai Darius")};
@@ -95,12 +92,12 @@ void Draw::init()
     while(window.isOpen()){
         Event event{};
         window.clear();
-        this->draw(&window);
-        while (window.pollEvent(event)){
+        while(window.pollEvent(event)){
             this->digestAction(&window, event);
             if (event.type == Event::Closed)
                 window.close();
         }
+        this->draw(&window);
         window.display();
     }
 
@@ -133,6 +130,9 @@ void Draw::digestAction(RenderWindow* window, Event event){
     if(table.isPlayingAgainstAi() != playAgainstAi)
         table.togglePlayAgainstAi();
 
+    if(table.isShowingBestMove() != showBestMove)
+        table.toggleShowBestMove();
+
     /** Load determined cursor */
     Cursor cursor;
     cursor.loadFromSystem(cursorHand ? Cursor::Hand : Cursor::Arrow);
@@ -160,7 +160,7 @@ void Draw::draw(RenderWindow* window)
         }
 
         if(table.getIsCheckMate()){
-            *labels["checkmate"][2] = ""+string(1, '1'+table.getWinnerPlayer());
+            *labels["checkmate"][1] = "Player "+string(1, '1'+table.getWinnerPlayer())+" wins";
             labels.draw(window, "checkmate");
         }
         buttons.draw(window, "chess");

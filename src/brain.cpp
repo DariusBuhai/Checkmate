@@ -1,5 +1,4 @@
 #include "../include/brain.h"
-#include <time.h>
 #include "../include/connector.h"
 
 #include <iostream>
@@ -263,7 +262,7 @@ Move Brain::determineBrainBestMove()
 
     rules->getCurentBoard(board);
     for(Piece* piece: rules->getPieces())
-        if(piece -> getPlayer() == 1)
+        if(piece -> getPlayer() == 1 or 1)
         {
             Move best_current_eval_move;
             int best_current_eval = -9999;
@@ -418,11 +417,10 @@ Move Brain::determineStockFishBestMove()
         pos_best_move.first = int(best_move[2] - 97);
         pos_best_move.second = 8 - (best_move[3] - '0');
         cout<<best_move<<" cea mai buna mutare " << '\n';
-        Piece* piece = board[1][pos_piece.first][pos_piece.second];
-        Best_move = Move(piece,pos_best_move);
+        Piece* piece = board[rules->getCurrentPlayer()][pos_piece.first][pos_piece.second];
+        Best_move = Move(piece,pos_piece,pos_best_move);
     }catch(...){
         cout<<"Cannot use stockfish, returning brain move\n";
-        ///*this->playAgainstStockFish = false;
         Best_move = this->determineBrainBestMove();
     }
     return Best_move;
