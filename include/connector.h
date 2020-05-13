@@ -92,6 +92,5 @@
 
         return s;
     }
-
 #endif
 #endif //CONNECTOR_H
