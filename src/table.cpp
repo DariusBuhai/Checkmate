@@ -371,7 +371,6 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
         else if(event.key.code==Keyboard::Down)
             updateSelectedSquare({selectedSquare.first, selectedSquare.second+1});
     }
-<<<<<<< HEAD
     if (rules.getCurrentPlayer() == 0 && calculateBestMove)
     {
         calculateBestMove = false;
@@ -383,8 +382,6 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
         if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable())
             rules.movePiece(m.piece, m.to);
     }
-=======
->>>>>>> 48dea52a5c03271cba6ff165983f1b3b73a2de47
     /** Update timers */
     toggleTimers();
 }

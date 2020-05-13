@@ -54,14 +54,8 @@ void Draw::initComponents()
 
     buttons.setDarkMode((&this->darkMode));
 
-<<<<<<< HEAD
-    buttons += new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 240, screenHeight - 340},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
-    buttons += {"chess", new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 50, screenHeight - 190}, &this->showBestMove, &this->cursorHand, "Show\nBest\nMove")};
-    buttons += new Button({screenWidth - 140, screenWidth - 10}, {350, 250}, &this->viewCredits,&this->cursorHand, "Show\nCredits","Hide\nCredits");
-=======
     buttons += new Button({screenWidth - 137, screenWidth - 20}, {screenHeight - 200, screenHeight - 300},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
     buttons += new Button({screenWidth - 145, screenWidth - 15}, {350, 250}, &this->viewCredits,&this->cursorHand, "Show\nCredits","Close\nCredits");
->>>>>>> 48dea52a5c03271cba6ff165983f1b3b73a2de47
 
     buttons += {"ai", new Button({screenWidth - 145, screenWidth - 15}, {500, 400}, &this->playAgainstStockFish,&this->cursorHand, "Stock\nFish","Brain")};
 
@@ -99,15 +93,8 @@ void Draw::init()
     while(window.isOpen()){
         Event event{};
         window.clear();
-<<<<<<< HEAD
-        this->draw(&window);
-        //std::cout << this->showBestMove<<"\n";
-        while (window.pollEvent(event))
-        {
-=======
         while (window.pollEvent(event)){
             this->digestAction(&window, event);
->>>>>>> 48dea52a5c03271cba6ff165983f1b3b73a2de47
             if (event.type == Event::Closed)
                 window.close();
         }
