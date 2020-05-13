@@ -202,24 +202,32 @@ bool Brain::pieceIsAttacked(Piece* piece, std::pair<int,int> position){
 
 bool Brain::checkLast3Moves(Move check_move){
     int n = lastBrainMoves.size();
-    if(n > 0 && lastBrainMoves[n - 1].to == check_move.to && lastBrainMoves[n - 1].from == check_move.from)
-        return true;
-    if(n > 1  && lastBrainMoves[n - 2].to == check_move.to && lastBrainMoves[n - 2].from == check_move.from)
-        return true;
-    if ( n > 2 && lastBrainMoves[n - 3].to == check_move.to && lastBrainMoves[n - 3].from == check_move.from)
-        return true;
+    try{
+        if(n > 0 && lastBrainMoves[n - 1].to == check_move.to && lastBrainMoves[n - 1].from == check_move.from)
+            return true;
+        if(n > 1  && lastBrainMoves[n - 2].to == check_move.to && lastBrainMoves[n - 2].from == check_move.from)
+            return true;
+        if ( n > 2 && lastBrainMoves[n - 3].to == check_move.to && lastBrainMoves[n - 3].from == check_move.from)
+            return true;
+    } catch (...) {
+        return false;
+    }
     return false;
 }
 
 bool Brain::checkLast3Moves(Piece* piece)
 {
     int n = lastBrainMoves.size();
-    if(n > 0 && lastBrainMoves[n - 1].piece -> getType() == piece->getType())
-        return true;
-    if(n > 1 && lastBrainMoves[n - 2].piece -> getType() == piece->getType())
-        return true;
-    if(n > 2 && lastBrainMoves[n - 3].piece -> getType() == piece->getType())
-        return true;
+    try{
+        if(n > 0 && lastBrainMoves[n - 1].piece!=nullptr && lastBrainMoves[n - 1].piece->getType() == piece->getType())
+            return true;
+        if(n > 1 && lastBrainMoves[n - 2].piece!=nullptr && lastBrainMoves[n - 2].piece -> getType() == piece->getType())
+            return true;
+        if(n > 2 && lastBrainMoves[n - 3].piece!=nullptr && lastBrainMoves[n - 3].piece -> getType() == piece->getType())
+            return true;
+    } catch (...) {
+        return false;
+    }
     return false;
 }
 
