@@ -11,7 +11,7 @@ obj\debug
 TestSFML.cbp
 TestSFML.depend
 TestSFML.layout
-stockfish.exe
+stockfish/stockfish_windows.exe
 clear_workspace.command
 makefile
 CheckMate.out

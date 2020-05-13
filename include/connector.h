@@ -34,7 +34,7 @@
     }
 
 
-    std::string getNextMove(std::string position)
+    std::string getNextMove(const std::string position)
     {
         std::string str;
         position = "position startpos moves "+position+"\ngo\n";
@@ -69,6 +69,27 @@
         if(pi.hThread != NULL) CloseHandle(pi.hThread);
     }
 #else
+
+    #include "utils.h"
+    #include <fstream>
+    #include <cstdlib>
+    #include <assert.h>
+
+    std::string getNextMove(const std::string position) {
+        std::ofstream fout("../donotopen/buffer.txt");
+        fout << position;
+        fout.close();
+
+        if(!system("python3 donotopen/stockfish_engine.py"))
+            throw EXIT_FAILURE;
+
+        std::ifstream fin("../donotopen/buffer.txt");
+        std::string s;
+        fin >> s;
+        fin.close();
+
+        return s;
+    }
 
 #endif
 #endif //CONNECTOR_H
