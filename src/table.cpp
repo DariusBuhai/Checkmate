@@ -382,18 +382,11 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
     }
 
 
-    if (rules.getCurrentPlayer() == 0 && showBestMove && calculateBestMove)
-    {
-        
+    if (rules.getCurrentPlayer() == 0 && showBestMove && calculateBestMove){
         calculateBestMove = false;
         bestMove = brain->determineBestMove();
     }
-    
-    if(rules.getCurrentPlayer()==1 && playAgainstAi){
-        Move m = brain->determineBestMove();
-        if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable())
-            rules.movePiece(m.piece, m.to);
-    }
+
     /** Update timers */
     toggleTimers();
 }
