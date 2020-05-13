@@ -97,7 +97,7 @@ void Draw::init()
             if (event.type == Event::Closed)
                 window.close();
         }
-        this->draw(&window);
+        this->updateFrame(&window);
         window.display();
     }
 
@@ -139,7 +139,7 @@ void Draw::digestAction(RenderWindow* window, Event event){
     window->setMouseCursor(cursor);
 }
 
-void Draw::draw(RenderWindow* window)
+void Draw::updateFrame(RenderWindow* window)
 {
 
     RectangleShape fill = RectangleShape(Vector2f(screenWidth, screenHeight));
@@ -152,7 +152,7 @@ void Draw::draw(RenderWindow* window)
         buttons.draw(window, "credits");
     }
     else{
-        table.draw(window);
+        table.updateFrame(window);
 
         if(table.isPlayingAgainstAi()){
             images.draw(window, "ai");

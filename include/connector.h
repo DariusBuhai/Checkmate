@@ -90,6 +90,9 @@
         fin >> s;
         fin.close();
 
+        if(s.empty() || s.length()>5 || s.substr(0,4)==position.substr(0,4))
+            throw EXIT_FAILURE;
+
         return s;
     }
 #endif

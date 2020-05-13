@@ -71,7 +71,7 @@ int Table::getWinnerPlayer() const {
 }
 
 /** Content generators */
-void Table::draw(RenderWindow *window) {
+void Table::updateFrame(RenderWindow *window) {
 
     /** Called on each frame */
     if(rules.getCurrentPlayer()==1 && playAgainstAi && !awaitNextMove){
@@ -381,9 +381,8 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
             updateSelectedSquare({selectedSquare.first, selectedSquare.second+1});
     }
 
-    if (rules.getCurrentPlayer() == 0 && showBestMove && calculateBestMove)
-    {
 
+    if (rules.getCurrentPlayer() == 0 && showBestMove && calculateBestMove){
         calculateBestMove = false;
         bestMove = brain->determineStockFishBestMove();
         cout<<bestMove.piece->getType()[0] << char(bestMove.from.first +97) << 8 - bestMove.from.second << '\n';
@@ -395,6 +394,7 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
         if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable())
             rules.movePiece(m.piece, m.to);
     }
+
     /** Update timers */
     toggleTimers();
 }

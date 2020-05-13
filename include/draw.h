@@ -41,7 +41,7 @@ private:
     Container<Label*> labels;
     Container<ImageLabel*> images;
 
-    void draw(sf::RenderWindow*);
+    void updateFrame(sf::RenderWindow*);
     void digestAction(sf::RenderWindow*, sf::Event);
 
     void init();
