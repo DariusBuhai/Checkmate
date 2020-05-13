@@ -38,6 +38,7 @@ private:
 
     Container<Button*> buttons;
     Container<Label*> labels;
+    Container<ImageLabel*> images;
 
     void draw(sf::RenderWindow*);
     void digestAction(sf::RenderWindow*, sf::Event);

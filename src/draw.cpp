@@ -7,9 +7,11 @@
 
 #include "../include/piece.h"
 #include "../include/draw.h"
+
 #if defined(_WIN32)
 #include "table.cpp"
 #endif // defined
+
 using namespace std;
 using namespace sf;
 
@@ -57,12 +59,11 @@ void Draw::initComponents()
 
     buttons += {"chess", new Button({100, 320}, {120, 60}, &this->resetGameGulp,&this->cursorHand, "Reset Game")};
     buttons += {"chess", new Button({400, 620}, {120, 60}, &this->undoMoveGulp,&this->cursorHand, "Undo Move")};
-    buttons += {"chess", new Button({700, 980}, {120, 60}, &this->playAgainstAi,&this->cursorHand, "Play against AI", "Play with friend")};
+    buttons += {"chess", new Button({700, 1050}, {120, 60}, &this->playAgainstAi,&this->cursorHand, "Play with computer", "Play against friend")};
 
     labels.setDarkMode(&this->darkMode);
 
-    labels += {"ai", new Label({screenWidth - 100,50}, "AI", 40, Color::Magenta, Color::Magenta)};
-    labels += {"ai", new Label({screenWidth - 130,100}, "Active", 40, Color::Magenta, Color::Magenta)};
+    images += {"ai", new ImageLabel({screenWidth - 135,50}, "resources/brain.png", {.12,.12})};
 
     labels += {"checkmate", new Label({(screenWidth-150)/2-220,360}, "Checkmate", 100, Color::Red, Color::Red)};
     labels += {"checkmate", new Label({screenWidth - 130,360}, "Player", 40, Color::Blue, Color::Blue)};
@@ -147,7 +148,7 @@ void Draw::draw(RenderWindow* window)
         table.draw(window);
 
         if(table.isPlayingAgainstAi()){
-            labels.draw(window, "ai");
+            images.draw(window, "ai");
             buttons.draw(window,"ai");
         }
 

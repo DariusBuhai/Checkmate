@@ -101,14 +101,6 @@ void Pieces::initPieces()
     pieces.push_back(newElement.createElement("Knight", {6, 7}, 0));
     pieces.push_back(newElement.createElement("Rook", {7, 7}, 0));
 
-    // pieces.push_back(new Knight({1,7},0));
-    // pieces.push_back(new Bishop({2,7},0));
-    // pieces.push_back(new Queen({3,7},0));
-    // pieces.push_back(new King({4,7},0));
-    // pieces.push_back(new Bishop({5,7},0));
-    // pieces.push_back(new Knight({6,7},0));
-    // pieces.push_back(new Rook({7,7},0));
-
     for(int i = 0 ; i < 8 ; i ++ )
         pieces.push_back(newElement.createElement("Pawn", {i, 6}, 0));
 

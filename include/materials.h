@@ -9,11 +9,18 @@
 
 #include "../include/utils.h"
 
-/*class Image{
-    std::pair<int,int> x, y;
+class ImageLabel{
+    std::pair<int, int> position;
     std::string image_path;
-    double
-};*/
+    std::pair<double, double> scale;
+    sf::Color color;
+public:
+    ImageLabel(std::pair<int,int> _position, std::string _image_path, std::pair<double, double> _scale = {1,1}, sf::Color _color = sf::Color::Transparent): position(_position), image_path(_image_path), scale(_scale), color(_color){}
+
+    void draw(sf::RenderWindow*, bool = false);
+
+    ImageLabel &operator=(const std::string&);
+};
 
 class Button{
     std::pair<int,int> x, y;
@@ -47,7 +54,7 @@ public:
 template <class T>
 class Container{
     std::vector<std::pair<std::string, T>> childs;
-    bool* darkMode;
+    bool* darkMode = new bool(false);
     double screenWidth, screenHeight;
 public:
 

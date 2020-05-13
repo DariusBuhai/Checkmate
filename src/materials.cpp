@@ -16,14 +16,32 @@
 using namespace std;
 using namespace sf;
 
+void ImageLabel::draw(RenderWindow* window, bool darkMode){
+    Texture piece_img;
+    if(!piece_img.loadFromFile(this->image_path)) throw EXIT_FAILURE;
 
-void Button::digestAction(sf::Event event, sf::RenderWindow* window){
-    if(event.type==sf::Event::MouseButtonPressed)
+    Sprite item;
+    item.setScale(this->scale.first, this->scale.second);
+    item.setTexture(piece_img);
+    if(this->color!=Color::Transparent)
+        item.setColor(this->color);
+    item.setPosition(Vector2f(this->position.first, this->position.second));
+
+    window->draw(item);
+}
+
+ImageLabel &ImageLabel::operator=(const std::string& _image_path){
+    this->image_path = _image_path;
+    return *this;
+}
+
+void Button::digestAction(Event event, RenderWindow* window){
+    if(event.type==Event::MouseButtonPressed)
         if(Utils::mouseInsideLimits(event, this->x, this->y)){
             *this->pressed = !*this->pressed;
             *this->cursorHand = true;
         }
-    if(event.type==sf::Event::MouseMoved){
+    if(event.type==Event::MouseMoved){
         if(Utils::mouseInsideLimits({event.mouseMove.x, event.mouseMove.y}, this->x, this->y)){
             *this->cursorHand = true;
             hovering = true;
@@ -32,7 +50,7 @@ void Button::digestAction(sf::Event event, sf::RenderWindow* window){
     }
 }
 
-void Button::draw(sf::RenderWindow* window, bool darkMode){
+void Button::draw(RenderWindow* window, bool darkMode){
     string t = this->text;
     if(*this->pressed && !this->disabledText.empty())
         t = this->disabledText;
@@ -52,11 +70,11 @@ Button &Button::operator=(const std::pair<std::string, std::string>& _texts) {
     return *this;
 }
 
-void Label::draw(sf::RenderWindow* window, bool darkMode){
+void Label::draw(RenderWindow* window, bool darkMode){
     Utils::drawText(window, text, darkMode ? oppositeColor : color, position, size);
 }
 
-void Label::setColor(sf::Color _color, sf::Color _oppositeColor) {
+void Label::setColor(Color _color, Color _oppositeColor) {
     this->color = _color;
     this->oppositeColor = _oppositeColor;
 }

@@ -239,8 +239,8 @@ void Table::drawPiece(RenderWindow* window, Piece* piece) const{
 
     pair<double, double> origin = {-110,-50}, scale = {.3,.3};
     /// Deprecated
-    /// int piece_type = 1;
-    /**switch(piece_type) {
+    /** int piece_type = 1;
+    switch(piece_type) {
         case 2:
             origin = {-110, -50};
             scale = {0.35, .3};
