@@ -17,3 +17,5 @@ makefile
 CheckMate.out
 .vscode/settings.json
 Proiect.code-workspace
+.vscode/tasks.json
+.vscode/launch.json
