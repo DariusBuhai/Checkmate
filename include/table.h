@@ -32,45 +32,39 @@ private:
     const double borderWidth = 10;
     double indicatorSpacing = 70;
 
+    Rules rules;
+    Brain* brain;
+
     SizeType size;
     std::pair<int,int> position;
-
     std::pair<int, int> selectedSquare = {-1, -1};
     std::pair<int, int> selectedPieceCurrentLocation = {-1,-1};
     Piece* selectedPiece = nullptr;
     std::vector<std::pair<int, int>> futurePositions;
 
     bool mousePressing = false;
-    sf::Clock mousePressingTimeout;
-
     bool *cursorHand = new bool(false);
-
     bool playAgainstAi = false;
     bool playAgainstStockFish = false;
-    bool showBestMove = false;
-
     bool awaitNextMove = false;
-
     bool checkMate = false;
+    bool showingBestMove = false;
     int winnerPlayer = -1;
 
     Move bestMove;
-    bool calculateBestMove = true;
 
     Timer timer1;
     Timer timer2;
+    sf::Clock mousePressingTimeout;
 
     Container<Label*> labels;
-
-    Rules rules;
-    Brain* brain;
 
     void resetFuturePositions();
     void resetSelectedPieceLocation();
     void resetSelectedSquare();
+    void resetShowingBestMove();
 
     void updateSelectedSquare(std::pair<int, int>);
-
     bool isInsideTable(std::pair<int,int>) const;
     void drawGrid(sf::RenderWindow*, SizeType, std::pair<int,int>);
     void drawOutline(sf::RenderWindow*, SizeType, std::pair<int,int>) const;
@@ -79,7 +73,6 @@ private:
     std::pair<int, int> determineGridPosition(std::pair<int,int>) const;
 public:
     Table();
-
     ~Table();
 
     void digestAction(sf::Event, sf::RenderWindow*);
@@ -105,8 +98,7 @@ public:
     bool isPlayingAgainstAi() const;
     void togglePlayAgainstStockfish();
     bool isPlayingAgainstStockfish() const;
-    void toggleShowBestMove();
-    bool isShowingBestMove() const;
+    void showBestMove();
 };
 
 #endif //CHECKMATE_TABLE_H

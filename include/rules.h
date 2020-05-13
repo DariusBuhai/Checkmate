@@ -27,7 +27,7 @@ public:
     std::vector <std::pair<int, int>> canProtectPos(Piece*);
     bool isInCheck(int);
     std::vector<std::pair<int, int>> getFuturePositions(Piece*, bool = true);
-    std::vector<std::pair<int, int>> getFuturePositions2(Piece*,std::pair<int, int>, bool = true );
+    std::vector<std::pair<int, int>> getFuturePositions(Piece*, std::pair<int, int>, bool = true );
     std::vector<std::pair<int, int>> getProtectedPositions(Piece*);
     std::vector<std::pair<int, int>> getFuturePawn(Piece*);
     std::vector<std::pair<int, int>> canCastle(Piece*);

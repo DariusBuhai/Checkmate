@@ -33,9 +33,9 @@ private:
     bool viewCredits = false;
     bool resetGameGulp = false;
     bool playAgainstStockFish = false;
+    bool showBestMoveGulp = false;
     bool undoMoveGulp = false;
     bool playAgainstAi = false;
-    bool showBestMove = false;
 
     Container<Button*> buttons;
     Container<Label*> labels;

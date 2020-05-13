@@ -9,7 +9,6 @@
 class Brain : public Rules{
 private:
     Rules* rules;
-    int player = 1;
     int moves = 0;
     bool *playAgainstStockFish = new bool(false);
 
@@ -17,10 +16,13 @@ private:
     std::vector<std::vector<std::vector<Piece*>> >  boardBrain;
 
     static int getPointsEvaluation(Piece*);
-    int getEvaluation(Piece*, std::pair<int,int>);
-    std::vector<Move>last_AI_moves;
+    int getEvaluation(Piece*, std::pair<int,int>, int = 1);
+    std::vector<Move>lastBrainMoves;
 public:
     Brain(Rules*, bool*);
+
+    void initializeEvaluation();
+
     Evaluation evalAttacked(Piece*,std::pair<int,int>);
     Evaluation evalProtected(Piece*,std::pair<int,int>);
 
@@ -28,16 +30,13 @@ public:
     bool canCheck(Piece*,std::pair<int,int>);
     bool pieceIsAttacked(Piece*,std::pair<int,int>);
 
-    Move determineBrainBestMove();
-    int getMoves();
-    void initializeEvaluation();
-    inline void copyBoard();
-
     bool checkLast3Moves(Move);
     bool checkLast3Moves(Piece*);
-    Move determineStockFishBestMove();
 
-    Move determineBestMove();
+    Move determineBrainBestMove(int = 1);
+    Move determineStockFishBestMove(int = 1);
+
+    Move determineBestMove(int = 1);
 
     friend std::ostream& operator<<(std::ostream& , const Brain&);
     ~Brain();

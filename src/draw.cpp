@@ -54,7 +54,7 @@ void Draw::initComponents()
 
     buttons.setDarkMode((&this->darkMode));
 
-    buttons += {"chess", new Button({screenWidth - 137, screenWidth - 20}, {screenHeight - 50, screenHeight - 195},&this->showBestMove, &this->cursorHand, "Show\nBest\nMove", "Hide\nBest\nMove")};
+    buttons += {"chess", new Button({screenWidth - 137, screenWidth - 20}, {screenHeight - 50, screenHeight - 195},&this->showBestMoveGulp, &this->cursorHand, "Show\nBest\nMove")};
     buttons += new Button({screenWidth - 137, screenWidth - 20}, {screenHeight - 230, screenHeight - 330},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
     buttons += new Button({screenWidth - 145, screenWidth - 15}, {350, 250}, &this->viewCredits,&this->cursorHand, "Show\nCredits","Close\nCredits");
 
@@ -124,6 +124,10 @@ void Draw::digestAction(RenderWindow* window, Event event){
         resetGameGulp = false;
         table.resetGame();
     }
+    if(showBestMoveGulp){
+        showBestMoveGulp = false;
+        table.showBestMove();
+    }
 
     if(table.isPlayingAgainstStockfish() != playAgainstStockFish)
         table.togglePlayAgainstStockfish();
@@ -131,8 +135,6 @@ void Draw::digestAction(RenderWindow* window, Event event){
     if(table.isPlayingAgainstAi() != playAgainstAi)
         table.togglePlayAgainstAi();
 
-    if(table.isShowingBestMove() != showBestMove)
-        table.toggleShowBestMove();
 
     /** Load determined cursor */
     Cursor cursor;

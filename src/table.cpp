@@ -70,6 +70,24 @@ int Table::getWinnerPlayer() const {
     return winnerPlayer;
 }
 
+/** Resseters */
+
+void Table::resetFuturePositions(){
+    this->futurePositions.clear();
+}
+
+void Table::resetSelectedSquare(){
+    this->selectedSquare = {-1,-1};
+}
+
+void Table::resetSelectedPieceLocation(){
+    this->selectedPieceCurrentLocation = {-1, -1};
+}
+
+void Table::resetShowingBestMove(){
+    this->showingBestMove = false;
+}
+
 /** Content generators */
 void Table::updateFrame(RenderWindow *window) {
 
@@ -78,16 +96,8 @@ void Table::updateFrame(RenderWindow *window) {
         Move m = brain->determineBestMove();
         if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable()){
             rules.movePiece(m.piece, m.to);
-            calculateBestMove = true;
             awaitNextMove = true;
         }
-    }
-
-    if (showBestMove && calculateBestMove){
-        calculateBestMove = false;
-        bestMove = brain->determineStockFishBestMove();
-        cout<<bestMove.piece->getType()[0] << char(bestMove.from.first +97) << 8 - bestMove.from.second << '\n';
-        cout<<bestMove.piece->getType()[0] << char(bestMove.to.first +97) << 8 - bestMove.to.second << '\n';
     }
 
     drawIndicators(window, size, position);
@@ -195,18 +205,6 @@ void Table::drawGrid(RenderWindow *window, SizeType s, std::pair<int,int> p){
 
             window->draw(square);
 
-            if (showBestMove)
-            {
-                if (current_pos == bestMove.from or current_pos == bestMove.to)
-                {
-                    RectangleShape insideRectangle;
-                    insideRectangle.setSize(Vector2f(squareWidth, squareHeight));
-                    insideRectangle.setPosition(static_cast<float>(p.first +squareWidth*i), static_cast<float>(p.second + squareHeight*j));
-                    insideRectangle.setFillColor(Color(178,65,55));
-                    window->draw(insideRectangle);
-                }
-            }
-
             if(find(futurePositions.begin(), futurePositions.end(), current_pos)!=futurePositions.end()){
                 if(rules[current_pos]->getType() != "Null" && rules[selectedSquare]->getType() != "Null" && rules[current_pos]->getPlayer()!=rules[selectedSquare]->getPlayer()){
                     RectangleShape insideRectangle;
@@ -221,6 +219,14 @@ void Table::drawGrid(RenderWindow *window, SizeType s, std::pair<int,int> p){
                     insideCircle.setFillColor(*darkMode ? Color(255,255,255) : Color(50,50,50));
                     window->draw(insideCircle);
                 }
+            }
+
+            if (showingBestMove && current_pos==bestMove.to){
+                CircleShape insideCircle;
+                insideCircle.setPosition(static_cast<float>(p.first +squareWidth*i)+squareWidth/2-20, static_cast<float>(p.second + squareHeight*j)+squareHeight/2-20);
+                insideCircle.setRadius(20);
+                insideCircle.setFillColor(Color(207,90,38));
+                window->draw(insideCircle);
             }
 
             if(hoveringSquare.first==i && hoveringSquare.second==j){
@@ -269,18 +275,6 @@ void Table::drawPiece(RenderWindow* window, Piece* piece) const{
     Texture piece_img;
 
     pair<double, double> origin = {-110,-50}, scale = {.3,.3};
-    /// Deprecated
-    /** int piece_type = 1;
-    switch(piece_type) {
-        case 2:
-            origin = {-110, -50};
-            scale = {0.35, .3};
-            break;
-        default:
-            origin = {-110, -50};
-            scale = {0.3, .3};
-            break;
-    }*/
     if (!piece_img.loadFromFile(piece->getImage())) throw EXIT_FAILURE;
 
     Sprite item;
@@ -293,25 +287,13 @@ void Table::drawPiece(RenderWindow* window, Piece* piece) const{
 }
 
 /** Action digesters */
-void Table::resetFuturePositions(){
-    this->futurePositions.clear();
-}
-
-void Table::resetSelectedSquare(){
-    this->selectedSquare = {-1,-1};
-}
-
-void Table::resetSelectedPieceLocation(){
-    this->selectedPieceCurrentLocation = {-1, -1};
-}
-
 void Table::updateSelectedSquare(pair<int, int> new_position){
     if(!(new_position.first>=0 && new_position.first<8 && new_position.second>=0 && new_position.second<8)) return;
     this->selectedSquare = new_position;
     Piece* current = rules[new_position];
+    resetShowingBestMove();
     if(find(futurePositions.begin(), futurePositions.end(), new_position)!=futurePositions.end()){
         rules.movePiece(selectedPiece, new_position);
-        calculateBestMove = true;
         awaitNextMove = true;
         resetFuturePositions();
         resetSelectedSquare();
@@ -347,8 +329,9 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
             if(!checkMate){
                 pair<int, int> grid_position = this->determineGridPosition(std::pair<int,int>(event.mouseButton.x, event.mouseButton.y));
                 if(grid_position==this->selectedSquare){
-                    resetFuturePositions();
-                    resetSelectedSquare();
+                    /// Needs to be fixed
+                    //resetFuturePositions();
+                    //resetSelectedSquare();
                 }else{
                     updateSelectedSquare(grid_position);
                 }
@@ -365,7 +348,7 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
             pair<int, int> grid_position = this->determineGridPosition(std::pair<int,int>(selectedPieceCurrentLocation.first, selectedPieceCurrentLocation.second));
             updateSelectedSquare(grid_position);
         } catch (int e) {
-            //cout<<"Moved piece outside the table"<<'\n';
+            ///cout<<"Moved piece outside the table"<<'\n';
         }
         mousePressing = false;
         resetSelectedPieceLocation();
@@ -418,6 +401,7 @@ void Table::resetGame() {
     checkMate = false;
     rules.resetGame();
     resetSelectedSquare();
+    resetShowingBestMove();
     resetFuturePositions();
     selectedPiece = rules.getPiece(0, {6, 6});
     /** Stop timers */
@@ -431,13 +415,20 @@ void Table::undoMove() {
     rules.undoMove();
     resetSelectedSquare();
     resetFuturePositions();
+    resetShowingBestMove();
 }
 
-void Table::toggleShowBestMove()
-{
-    showBestMove = !showBestMove;
-}
-bool Table::isShowingBestMove() const
-{
-    return showBestMove;
+void Table::showBestMove() {
+    bestMove = brain->determineStockFishBestMove(rules.getCurrentPlayer());
+    if(bestMove.piece!=NULL){
+        cout<<bestMove.piece->getType()[0] << char(bestMove.from.first +97) << 8 - bestMove.from.second << '\n';
+        cout<<bestMove.piece->getType()[0] << char(bestMove.to.first +97) << 8 - bestMove.to.second << '\n';
+        resetSelectedPieceLocation();
+        resetFuturePositions();
+        resetSelectedSquare();
+        this->selectedSquare = bestMove.piece->getPos();
+        this->selectedPiece = bestMove.piece;
+        this->futurePositions = rules.getFuturePositions(bestMove.piece);
+        this->showingBestMove = true;
+    }
 }

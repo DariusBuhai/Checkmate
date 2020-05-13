@@ -339,7 +339,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs, bool chec
     return ans;
 }
 
-std::vector<std::pair<int, int>> Rules::getFuturePositions2(Piece* pcs, std::pair<int, int> position, bool checkPlayer)
+std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs, std::pair<int, int> position, bool checkPlayer)
 {
     //returns the position that a piece can move.
     int player = pcs->getPlayer();
