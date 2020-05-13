@@ -363,7 +363,7 @@ Move Brain::determineStockFishBestMove(int for_player){
     try{
         rules->getCurentBoard(board);
         std::string best_move;
-        best_move = rules -> get_history();
+        best_move = rules->get_history();
         best_move = getNextMove(best_move);
         if(best_move.empty()) throw EXIT_FAILURE;
         std::pair<int,int> pos_best_move;

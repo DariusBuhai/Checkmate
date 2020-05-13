@@ -82,8 +82,7 @@
         fout << position;
         fout.close();
 
-        if(!system("python3 donotopen/stockfish_engine.py"))
-            throw EXIT_FAILURE;
+        system("python3 donotopen/stockfish_engine.py");
 
         std::ifstream fin("donotopen/buffer.txt");
         std::string s;
