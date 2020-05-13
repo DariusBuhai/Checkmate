@@ -304,6 +304,13 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
 
 void Table::digestAction(Event event, sf::RenderWindow* window){
 
+    /** Call on frame begin */
+    if(rules.getCurrentPlayer()==1 && playAgainstAi){
+        Move m = brain->determineBestMove();
+        if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable())
+            rules.movePiece(m.piece, m.to);
+    }
+
     Vector2i pos = Mouse::getPosition(*window);
 
     /** If is in drag and drop */
@@ -353,11 +360,6 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
             updateSelectedSquare({selectedSquare.first, selectedSquare.second-1});
         else if(event.key.code==Keyboard::Down)
             updateSelectedSquare({selectedSquare.first, selectedSquare.second+1});
-    }
-    if(rules.getCurrentPlayer()==1 && playAgainstAi){
-        Move m = brain->determineBestMove();
-        if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable())
-            rules.movePiece(m.piece, m.to);
     }
     /** Update timers */
     toggleTimers();

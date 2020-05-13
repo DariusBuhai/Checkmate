@@ -10,6 +10,8 @@ board = chess.Board()
 for mv in board_pos:
     if len(mv) == 4:
         board.push(chess.Move.from_uci(mv))
+    elif len(mv) == 5 and mv != "moves":
+        board.push(chess.Move.from_uci(mv))
 
 result = engine.play(board, chess.engine.Limit(time = 0.1))
 
