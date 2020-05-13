@@ -97,7 +97,8 @@ void Draw::init()
             if (event.type == Event::Closed)
                 window.close();
         }
-        this->updateFrame(&window);
+        if(window.isOpen())
+            this->updateFrame(&window);
         window.display();
     }
 

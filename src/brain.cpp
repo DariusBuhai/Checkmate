@@ -262,7 +262,7 @@ Move Brain::determineBrainBestMove()
 
     rules->getCurentBoard(board);
     for(Piece* piece: rules->getPieces())
-        if(piece -> getPlayer() == 1 or 1)
+        if(piece -> getPlayer() == 1)
         {
             Move best_current_eval_move;
             int best_current_eval = -9999;

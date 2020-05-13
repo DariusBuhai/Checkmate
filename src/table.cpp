@@ -78,11 +78,12 @@ void Table::updateFrame(RenderWindow *window) {
         Move m = brain->determineBestMove();
         if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable()){
             rules.movePiece(m.piece, m.to);
+            calculateBestMove = true;
             awaitNextMove = true;
         }
     }
 
-    if (rules.getCurrentPlayer() == 0 && showBestMove && calculateBestMove){
+    if (showBestMove && calculateBestMove){
         calculateBestMove = false;
         bestMove = brain->determineStockFishBestMove();
         cout<<bestMove.piece->getType()[0] << char(bestMove.from.first +97) << 8 - bestMove.from.second << '\n';
@@ -310,6 +311,7 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
     Piece* current = rules[new_position];
     if(find(futurePositions.begin(), futurePositions.end(), new_position)!=futurePositions.end()){
         rules.movePiece(selectedPiece, new_position);
+        calculateBestMove = true;
         awaitNextMove = true;
         resetFuturePositions();
         resetSelectedSquare();
@@ -365,7 +367,6 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
         } catch (int e) {
             //cout<<"Moved piece outside the table"<<'\n';
         }
-        calculateBestMove = true;
         mousePressing = false;
         resetSelectedPieceLocation();
     }
