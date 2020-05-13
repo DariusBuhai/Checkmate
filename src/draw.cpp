@@ -54,7 +54,7 @@ void Draw::initComponents()
 
     buttons.setDarkMode((&this->darkMode));
 
-    buttons += new Button({screenWidth - 137, screenWidth - 20}, {screenHeight - 50, screenHeight - 195},&this->showBestMove, &this->cursorHand, "Show\nBest\nMove");
+    buttons += {"chess", new Button({screenWidth - 137, screenWidth - 20}, {screenHeight - 50, screenHeight - 195},&this->showBestMove, &this->cursorHand, "Show\nBest\nMove", "Hide\nBest\nMove")};
     buttons += new Button({screenWidth - 137, screenWidth - 20}, {screenHeight - 230, screenHeight - 330},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
     buttons += new Button({screenWidth - 145, screenWidth - 15}, {350, 250}, &this->viewCredits,&this->cursorHand, "Show\nCredits","Close\nCredits");
 
@@ -66,7 +66,7 @@ void Draw::initComponents()
 
     labels.setDarkMode(&this->darkMode);
 
-    images += {"ai", new ImageLabel({screenWidth - 135,50}, "resources/images/brain.png", {.12,.12})};
+    images += {"ai", new ImageLabel({screenWidth - 135,360}, "resources/images/brain.png", {.12,.12})};
 
     labels += {"checkmate", new Label({(screenWidth-150)/2-220,360}, "Checkmate", 100, Color::Red, Color::Red)};
     labels += {"checkmate", new Label({(screenWidth-150)/2-100,500}, "Player x wins", 40, Color::White, Color::White)};
