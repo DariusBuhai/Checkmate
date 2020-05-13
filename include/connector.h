@@ -77,6 +77,7 @@
     #include <iostream>
 
     std::string getNextMove(const std::string position) {
+        std::cout<<"ANA";
         std::cout<<position;
         std::ofstream fout("donotopen/buffer.txt");
         fout << position;
