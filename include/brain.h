@@ -34,6 +34,7 @@ public:
     inline void copyBoard();
 
     bool checkLast3Moves(Move);
+    bool checkLast3Moves(Piece*);
     Move determineStockFishBestMove();
 
     Move determineBestMove();
