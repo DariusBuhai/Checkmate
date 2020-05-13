@@ -82,6 +82,13 @@ void Table::updateFrame(RenderWindow *window) {
         }
     }
 
+    if (rules.getCurrentPlayer() == 0 && showBestMove && calculateBestMove){
+        calculateBestMove = false;
+        bestMove = brain->determineStockFishBestMove();
+        cout<<bestMove.piece->getType()[0] << char(bestMove.from.first +97) << 8 - bestMove.from.second << '\n';
+        cout<<bestMove.piece->getType()[0] << char(bestMove.to.first +97) << 8 - bestMove.to.second << '\n';
+    }
+
     drawIndicators(window, size, position);
     drawOutline(window, SizeType(size.width-indicatorSpacing, size.height-indicatorSpacing), {position.first+indicatorSpacing, position.second});
     drawGrid(window, SizeType(size.width-2*padding-indicatorSpacing, size.height-2*padding-indicatorSpacing), std::pair<int,int>(position.first + indicatorSpacing + padding, position.second + padding));
@@ -381,19 +388,6 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
             updateSelectedSquare({selectedSquare.first, selectedSquare.second+1});
     }
 
-
-    if (rules.getCurrentPlayer() == 0 && showBestMove && calculateBestMove){
-        calculateBestMove = false;
-        bestMove = brain->determineStockFishBestMove();
-        cout<<bestMove.piece->getType()[0] << char(bestMove.from.first +97) << 8 - bestMove.from.second << '\n';
-        cout<<bestMove.piece->getType()[0] << char(bestMove.to.first +97) << 8 - bestMove.to.second << '\n';
-    }
-
-    if(rules.getCurrentPlayer()==1 && playAgainstAi){
-        Move m = brain->determineBestMove();
-        if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable())
-            rules.movePiece(m.piece, m.to);
-    }
 
     /** Update timers */
     toggleTimers();
