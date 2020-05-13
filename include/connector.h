@@ -52,7 +52,7 @@
         while(Read >= sizeof(buffer));
 
         int n = str.find("bestmove");
-        std::cout<<str<<'\n';
+        //std::cout<<str<<'\n';
         if (n!=-1) return str.substr(n+9,4);
 
         return "error";
