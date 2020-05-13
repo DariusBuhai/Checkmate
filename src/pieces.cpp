@@ -169,8 +169,9 @@ std::vector<std::vector<Piece*>> Pieces::operator[](int player)
 
 void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_taken_piece)
 {
-    if(piece -> getType() == "king" && abs(piece -> getPos().first - new_position.first == 2))
+    if(piece -> getType() == "king" && abs(piece -> getPos().first - new_position.first) == 2)
     {
+        cout<<"ANA";
         if(piece -> getPos().first - new_position.first == 2)
             new_position.first -=2;
         else
