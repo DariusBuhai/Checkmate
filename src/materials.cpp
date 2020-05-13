@@ -55,13 +55,15 @@ void Button::draw(RenderWindow* window, bool darkMode){
     if(*this->pressed && !this->disabledText.empty())
         t = this->disabledText;
 
-    const int elevation = 6;
-    if(hovering){
-        Utils::drawBox(window, x, y, !darkMode ? Color::Black : Color::White, Color::Transparent);
-        Utils::drawBox(window, {x.first+elevation, x.second+elevation}, {y.first+elevation, y.second+elevation}, !darkMode ? Color::Black : Color::White, darkMode ? Color(46,47,49) : Color(236,236,236));
-    }
-
-    Utils::drawText(window, t, darkMode ? Color::White : Color::Black, {hovering ? x.first+elevation : x.first,1100-(hovering ? y.first+elevation : y.first)});
+    const int elevation = !hovering ? 10 : 0;
+    const int padding_top = 10;
+    /// Button fill
+    Utils::drawBox(window, x, {y.first+padding_top+elevation,y.second+elevation}, darkMode ? Color(80,102,47, 100) : Color(105,127,72,100), darkMode ? Color(80,102,47) : Color(105,127,72));
+    /// Bottom elevated border
+    if(elevation>0)
+        Utils::drawBox(window, {x.first-5, x.second+5}, {y.second+elevation-15, y.second+2*elevation-15}, Color::Transparent, Color(0,0,0,100));
+    /// Text
+    Utils::drawText(window, t, Color::White, {x.first,1100-(!hovering ? y.first+elevation : y.first)});
 }
 
 Button &Button::operator=(const std::pair<std::string, std::string>& _texts) {
