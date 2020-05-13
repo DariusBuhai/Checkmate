@@ -72,6 +72,16 @@ int Table::getWinnerPlayer() const {
 
 /** Content generators */
 void Table::draw(RenderWindow *window) {
+
+    /** Called on each frame */
+    if(rules.getCurrentPlayer()==1 && playAgainstAi && !awaitNextMove){
+        Move m = brain->determineBestMove();
+        if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable()){
+            rules.movePiece(m.piece, m.to);
+            awaitNextMove = true;
+        }
+    }
+
     drawIndicators(window, size, position);
     drawOutline(window, SizeType(size.width-indicatorSpacing, size.height-indicatorSpacing), {position.first+indicatorSpacing, position.second});
     drawGrid(window, SizeType(size.width-2*padding-indicatorSpacing, size.height-2*padding-indicatorSpacing), std::pair<int,int>(position.first + indicatorSpacing + padding, position.second + padding));
@@ -296,8 +306,8 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
     selectedPiece = current;
     if(current != nullptr){
         try{
-            vector<pair<int, int>> futurePositions = rules.getFuturePositions(current);
-            this->futurePositions = futurePositions;
+            vector<pair<int, int>> _futurePositions = rules.getFuturePositions(current);
+            this->futurePositions = _futurePositions;
         }catch (int e){
             cout<<"An error occurred trying to find future positions!";
         }
@@ -306,28 +316,21 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
 
 void Table::digestAction(Event event, sf::RenderWindow* window){
 
-    /** Call on frame begin */
-    if(rules.getCurrentPlayer()==1 && playAgainstAi && !awaitNextMove){
-        Move m = brain->determineBestMove();
-        if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable()){
-            awaitNextMove = true;
-            rules.movePiece(m.piece, m.to);
-        }
-    }
-
-    Vector2i pos = Mouse::getPosition(*window);
-
     /** If is in drag and drop */
     if(mousePressing)
         *cursorHand = true;
 
     if(event.type==Event::MouseButtonPressed && event.mouseButton.button==Mouse::Left){
-        gameClock.restart();
         this->resetSelectedPieceLocation();
         try{
             if(!checkMate){
                 pair<int, int> grid_position = this->determineGridPosition(std::pair<int,int>(event.mouseButton.x, event.mouseButton.y));
-                updateSelectedSquare(grid_position);
+                if(grid_position==this->selectedSquare){
+                    resetFuturePositions();
+                    resetSelectedSquare();
+                }else{
+                    updateSelectedSquare(grid_position);
+                }
             }
         }catch (int e){
             cout<<"Pressed outside the table"<<'\n';
@@ -341,15 +344,14 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
             pair<int, int> grid_position = this->determineGridPosition(std::pair<int,int>(selectedPieceCurrentLocation.first, selectedPieceCurrentLocation.second));
             updateSelectedSquare(grid_position);
         } catch (int e) {
-            cout<<"Moved piece outside the table"<<'\n';
+            //cout<<"Moved piece outside the table"<<'\n';
         }
         mousePressing = false;
         resetSelectedPieceLocation();
     }
     if(mousePressing && mousePressingTimeout.getElapsedTime().asMilliseconds()>100){
-        if(selectedPiece ->getType() != "Null" && selectedPiece->getPlayer()==rules.getCurrentPlayer() && isInsideTable({event.mouseMove.x, event.mouseMove.y})){
+        if(selectedPiece->getType() != "Null" && selectedPiece->getPlayer()==rules.getCurrentPlayer() && isInsideTable({event.mouseMove.x, event.mouseMove.y}))
             selectedPieceCurrentLocation = {Mouse::getPosition(*window).x,Mouse::getPosition(*window).y};
-        }
     }
     if(event.type==Event::KeyPressed){
         if(selectedSquare.first==-1 || selectedSquare.second==-1){

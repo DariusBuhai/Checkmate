@@ -77,7 +77,7 @@
     #include <iostream>
 
     std::string getNextMove(const std::string position) {
-        std::cout<<position;
+        //std::cout<<position;
         std::ofstream fout("donotopen/buffer.txt");
         fout << position;
         fout.close();

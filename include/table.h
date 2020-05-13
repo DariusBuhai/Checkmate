@@ -61,8 +61,6 @@ private:
     Rules rules;
     Brain* brain;
 
-    sf::Clock gameClock;
-
     void resetFuturePositions();
     void resetSelectedPieceLocation();
     void resetSelectedSquare();

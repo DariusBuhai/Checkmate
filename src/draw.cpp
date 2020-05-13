@@ -68,9 +68,7 @@ void Draw::initComponents()
     images += {"ai", new ImageLabel({screenWidth - 135,50}, "resources/images/brain.png", {.12,.12})};
 
     labels += {"checkmate", new Label({(screenWidth-150)/2-220,360}, "Checkmate", 100, Color::Red, Color::Red)};
-    labels += {"checkmate", new Label({screenWidth - 130,360}, "Player", 40, Color::Blue, Color::Blue)};
-    labels += {"checkmate", new Label({screenWidth - 90,400}, "x", 40, Color::Blue, Color::Blue)};
-    labels += {"checkmate", new Label({screenWidth - 120,440}, "Wins", 40, Color::Blue, Color::Blue)};
+    labels += {"checkmate", new Label({(screenWidth-150)/2-100,500}, "Player x wins", 40, Color::White, Color::White)};
 
     labels += {"credits", new Label({screenWidth/2-100, 50}, "Credits", 70)};
     labels += {"credits", new Label({100, 160}, "Buhai Darius")};
@@ -93,7 +91,7 @@ void Draw::init()
     while(window.isOpen()){
         Event event{};
         window.clear();
-        while (window.pollEvent(event)){
+        while(window.pollEvent(event)){
             this->digestAction(&window, event);
             if (event.type == Event::Closed)
                 window.close();
@@ -158,7 +156,7 @@ void Draw::draw(RenderWindow* window)
         }
 
         if(table.getIsCheckMate()){
-            *labels["checkmate"][2] = ""+string(1, '1'+table.getWinnerPlayer());
+            *labels["checkmate"][1] = "Player "+string(1, '1'+table.getWinnerPlayer())+" wins";
             labels.draw(window, "checkmate");
         }
         buttons.draw(window, "chess");

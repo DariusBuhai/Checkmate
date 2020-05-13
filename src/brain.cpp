@@ -1,11 +1,8 @@
 #include "../include/brain.h"
-#include <time.h>
 #include "../include/connector.h"
 
 #include <iostream>
-#include <fstream>
 #include <vector>
-#include <random>
 
 using namespace std;
 
@@ -422,7 +419,6 @@ Move Brain::determineStockFishBestMove()
         Best_move = Move(piece,pos_best_move);
     }catch(...){
         cout<<"Cannot use stockfish, returning brain move\n";
-        ///*this->playAgainstStockFish = false;
         Best_move = this->determineBrainBestMove();
     }
     return Best_move;
