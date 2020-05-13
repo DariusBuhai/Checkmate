@@ -30,7 +30,7 @@ private:
     /** Custom table sizes */
     const double padding = 10;
     const double borderWidth = 10;
-    double indicatorSpacing = 100;
+    double indicatorSpacing = 70;
 
     SizeType size;
     std::pair<int,int> position;

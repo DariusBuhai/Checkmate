@@ -118,7 +118,7 @@ void Table::drawIndicators(RenderWindow *window, SizeType s, std::pair<int,int> 
         if(i%2) l.setFillColor(*darkMode ? Color(100,122,67) : Color(125,147,92));
         else l.setFillColor(*darkMode ? Color(210,210,186) : Color(145,145,121));
 
-        l.setPosition(p.first + indicatorSpacing / 2 + 20, p.second +indicatorHeight*i + indicatorHeight/2 - 20);
+        l.setPosition(p.first + indicatorSpacing / 2 - 10, p.second +indicatorHeight*i + indicatorHeight/2 -10);
         window->draw(l);
     }
     for(int j=0;j<8;j++){
@@ -132,7 +132,7 @@ void Table::drawIndicators(RenderWindow *window, SizeType s, std::pair<int,int> 
         if(!(j%2)) l.setFillColor(*darkMode ? Color(100,122,67) : Color(125,147,92));
         else l.setFillColor(*darkMode ? Color(210,210,186) : Color(145,145,121));
 
-        l.setPosition(p.first + indicatorWidth * j + indicatorSpacing + indicatorWidth / 2 - 20, s.height - indicatorHeight / 2 -20);
+        l.setPosition(p.first + indicatorWidth * j + indicatorSpacing + indicatorWidth / 2 - 20, s.height - indicatorHeight / 2 + 10);
         window->draw(l);
     }
 }
