@@ -21,3 +21,10 @@
 * [ ] Multithreading (la echipe de 3-4 oameni)
 * [ ] Computer Network / Socket Programming (la echipe de 2-4 oameni)
 * [ ] BD
+
+### Dependencies:
+ - For graphics:
+   - SFML (https://www.sfml-dev.org/)
+ - Stockfish for linux:
+   - python 3.6+ (with python3 alias)
+   - python-chess (pip install python-chess)

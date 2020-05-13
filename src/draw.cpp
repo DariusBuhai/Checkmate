@@ -57,9 +57,7 @@ void Draw::initComponents()
     buttons += new Button({screenWidth - 137, screenWidth - 20}, {screenHeight - 200, screenHeight - 300},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
     buttons += new Button({screenWidth - 145, screenWidth - 15}, {350, 250}, &this->viewCredits,&this->cursorHand, "Show\nCredits","Close\nCredits");
 
-    //#if defined(_WIN32)
-    buttons += {"ai", new Button({screenWidth - 140, screenWidth - 10}, {500, 400}, &this->playAgainstStockFish,&this->cursorHand, "Stock\nFish","Brain")};
-
+    buttons += {"ai", new Button({screenWidth - 145, screenWidth - 15}, {500, 400}, &this->playAgainstStockFish,&this->cursorHand, "Stock\nFish","Brain")};
 
     buttons += {"chess", new Button({100, 320}, {100, 40}, &this->resetGameGulp,&this->cursorHand, "Reset Game")};
     buttons += {"chess", new Button({400, 620}, {100, 40}, &this->undoMoveGulp,&this->cursorHand, "Undo Move")};
