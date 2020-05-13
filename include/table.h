@@ -30,7 +30,7 @@ private:
     /** Custom table sizes */
     const double padding = 10;
     const double borderWidth = 10;
-    double indicatorSpacing = 100;
+    double indicatorSpacing = 70;
 
     SizeType size;
     std::pair<int,int> position;
@@ -48,6 +48,8 @@ private:
     bool playAgainstAi = false;
     bool playAgainstStockFish = false;
     bool showBestMove = false;
+
+    bool awaitNextMove = false;
 
     bool checkMate = false;
     int winnerPlayer = -1;

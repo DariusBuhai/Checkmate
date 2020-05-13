@@ -9,7 +9,7 @@
 #include "../include/draw.h"
 
 #if defined(_WIN32)
-#include "table.cpp"
+    #include "table.cpp"
 #endif // defined
 
 using namespace std;
@@ -46,7 +46,7 @@ ostream& operator<<(ostream& out, const Draw& ob)
 
 void Draw::initComponents()
 {
-    table.setSize(SizeType(screenWidth - 150, screenHeight - 150));
+    table.setSize(SizeType(screenWidth - 160, screenHeight - 160));
     table.setPosition({0, 25});
     table.setDarkMode(&this->darkMode);
     table.setCursorHand(&this->cursorHand);
@@ -54,31 +54,37 @@ void Draw::initComponents()
 
     buttons.setDarkMode((&this->darkMode));
 
+<<<<<<< HEAD
     buttons += new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 240, screenHeight - 340},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
     buttons += {"chess", new Button({screenWidth - 130, screenWidth - 20}, {screenHeight - 50, screenHeight - 190}, &this->showBestMove, &this->cursorHand, "Show\nBest\nMove")};
     buttons += new Button({screenWidth - 140, screenWidth - 10}, {350, 250}, &this->viewCredits,&this->cursorHand, "Show\nCredits","Hide\nCredits");
+=======
+    buttons += new Button({screenWidth - 137, screenWidth - 20}, {screenHeight - 200, screenHeight - 300},&this->darkMode, &this->cursorHand, "Dark\nMode", "Light\nMode");
+    buttons += new Button({screenWidth - 145, screenWidth - 15}, {350, 250}, &this->viewCredits,&this->cursorHand, "Show\nCredits","Close\nCredits");
+>>>>>>> 48dea52a5c03271cba6ff165983f1b3b73a2de47
 
-    #if defined(_WIN32)
-        buttons += {"ai", new Button({screenWidth - 140, screenWidth - 10}, {500, 400}, &this->playAgainstStockFish,&this->cursorHand, "Stock\nFish","Brain")};
-    #endif
+    buttons += {"ai", new Button({screenWidth - 145, screenWidth - 15}, {500, 400}, &this->playAgainstStockFish,&this->cursorHand, "Stock\nFish","Brain")};
 
-    buttons += {"chess", new Button({100, 320}, {120, 60}, &this->resetGameGulp,&this->cursorHand, "Reset Game")};
-    buttons += {"chess", new Button({400, 620}, {120, 60}, &this->undoMoveGulp,&this->cursorHand, "Undo Move")};
-    buttons += {"chess", new Button({700, 1050}, {120, 60}, &this->playAgainstAi,&this->cursorHand, "Play with computer", "Play against friend")};
+    buttons += {"chess", new Button({100, 320}, {100, 40}, &this->resetGameGulp,&this->cursorHand, "Reset Game")};
+    buttons += {"chess", new Button({400, 620}, {100, 40}, &this->undoMoveGulp,&this->cursorHand, "Undo Move")};
+    buttons += {"chess", new Button({700, 1050}, {100, 40}, &this->playAgainstAi,&this->cursorHand, "Play with computer", "Play against friend")};
 
     labels.setDarkMode(&this->darkMode);
 
-    images += {"ai", new ImageLabel({screenWidth - 135,50}, "resources/brain.png", {.12,.12})};
+    images += {"ai", new ImageLabel({screenWidth - 135,50}, "resources/images/brain.png", {.12,.12})};
 
     labels += {"checkmate", new Label({(screenWidth-150)/2-220,360}, "Checkmate", 100, Color::Red, Color::Red)};
     labels += {"checkmate", new Label({screenWidth - 130,360}, "Player", 40, Color::Blue, Color::Blue)};
     labels += {"checkmate", new Label({screenWidth - 90,400}, "x", 40, Color::Blue, Color::Blue)};
     labels += {"checkmate", new Label({screenWidth - 120,440}, "Wins", 40, Color::Blue, Color::Blue)};
 
-    labels += {"credits", new Label({100, 50}, "Credits:", 50)};
-    labels += {"credits", new Label({100, 130}, "- Buhai Darius")};
-    labels += {"credits", new Label({100, 200}, "- Vlad Ciorica")};
-    labels += {"credits", new Label({100, 270}, "- Johnny")};
+    labels += {"credits", new Label({screenWidth/2-100, 50}, "Credits", 70)};
+    labels += {"credits", new Label({100, 160}, "Buhai Darius")};
+    images += {"credits", new ImageLabel({100, 230}, "resources/images/darius.jpeg", {.52,.52})};
+    labels += {"credits", new Label({100, 530}, "Vlad Ciorica")};
+    images += {"credits", new ImageLabel({100, 600}, "resources/images/vlad.jpeg", {1.2,1.2})};
+    labels += {"credits", new Label({550, 300}, "Johnny")};
+    images += {"credits", new ImageLabel({550, 370}, "resources/images/johnny.jpeg", {1.2,1.2})};
     labels += {"credits", new Label({100, screenHeight-120}, "@ All rights reserved", 30)};
 }
 
@@ -93,14 +99,19 @@ void Draw::init()
     while(window.isOpen()){
         Event event{};
         window.clear();
+<<<<<<< HEAD
         this->draw(&window);
         //std::cout << this->showBestMove<<"\n";
         while (window.pollEvent(event))
         {
+=======
+        while (window.pollEvent(event)){
+            this->digestAction(&window, event);
+>>>>>>> 48dea52a5c03271cba6ff165983f1b3b73a2de47
             if (event.type == Event::Closed)
                 window.close();
-            digestAction(&window, event);
         }
+        this->draw(&window);
         window.display();
     }
 
@@ -151,6 +162,7 @@ void Draw::draw(RenderWindow* window)
 
     if(viewCredits){
         labels.draw(window, "credits");
+        images.draw(window, "credits");
         buttons.draw(window, "credits");
     }
     else{

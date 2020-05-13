@@ -82,6 +82,7 @@ void Table::draw(RenderWindow *window) {
         else containsSelectedPiece = true;
 
     /** Draw the selected piece at the end, to be above */
+    awaitNextMove = false;
     if(selectedPiece != nullptr && selectedPiece->getType() != "Null" && containsSelectedPiece)
         drawPiece(window, selectedPiece);
 
@@ -118,7 +119,7 @@ void Table::drawIndicators(RenderWindow *window, SizeType s, std::pair<int,int> 
         if(i%2) l.setFillColor(*darkMode ? Color(100,122,67) : Color(125,147,92));
         else l.setFillColor(*darkMode ? Color(210,210,186) : Color(145,145,121));
 
-        l.setPosition(p.first + indicatorSpacing / 2 + 20, p.second +indicatorHeight*i + indicatorHeight/2 - 20);
+        l.setPosition(p.first + indicatorSpacing / 2 - 10, p.second +indicatorHeight*i + indicatorHeight/2 -10);
         window->draw(l);
     }
     for(int j=0;j<8;j++){
@@ -132,7 +133,7 @@ void Table::drawIndicators(RenderWindow *window, SizeType s, std::pair<int,int> 
         if(!(j%2)) l.setFillColor(*darkMode ? Color(100,122,67) : Color(125,147,92));
         else l.setFillColor(*darkMode ? Color(210,210,186) : Color(145,145,121));
 
-        l.setPosition(p.first + indicatorWidth * j + indicatorSpacing + indicatorWidth / 2 - 20, s.height - indicatorHeight / 2 -20);
+        l.setPosition(p.first + indicatorWidth * j + indicatorSpacing + indicatorWidth / 2 - 20, s.height - indicatorHeight / 2 + 10);
         window->draw(l);
     }
 }
@@ -285,6 +286,7 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
     Piece* current = rules[new_position];
     if(find(futurePositions.begin(), futurePositions.end(), new_position)!=futurePositions.end()){
         rules.movePiece(selectedPiece, new_position);
+        awaitNextMove = true;
         resetFuturePositions();
         resetSelectedSquare();
         if(rules.isCheckMate(!selectedPiece->getPlayer())){
@@ -308,6 +310,15 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
 }
 
 void Table::digestAction(Event event, sf::RenderWindow* window){
+
+    /** Call on frame begin */
+    if(rules.getCurrentPlayer()==1 && playAgainstAi && !awaitNextMove){
+        Move m = brain->determineBestMove();
+        if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable()){
+            awaitNextMove = true;
+            rules.movePiece(m.piece, m.to);
+        }
+    }
 
     Vector2i pos = Mouse::getPosition(*window);
 
@@ -360,6 +371,7 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
         else if(event.key.code==Keyboard::Down)
             updateSelectedSquare({selectedSquare.first, selectedSquare.second+1});
     }
+<<<<<<< HEAD
     if (rules.getCurrentPlayer() == 0 && calculateBestMove)
     {
         calculateBestMove = false;
@@ -371,6 +383,8 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
         if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable())
             rules.movePiece(m.piece, m.to);
     }
+=======
+>>>>>>> 48dea52a5c03271cba6ff165983f1b3b73a2de47
     /** Update timers */
     toggleTimers();
 }

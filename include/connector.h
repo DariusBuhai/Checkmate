@@ -70,5 +70,27 @@
     }
 #else
 
+    #include "utils.h"
+    #include <fstream>
+    #include <cstdlib>
+    #include <assert.h>
+    #include <iostream>
+
+    std::string getNextMove(const std::string position) {
+        std::cout<<position;
+        std::ofstream fout("donotopen/buffer.txt");
+        fout << position;
+        fout.close();
+
+        if(!system("python3 donotopen/stockfish_engine.py"))
+            throw EXIT_FAILURE;
+
+        std::ifstream fin("donotopen/buffer.txt");
+        std::string s;
+        fin >> s;
+        fin.close();
+
+        return s;
+    }
 #endif
 #endif //CONNECTOR_H

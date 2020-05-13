@@ -29,7 +29,7 @@ ostream& operator<<(ostream& out, const Brain& ob)
 Brain::Brain(Rules* _rules, bool *_playAgainstStockFish)
 {
 #if defined(_WIN32)
-    ConnectToEngine("stockfish.exe");
+    ConnectToEngine("stockfish/stockfish_windows.exe");
 #endif
     this->rules = _rules;
     this->playAgainstStockFish = _playAgainstStockFish;
@@ -404,25 +404,28 @@ Move Brain::determineBrainBestMove()
 
 Move Brain::determineStockFishBestMove()
 {
-#if defined(_WIN32)
-    rules->getCurentBoard(board);
-    std::string best_move;
     Move Best_move;
-    best_move = rules -> get_history();
-    best_move = getNextMove(best_move);
-    std::pair<int,int> pos_best_move;
-    std::pair<int,int> pos_piece;
-    pos_piece.first = int(best_move[0] - 97);
-    pos_piece.second = 8 - (best_move[1] - '0');
-    pos_best_move.first = int(best_move[2] - 97);
-    pos_best_move.second = 8 - (best_move[3] - '0');
-    cout<<best_move<<" cea mai buna mutare " << '\n';
-    Piece* piece = board[1][pos_piece.first][pos_piece.second];
-    Best_move = Move(piece,pos_best_move);
+    try{
+        rules->getCurentBoard(board);
+        std::string best_move;
+        best_move = rules -> get_history();
+        best_move = getNextMove(best_move);
+        if(best_move=="") throw EXIT_FAILURE;
+        std::pair<int,int> pos_best_move;
+        std::pair<int,int> pos_piece;
+        pos_piece.first = int(best_move[0] - 97);
+        pos_piece.second = 8 - (best_move[1] - '0');
+        pos_best_move.first = int(best_move[2] - 97);
+        pos_best_move.second = 8 - (best_move[3] - '0');
+        cout<<best_move<<" cea mai buna mutare " << '\n';
+        Piece* piece = board[1][pos_piece.first][pos_piece.second];
+        Best_move = Move(piece,pos_best_move);
+    }catch(...){
+        cout<<"Cannot use stockfish, returning brain move\n";
+        ///*this->playAgainstStockFish = false;
+        Best_move = this->determineBrainBestMove();
+    }
     return Best_move;
-#else
-    return this->determineBrainBestMove();
-#endif
 }
 
 Move Brain::determineBestMove()
