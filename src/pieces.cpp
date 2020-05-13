@@ -54,7 +54,7 @@ Pieces::~Pieces()
     }
     history.clear();
     pieces.clear();
-    
+
 }
 
 std::string Pieces::get_history()
@@ -169,6 +169,13 @@ std::vector<std::vector<Piece*>> Pieces::operator[](int player)
 
 void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_taken_piece)
 {
+    if(piece -> getType() == "king" && abs(piece -> getPos().first - new_position.first == 2))
+    {
+        if(piece -> getPos().first - new_position.first == 2)
+            new_position.first -=2;
+        else
+            new_position.first +=1;
+    }
     Move current_move = Move(piece, piece->getPos(), new_position);
 
     std::cout<<current_move.from.first<<','<<current_move.from.second<<' ';
@@ -187,13 +194,16 @@ void Pieces::movePiece(Piece* piece, std::pair<int, int> new_position, bool has_
         {
             aux->move(piece->getPosCastleShort());
             new_position.first -=1;
+            current_move.to.first -=1;
         }
         else
         {
             aux->move(piece->getPosCastleLong());
             new_position.first +=2;
+            current_move.to.first +=2;
         }
         piece->move(new_position);
+        history.emplace_back(current_move);
         switchPlayer();
         updateBoard();
         return;
