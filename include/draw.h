@@ -49,7 +49,7 @@ private:
 
 public:
     static Draw* getInstance();
-
+    void startGame();
     friend std::ostream& operator<<(std::ostream& , const Draw&);
     friend Table;
 };

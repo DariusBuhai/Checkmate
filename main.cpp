@@ -9,5 +9,6 @@ using namespace std;
 int main(){
 
     unique_ptr<Draw> drawPtr(Draw::getInstance());
+    drawPtr->startGame();
     return 0;
 }
