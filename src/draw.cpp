@@ -96,11 +96,10 @@ void Draw::init()
         Event event{};
         window.clear();
         this->draw(&window);
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)){
+            this->digestAction(&window, event);
             if (event.type == Event::Closed)
                 window.close();
-            digestAction(&window, event);
         }
         window.display();
     }
