@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -219,6 +220,8 @@ bool Brain::checkLast3Moves(Piece* piece)
 {
     int n = lastBrainMoves.size();
     try{
+        if(piece->getType() == "pawn" && moves < 5 && (piece->getPos().second == 3 || piece->getPos().second == 4))
+            return false;
         if(n > 0 && lastBrainMoves[n - 1].piece!=nullptr && lastBrainMoves[n - 1].piece->getType() == piece->getType())
             return true;
         if(n > 1 && lastBrainMoves[n - 2].piece!=nullptr && lastBrainMoves[n - 2].piece -> getType() == piece->getType())
@@ -230,6 +233,17 @@ bool Brain::checkLast3Moves(Piece* piece)
     }
     return false;
 }
+
+void Brain::restart_game()
+{
+     for(auto &move: lastBrainMoves)
+    {
+        delete move.updatedPiece;
+        delete move.deletedPiece;
+    }
+    lastBrainMoves.clear();
+}
+
 
 Move Brain::determineBrainBestMove(int for_player){
     if(rules == nullptr)
