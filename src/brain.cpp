@@ -373,6 +373,7 @@ Move Brain::determineStockFishBestMove(int for_player){
         pos_best_move.first = int(best_move[2] - 97);
         pos_best_move.second = 8 - (best_move[3] - '0');
         cout<<best_move<<" cea mai buna mutare " << '\n';
+        if(best_move=="None") throw EXIT_FAILURE;
         Piece* piece = board[rules->getCurrentPlayer()][pos_piece.first][pos_piece.second];
         Best_move = Move(piece,pos_piece,pos_best_move);
     }catch(...){
