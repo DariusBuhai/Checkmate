@@ -91,18 +91,43 @@ void Table::resetShowingBestMove(){
     this->showingBestMove = false;
 }
 
+/** Update checkmate or stalemate status */
+void Table::updateCheckmateStatus(int player){
+    if(rules.isCheckMate(player)){
+        if(rules.isInCheck(player)){
+            winnerPlayer = !player;
+            resetSelectedSquare();
+            resetFuturePositions();
+            checkMate = true;
+        }
+        else{
+            resetSelectedSquare();
+            resetFuturePositions();
+            staleMate = true;
+        }
+    }
+    if(checkMate || staleMate){
+        timer1.Pause();
+        timer2.Pause();
+    }
+}
 
-/** Content generators */
-void Table::updateFrame(RenderWindow *window) {
-
-    /** Called on each frame */
+/** Called on each frame */
+void Table::updateBrainMove(){
     if(rules.getCurrentPlayer()==1 && playAgainstAi && !awaitNextMove){
         Move m = brain->determineBestMove();
         if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable()){
             rules.movePiece(m.piece, m.to);
             awaitNextMove = true;
+            updateCheckmateStatus(!m.piece->getPlayer());
         }
     }
+}
+
+/** Content generators */
+void Table::updateFrame(RenderWindow *window) {
+
+    this->updateBrainMove();
 
     drawIndicators(window, size, position);
     drawOutline(window, SizeType(size.width-indicatorSpacing, size.height-indicatorSpacing), {position.first+indicatorSpacing, position.second});
@@ -301,22 +326,7 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
         awaitNextMove = true;
         resetFuturePositions();
         resetSelectedSquare();
-        if(rules.isCheckMate(!selectedPiece->getPlayer()))
-        {
-            if(rules.isInCheck(!selectedPiece->getPlayer()) == true)
-            {
-                winnerPlayer = selectedPiece->getPlayer();
-                resetSelectedSquare();
-                resetFuturePositions();
-                checkMate = true;
-            }
-            else
-            {
-                resetSelectedSquare();
-                resetFuturePositions();
-                staleMate = true;
-            }
-        }
+        updateCheckmateStatus(!selectedPiece->getPlayer());
         return;
     }
     resetFuturePositions();
@@ -388,7 +398,8 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
 
 
     /** Update timers */
-    toggleTimers();
+    if(!checkMate && !staleMate)
+        toggleTimers();
 }
 
 void Table::toggleTimers(bool pause, bool reset){
@@ -420,8 +431,8 @@ void Table::resetGame() {
     resetShowingBestMove();
     resetFuturePositions();
     selectedPiece = rules.getPiece(0, {6, 6});
-    /** Stop timers */
-    toggleTimers(true, true);
+    /** Reset and start timers */
+    toggleTimers(false, true);
 }
 
 void Table::undoMove() {

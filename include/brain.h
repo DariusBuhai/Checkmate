@@ -9,11 +9,11 @@
 class Brain : public Rules{
 private:
     Rules* rules;
-    int moves = 0;
     bool *playAgainstStockFish = new bool(false);
+    int moves = 0;
 
-    std::map<std::string, std::vector<std::vector<int>> >  evaluation;
-    std::vector<std::vector<std::vector<Piece*>> >  boardBrain;
+    std::map<std::string, std::vector<std::vector<int>>>  evaluation;
+    std::vector<std::vector<std::vector<Piece*>>>  boardBrain;
 
     static int getPointsEvaluation(Piece*);
     int getEvaluation(Piece*, std::pair<int,int>, int = 1);

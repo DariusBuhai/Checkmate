@@ -65,6 +65,9 @@ private:
     void resetSelectedSquare();
     void resetShowingBestMove();
 
+    void updateCheckmateStatus(int);
+    void updateBrainMove();
+
     void updateSelectedSquare(std::pair<int, int>);
     bool isInsideTable(std::pair<int,int>) const;
     void drawGrid(sf::RenderWindow*, SizeType, std::pair<int,int>);
