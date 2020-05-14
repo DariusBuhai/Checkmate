@@ -114,7 +114,7 @@ void Table::updateCheckmateStatus(int player){
 
 /** Called on each frame */
 void Table::updateBrainMove(){
-    if(rules.getCurrentPlayer()==1 && playAgainstAi && !awaitNextMove){
+    if(!(checkMate || staleMate) && rules.getCurrentPlayer()==1 && playAgainstAi && !awaitNextMove){
         Move m = brain->determineBestMove();
         if(m.piece != nullptr && m.piece->getType() != "Null" && m.piece->isInTable()){
             rules.movePiece(m.piece, m.to);

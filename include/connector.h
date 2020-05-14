@@ -1,21 +1,31 @@
 #ifndef CONNECTOR_H
 #define CONNECTOR_H
 
+#include <iostream>
+#include <fstream>
+#include <string>
+
 #if defined(_WIN32)
     #include <windows.h>
     #include <stdio.h>
-    #include <iostream>
-    #include <string>
+#else
+    #include <assert.h>
+    #include <cstdlib>
+#endif
 
-    STARTUPINFO sti = {0};
-    SECURITY_ATTRIBUTES sats = {0};
-    PROCESS_INFORMATION pi = {0};
-    HANDLE pipin_w, pipin_r, pipout_w, pipout_r;
-    BYTE buffer[2048];
-    DWORD writ,available,Read,excode;
+class StockFish{
+#if defined(_WIN32)
+    static STARTUPINFO sti = {0};
+    static SECURITY_ATTRIBUTES sats = {0};
+    static PROCESS_INFORMATION pi = {0};
+    static HANDLE pipin_w, pipin_r, pipout_w, pipout_r;
+    static BYTE buffer[2048];
+    static DWORD writ,available,Read,excode;
+#endif
 
-    void ConnectToEngine(char* path)
-    {
+public:
+#if defined(_WIN32)
+    static void connectToEngine(char* path){
         pipin_w = pipin_r = pipout_w = pipout_r = NULL;
         sats.nLength = sizeof(sats);
         sats.bInheritHandle = true;
@@ -34,8 +44,7 @@
     }
 
 
-    std::string getNextMove(std::string position)
-    {
+    static std::string getNextMove(std::string position){
         std::string str;
         position = "position startpos moves "+position+"\ngo\n";
         WriteFile(pipin_w, position.c_str(), position.length(),&writ, NULL);
@@ -58,8 +67,7 @@
         return "error";
     }
 
-    void CloseConnection()
-    {
+    static void closeConnection(){
         WriteFile(pipin_w, "quit\n", 5,&writ, NULL);
         if(pipin_w != NULL) CloseHandle(pipin_w);
         if(pipin_r != NULL) CloseHandle(pipin_r);
@@ -69,15 +77,7 @@
         if(pi.hThread != NULL) CloseHandle(pi.hThread);
     }
 #else
-
-    #include "utils.h"
-    #include <fstream>
-    #include <cstdlib>
-    #include <assert.h>
-    #include <iostream>
-
-    std::string getNextMove(const std::string position) {
-
+    static std::string getNextMove(const std::string position) {
         std::ofstream fout("donotopen/buffer.txt");
         fout << position;
         fout.close();
@@ -95,4 +95,7 @@
         return s;
     }
 #endif
+
+};
+
 #endif //CONNECTOR_H

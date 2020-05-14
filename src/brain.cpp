@@ -27,7 +27,7 @@ ostream& operator<<(ostream& out, const Brain& ob)
 Brain::Brain(Rules* _rules, bool *_playAgainstStockFish)
 {
 #if defined(_WIN32)
-    ConnectToEngine("stockfish/stockfish_windows.exe");
+    StockFish::connectToEngine("stockfish/stockfish_windows.exe");
 #endif
     this->rules = _rules;
     this->playAgainstStockFish = _playAgainstStockFish;
@@ -37,7 +37,7 @@ Brain::Brain(Rules* _rules, bool *_playAgainstStockFish)
 Brain::~Brain()
 {
 #if defined(_WIN32)
-    CloseConnection();
+    StockFish::closeConnection();
 #endif
 }
 
@@ -136,7 +136,7 @@ Evaluation Brain::evalProtected(Piece* piece,  std::pair<int,int> position)
 
 bool Brain::isOkToMove(Piece* piece, std::pair<int,int> position)
 {
-    rules -> getCurentBoard(board);
+    rules -> updateCurrentBoard(board);
     board[piece -> getPlayer()][position.first][position.second] = piece;
     board[piece -> getPlayer()][piece -> getPos().first][piece -> getPos().second] = nullPiece;
 
@@ -159,7 +159,7 @@ bool Brain::isOkToMove(Piece* piece, std::pair<int,int> position)
 
 bool Brain::canCheck(Piece* piece, std::pair<int,int> position)
 {
-    rules->getCurentBoard(board);
+    rules->updateCurrentBoard(board);
 
     if(board[0][position.first][position.second] ->getType() != "Null")
     {
@@ -261,7 +261,7 @@ Move Brain::determineBrainBestMove(int for_player){
     int best_eval_attacked_piece = -9999;
     ///ma plimb prin piese
 
-    rules->getCurentBoard(board);
+    rules->updateCurrentBoard(board);
     for(Piece* piece: rules->getPieces())
         if(piece->getPlayer() == for_player){
             Move best_current_eval_move;
@@ -375,23 +375,26 @@ Move Brain::determineBrainBestMove(int for_player){
 Move Brain::determineStockFishBestMove(int for_player){
     Move Best_move;
     try{
-        rules->getCurentBoard(board);
-        std::string best_move;
-        best_move = rules->get_history();
-        best_move = getNextMove(best_move);
-        if(best_move.empty()) throw EXIT_FAILURE;
+        rules->updateCurrentBoard(board);
+        std::string last_move, determined_move;
+        last_move = rules->get_history();
+        determined_move = StockFish::getNextMove(last_move);
+
+        if(determined_move.empty() || determined_move=="None") throw EXIT_FAILURE;
+
         std::pair<int,int> pos_best_move;
         std::pair<int,int> pos_piece;
-        pos_piece.first = int(best_move[0] - 97);
-        pos_piece.second = 8 - (best_move[1] - '0');
-        pos_best_move.first = int(best_move[2] - 97);
-        pos_best_move.second = 8 - (best_move[3] - '0');
-        cout<<best_move<<" cea mai buna mutare " << '\n';
-        if(best_move=="None") throw EXIT_FAILURE;
+
+        pos_piece.first = int(determined_move[0] - 97);
+        pos_piece.second = 8 - (determined_move[1] - '0');
+        pos_best_move.first = int(determined_move[2] - 97);
+        pos_best_move.second = 8 - (determined_move[3] - '0');
+
         Piece* piece = board[rules->getCurrentPlayer()][pos_piece.first][pos_piece.second];
-        Best_move = Move(piece,pos_piece,pos_best_move);
+        Best_move = Move(piece, pos_piece, pos_best_move);
+
     }catch(...){
-        cout<<"Cannot use stockfish, returning brain move\n";
+        cout<<"Cannot use stockfish\n";
         Best_move = this->determineBrainBestMove(for_player);
     }
     return Best_move;

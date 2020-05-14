@@ -6,19 +6,14 @@
 #include <vector>
 #include <iostream>
 
-Rules::Rules() : Pieces()
-{
-
-}
+Rules::Rules() : Pieces(){}
 
 
-void Rules::getCurentBoard(std::vector<std::vector<std::vector<Piece*>> >& aux_board)
-{
+void Rules::updateCurrentBoard(std::vector<std::vector<std::vector<Piece*>> >& aux_board){
     for (int i = 0 ; i< 2; i++)
         for (int j = 0 ; j < 8; j++)
             for (int k = 0; k < 8; k++)
                 aux_board[i][j][k] = board[i][j][k];
-
 }
 
 

@@ -20,7 +20,7 @@ class Rules: public Pieces{
 public:
     inline void saveBoard(Piece* [2][8][8]);
     inline void getBoard(Piece* [2][8][8]);
-    void getCurentBoard(std::vector<std::vector<std::vector<Piece*>> >&);
+    void updateCurrentBoard(std::vector<std::vector<std::vector<Piece*>> >&);
     Rules();
     ~Rules();
     std::vector <std::pair<int, int>> canAttackPos(Piece*,std::pair<int,int>);
