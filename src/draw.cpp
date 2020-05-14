@@ -70,6 +70,8 @@ void Draw::initComponents()
 
     labels += {"checkmate", new Label({(screenWidth-150)/2-220,360}, "Checkmate", 100, Color::Red, Color::Red)};
     labels += {"checkmate", new Label({(screenWidth-150)/2-100,500}, "Player x wins", 40, Color::White, Color::White)};
+    labels += {"stalemate", new Label({(screenWidth-150)/2-220,360}, "Stalemate", 100, Color::Red, Color::Red)};
+    labels += {"stalemate", new Label({(screenWidth-150)/2-50,500}, "Draw", 60, Color::White, Color::White)};
 
     labels += {"credits", new Label({screenWidth/2-100, 50}, "Credits", 70)};
     labels += {"credits", new Label({100, 160}, "Buhai Darius")};
@@ -165,6 +167,10 @@ void Draw::updateFrame(RenderWindow* window)
         if(table.getIsCheckMate()){
             *labels["checkmate"][1] = "Player "+string(1, '1'+table.getWinnerPlayer())+" wins";
             labels.draw(window, "checkmate");
+        }
+
+        if(table.getIsStaleMate()){
+            labels.draw(window,"stalemate");
         }
         buttons.draw(window, "chess");
     }

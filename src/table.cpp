@@ -66,6 +66,9 @@ bool Table::getIsCheckMate() const {
     return checkMate;
 }
 
+bool Table::getIsStaleMate() const{
+    return staleMate;
+}
 int Table::getWinnerPlayer() const {
     return winnerPlayer;
 }
@@ -87,6 +90,7 @@ void Table::resetSelectedPieceLocation(){
 void Table::resetShowingBestMove(){
     this->showingBestMove = false;
 }
+
 
 /** Content generators */
 void Table::updateFrame(RenderWindow *window) {
@@ -297,11 +301,21 @@ void Table::updateSelectedSquare(pair<int, int> new_position){
         awaitNextMove = true;
         resetFuturePositions();
         resetSelectedSquare();
-        if(rules.isCheckMate(!selectedPiece->getPlayer())){
-            winnerPlayer = selectedPiece->getPlayer();
-            resetSelectedSquare();
-            resetFuturePositions();
-            checkMate = true;
+        if(rules.isCheckMate(!selectedPiece->getPlayer()))
+        {
+            if(rules.isInCheck(!selectedPiece->getPlayer()) == true)
+            {
+                winnerPlayer = selectedPiece->getPlayer();
+                resetSelectedSquare();
+                resetFuturePositions();
+                checkMate = true;
+            }
+            else
+            {
+                resetSelectedSquare();
+                resetFuturePositions();
+                staleMate = true;
+            }
         }
         return;
     }
@@ -326,7 +340,7 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
     if(event.type==Event::MouseButtonPressed && event.mouseButton.button==Mouse::Left){
         this->resetSelectedPieceLocation();
         try{
-            if(!checkMate){
+            if(!checkMate && !staleMate){
                 pair<int, int> grid_position = this->determineGridPosition(std::pair<int,int>(event.mouseButton.x, event.mouseButton.y));
                 if(grid_position==this->selectedSquare){
                     /// Needs to be fixed
@@ -399,7 +413,9 @@ void Table::toggleTimers(bool pause, bool reset){
 /** Button actions */
 void Table::resetGame() {
     checkMate = false;
+    staleMate = false;
     rules.resetGame();
+    brain->restart_game();
     resetSelectedSquare();
     resetShowingBestMove();
     resetFuturePositions();
@@ -410,6 +426,7 @@ void Table::resetGame() {
 
 void Table::undoMove() {
     checkMate = false;
+    staleMate = false;
     if(playAgainstAi && rules.getCurrentPlayer()==0)
         rules.undoMove();
     rules.undoMove();

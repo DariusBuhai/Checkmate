@@ -48,6 +48,7 @@ private:
     bool playAgainstStockFish = false;
     bool awaitNextMove = false;
     bool checkMate = false;
+    bool staleMate = false;
     bool showingBestMove = false;
     int winnerPlayer = -1;
 
@@ -90,6 +91,7 @@ public:
     void initComponents();
 
     bool getIsCheckMate() const;
+    bool getIsStaleMate() const;
     int getWinnerPlayer() const;
 
     void resetGame();
