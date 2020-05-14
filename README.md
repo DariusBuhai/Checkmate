@@ -12,12 +12,12 @@
 * [x] STL (**vectors**)
 * [x] Lambda expressions (**rules.cpp Rules::getFuturePawn()**)
 * [x] Templates (**materials.h**)
-* [ ] Smart pointers (**unique_pointer<>** + de adaugat inca unul)
+* [x] Smart pointers (**unique_pointer<>** + de adaugat inca unul)
 * [x] Design patterns (maxim 4: Factory, Template Method, Singleton, Null Object)
 * [x] Features of C++17/20 (***constexpr, consteval, constinit, fold expressions, init statement for if/switch, etc***) (**brain.cpp -> isOkToMove()**)
 
 ### Opțional => Bonus:
-* [ ] Move semantics
+* [ ] Move semantics ?? Probabil
 * [ ] Multithreading (la echipe de 3-4 oameni)
 * [ ] Computer Network / Socket Programming (la echipe de 2-4 oameni)
 * [ ] BD
