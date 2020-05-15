@@ -39,7 +39,7 @@ public:
     int getCurrentPlayer();
     void setCurrentPlayer(int);
     void switchPlayer();
-
+    void showGame();
     void resetGame();
     void undoMove();
     friend std::ostream& operator<<(std::ostream& , const Pieces&);

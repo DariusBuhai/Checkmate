@@ -446,7 +446,7 @@
 	"piece.h"
 	"pieces.h"
 
-1589358985 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\pieces.h
+1589537058 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\pieces.h
 	<vector>
 	<deque>
 	<string>
@@ -589,7 +589,7 @@
 	"../include/table.h"
 	"pieces.cpp"
 
-1589387587 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\pieces.cpp
+1589541023 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\pieces.cpp
 	<iostream>
 	<vector>
 	<utility>
