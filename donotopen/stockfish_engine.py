@@ -2,8 +2,10 @@ import chess
 import chess.engine
 
 engine = chess.engine.SimpleEngine.popen_uci("stockfish/stockfish_mac")
+#engine = chess.engine.SimpleEngine.popen_uci("../stockfish/stockfish_mac")
 
 fin = open("donotopen/buffer.txt", "r")
+#fin = open("buffer.txt", "r")
 board_pos = fin.readline().strip().split()
 
 board = chess.Board()
@@ -17,6 +19,7 @@ result = engine.play(board, chess.engine.Limit(time = 0.1))
 
 fin.close()
 fout = open("donotopen/buffer.txt", "w")
+#fout = open("buffer.txt", "w")
 fout.write(str(result.move))
 fout.close()
 

@@ -48,11 +48,11 @@ void Pieces::showGame()
     {
         if(nr_moves % 2 == 0)
             {
-                cout<<nr_moves / 2<<". ";
-                cout<<char((m.piece->getType()[0]) - 32)<< char(m.to.first +97) << 8 - m.to.second <<" ";
+                std::cout<<nr_moves / 2<<". ";
+                std::cout<<char((m.piece->getType()[0]) - 32)<< char(m.to.first +97) << 8 - m.to.second <<" ";
             }
         else
-             cout<<char((m.piece->getType()[0]) - 32)<< char(m.to.first +97) << 8 - m.to.second << '\n';
+             std::cout<<char((m.piece->getType()[0]) - 32)<< char(m.to.first +97) << 8 - m.to.second << '\n';
         nr_moves++;
     }
 }
@@ -75,11 +75,9 @@ Pieces::~Pieces()
 
 }
 
-std::string Pieces::get_history()
-{
-    std::string moves = "";
-    for(auto x : history)
-    {
+std::string Pieces::parseHistory(){
+    std::string moves;
+    for(auto x : history){
         char c1 = char(x.from.first + 97);
         char c2 = 8 - x.from.second + '0';
         char c3 = char(x.to.first + 97);
@@ -88,6 +86,9 @@ std::string Pieces::get_history()
         moves += c2;
         moves += c3;
         moves += c4;
+        if(x.updatedPiece!= nullptr)
+            if(dynamic_cast<Queen*>(x.piece))
+                moves+='q';
         moves += " ";
         //std::cout<< c1 << c2 << c3 << c4 << '\n';
     }

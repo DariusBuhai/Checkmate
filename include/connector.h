@@ -80,13 +80,15 @@
     }
 #else
     #include <cstdlib>
+    #include <unistd.h>
 
     std::string getNextMove(const std::string position){
         std::ofstream fout("donotopen/buffer.txt");
         fout << position;
         fout.close();
 
-        system("python3 donotopen/stockfish_engine.py");
+        system("python3 donotopen/stockfish_engine.py &");
+        sleep(1);
 
         std::ifstream fin("donotopen/buffer.txt");
         std::string s;
