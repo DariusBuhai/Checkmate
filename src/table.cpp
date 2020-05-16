@@ -353,7 +353,7 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
             if(!checkMate && !staleMate){
                 pair<int, int> grid_position = this->determineGridPosition(std::pair<int,int>(event.mouseButton.x, event.mouseButton.y));
                 if(grid_position==this->selectedSquare){
-                    /// Needs to be fixed
+                    /// Deprecated for drag&drop to work better
                     //resetFuturePositions();
                     //resetSelectedSquare();
                 }else{
@@ -361,7 +361,7 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
                 }
             }
         }catch (int e){
-            cout<<"Pressed outside the table"<<'\n';
+            //cout<<"Pressed outside the table"<<'\n';
         }
         if(!mousePressing)
             mousePressingTimeout.restart();
