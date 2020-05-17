@@ -427,7 +427,7 @@ void Table::resetGame() {
     checkMate = false;
     staleMate = false;
     rules.resetGame();
-    brain->restart_game();
+    brain->restartGame();
     resetSelectedSquare();
     resetShowingBestMove();
     resetFuturePositions();

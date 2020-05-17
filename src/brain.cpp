@@ -235,7 +235,7 @@ bool Brain::checkLast3Moves(Piece* piece)
     return false;
 }
 
-void Brain::restart_game()
+void Brain::restartGame()
 {
      for(auto &move: lastBrainMoves)
     {

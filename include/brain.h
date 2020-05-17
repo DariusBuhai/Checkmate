@@ -38,7 +38,7 @@ public:
 
     Move determineBestMove(int = 1);
 
-    void restart_game();
+    void restartGame();
 
     friend std::ostream& operator<<(std::ostream& , const Brain&);
     ~Brain();

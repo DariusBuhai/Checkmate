@@ -26,6 +26,11 @@ struct SizeType{
     }
 };
 
+struct Evaluation{
+    int nr_pieces;
+    int eval;
+};
+
 struct Move{
     Piece *piece = nullptr;
     Piece *deletedPiece = nullptr;
@@ -47,12 +52,7 @@ struct Move{
     }
 };
 
-struct Evaluation{
-    int nr_pieces;
-    int eval;
-};
-
-class Utils: public std::exception{
+class Utils{
 public:
     static bool mouseInsideLimits(std::pair<int, int> location, std::pair<int, int> x, std::pair<int,int> y){
         y.first = ScreenHeight - y.first;
