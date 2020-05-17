@@ -373,7 +373,7 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
             pair<int, int> grid_position = this->determineGridPosition(std::pair<int,int>(selectedPieceCurrentLocation.first, selectedPieceCurrentLocation.second));
             updateSelectedSquare(grid_position);
         } catch (Exception &e) {
-            std::cerr<<e.what()<<'\n';
+            //std::cerr<<e.what()<<'\n';
         }
         mousePressing = false;
         resetSelectedPieceLocation();
