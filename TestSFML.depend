@@ -1,9 +1,9 @@
 # depslib dependency file v1.0
-1589392275 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\main.cpp
+1589499210 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\main.cpp
 	"include/draw.h"
 	"draw.cpp"
 
-1589451850 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\draw.h
+1589499210 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\draw.h
 	<SFML/Graphics.hpp>
 	<iostream>
 	<vector>
@@ -420,7 +420,7 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1589458699 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\table.h
+1589499210 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\table.h
 	<SFML/Graphics.hpp>
 	<vector>
 	"utils.h"
@@ -429,44 +429,27 @@
 	"brain.h"
 	"../include/materials.h"
 
-1589358985 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\utils.h
-	<SFML/Graphics.hpp>
-	<iostream>
-	<string>
-	<vector>
+1587480986 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\types.h
 	"piece.h"
 
-1589358985 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\piece.h
+1589499210 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\piece.h
 	<vector>
 	<string>
 
-1589476497 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\rules.h
-	<string>
-	<vector>
-	"piece.h"
-	"pieces.h"
-
-1589537058 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\pieces.h
+1589499210 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\pieces.h
 	<vector>
 	<deque>
 	<string>
 	"piece.h"
 	"utils.h"
 
-1589458699 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\brain.h
-	<map>
-	"rules.h"
-	"piece.h"
-
-1589362737 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\materials.h
-	<SFML/Graphics.hpp>
-	<iostream>
+1589499210 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\rules.h
 	<string>
 	<vector>
-	<map>
-	"../include/utils.h"
+	"piece.h"
+	"pieces.h"
 
-1589453927 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\draw.cpp
+1589499210 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\draw.cpp
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 	<iostream>
@@ -580,7 +563,7 @@
 	<SFML/Audio/Export.hpp>
 	<string>
 
-1589476497 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\table.cpp
+1589499210 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\table.cpp
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 	<iostream>
@@ -589,7 +572,15 @@
 	"../include/table.h"
 	"pieces.cpp"
 
-1589541023 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\pieces.cpp
+1589499210 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\src\rules.cpp
+	"../include/rules.h"
+	"../include/table.h"
+	"../include/utils.h"
+	<string>
+	<vector>
+	<iostream>
+
+1589499210 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\pieces.cpp
 	<iostream>
 	<vector>
 	<utility>
@@ -598,38 +589,77 @@
 	"../include/piece.h"
 	"piece.cpp"
 
-1589358985 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\piece.cpp
+1589499210 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\piece.cpp
 	<vector>
 	<utility>
 	"../include/piece.h"
 	"../include/table.h"
 
-1589535239 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\src\brain.cpp
+1589499210 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\brain.h
+	<map>
+	"rules.h"
+	"piece.h"
+
+1586786442 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\brain.cpp
+	"../include/brain.h"
+	"../include/rules.h"
+	"../include/piece.h"
+	"../include/types.h"
+	<iostream>
+	<fstream>
+	<vector>
+	<random>
+
+1589499210 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\src\brain.cpp
 	"../include/brain.h"
 	"../include/connector.h"
 	<iostream>
 	<vector>
 	<fstream>
 
-1589535239 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\connector.h
-	<iostream>
-	<fstream>
+1586782717 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\rules.cpp
+	"../include/rules.h"
+	"../include/table.h"
+	"../include/types.h"
 	<string>
-	<windows.h>
-	<stdio.h>
-	<cstdlib>
+	<vector>
+	<iostream>
 
-1589377000 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\src\materials.cpp
+1589499210 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\utils.h
+	<SFML/Graphics.hpp>
+	<iostream>
+	<string>
+	<vector>
+	"piece.h"
+
+1589499210 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\materials.h
+	<SFML/Graphics.hpp>
+	<iostream>
+	<string>
+	<vector>
+	<map>
+	"../include/utils.h"
+
+1589499210 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\src\materials.cpp
 	<SFML/Graphics.hpp>
 	<utility>
 	"../include/utils.h"
 	"../include/materials.h"
 
-1589476497 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\src\rules.cpp
-	"../include/rules.h"
-	"../include/table.h"
-	"../include/utils.h"
+1589290270 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\connector.hpp
+	<windows.h>
+	<stdio.h>
+	<iostream>
 	<string>
-	<vector>
+
+1589499210 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\connector.h
+	<windows.h>
+	<stdio.h>
+	<iostream>
+	<string>
+	"utils.h"
+	<fstream>
+	<cstdlib>
+	<assert.h>
 	<iostream>
 

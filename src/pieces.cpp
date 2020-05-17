@@ -41,26 +41,8 @@ Pieces::Pieces()
     updateBoard();
 }
 
-void Pieces::showGame()
-{
-    int nr_moves = 2;
-    for(auto m : history)
-    {
-        if(nr_moves % 2 == 0)
-            {
-                cout<<nr_moves / 2<<". ";
-                cout<<char((m.piece->getType()[0]) - 32)<< char(m.to.first +97) << 8 - m.to.second <<" ";
-            }
-        else
-             cout<<char((m.piece->getType()[0]) - 32)<< char(m.to.first +97) << 8 - m.to.second << '\n';
-        nr_moves++;
-    }
-}
-
-
 Pieces::~Pieces()
 {
-    showGame();
     /** Clear history and pieces */
     delete nullPiece;
     for(auto &piece: pieces)
