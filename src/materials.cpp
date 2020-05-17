@@ -18,7 +18,7 @@ using namespace sf;
 
 void ImageLabel::draw(RenderWindow* window, bool darkMode){
     Texture piece_img;
-    if(!piece_img.loadFromFile(this->image_path)) throw EXIT_FAILURE;
+    if(!piece_img.loadFromFile(this->image_path)) throw Exception("Error: Cannot load image");
 
     Sprite item;
     item.setScale(this->scale.first, this->scale.second);

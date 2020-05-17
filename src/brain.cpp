@@ -1,5 +1,6 @@
 #include "../include/brain.h"
 #include "../include/connector.h"
+#include "../include/exception.h"
 
 #include <iostream>
 #include <vector>
@@ -234,7 +235,7 @@ bool Brain::checkLast3Moves(Piece* piece)
     return false;
 }
 
-void Brain::restart_game()
+void Brain::restartGame()
 {
      for(auto &move: lastBrainMoves)
     {
@@ -247,7 +248,7 @@ void Brain::restart_game()
 
 Move Brain::determineBrainBestMove(int for_player){
     if(rules == nullptr)
-        throw EXIT_FAILURE;
+        throw Exception("Error: Rules not set!");
 
     vector<Move> future_pos;
 
@@ -376,14 +377,12 @@ Move Brain::determineStockFishBestMove(int for_player){
     Move Best_move;
     try{
         rules->updateCurrentBoard(board);
-        std::string last_move, determined_move;
-        last_move = rules->get_history();
-        #if defined(_WIN32)
-            determined_move = getNextMove(last_move);
-        #else
-            determined_move = StockFish::getNextMove(last_move);
-        #endif
-        if(determined_move.empty() || determined_move=="None") throw EXIT_FAILURE;
+
+        std::string last_moves, determined_move;
+        last_moves = rules->parseHistory();
+        determined_move = getNextMove(last_moves);
+
+        if(determined_move.empty() || determined_move=="None") throw Exception("Error: Wrong stockfish answer!");
 
         std::pair<int,int> pos_best_move;
         std::pair<int,int> pos_piece;
@@ -396,8 +395,8 @@ Move Brain::determineStockFishBestMove(int for_player){
         Piece* piece = board[rules->getCurrentPlayer()][pos_piece.first][pos_piece.second];
         Best_move = Move(piece, pos_piece, pos_best_move);
 
-    }catch(...){
-        cout<<"Cannot use stockfish\n";
+    }catch(Exception &e){
+        std::cerr<<e.what()<<'\n';
         Best_move = this->determineBrainBestMove(for_player);
     }
     return Best_move;

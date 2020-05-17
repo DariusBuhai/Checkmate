@@ -5,8 +5,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <exception>
 
 #include "piece.h"
+#include "exception.h"
 
 #if defined(_WIN32)
     #define ScreenWidth 1100
@@ -22,6 +24,11 @@ struct SizeType{
         this->width = width;
         this->height = height;
     }
+};
+
+struct Evaluation{
+    int nr_pieces;
+    int eval;
 };
 
 struct Move{
@@ -45,11 +52,6 @@ struct Move{
     }
 };
 
-struct Evaluation{
-    int nr_pieces;
-    int eval;
-};
-
 class Utils{
 public:
     static bool mouseInsideLimits(std::pair<int, int> location, std::pair<int, int> x, std::pair<int,int> y){
@@ -67,7 +69,8 @@ public:
         sf::Text text = sf::Text();
         text.setString(title);
         sf::Font font;
-        if (!font.loadFromFile("resources/sansation.ttf")) throw EXIT_FAILURE;
+        if (!font.loadFromFile("resources/sansation.ttf"))
+            throw Exception("Error: Cannot load font!");
         text.setFont(font);
         text.setCharacterSize(size);
         text.setFillColor(color);

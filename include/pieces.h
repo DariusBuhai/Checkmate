@@ -32,7 +32,7 @@ public:
     Piece* operator[](std::pair<int, int>);
     std::vector<std::vector<Piece*>> operator[](int);
     void setPieces(const std::vector<Piece*>&);
-    std::string get_history();
+    std::string parseHistory();
     void movePiece(Piece*, std::pair<int, int>, bool = false);
     void movePiece(std::pair<int, int>, std::pair<int, int>);
 
@@ -42,6 +42,7 @@ public:
 
     void resetGame();
     void undoMove();
+    void showGame();
     friend std::ostream& operator<<(std::ostream& , const Pieces&);
 };
 

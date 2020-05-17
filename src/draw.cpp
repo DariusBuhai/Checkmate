@@ -75,11 +75,11 @@ void Draw::initComponents()
 
     labels += {"credits", new Label({screenWidth/2-100, 50}, "Credits", 70)};
     labels += {"credits", new Label({100, 160}, "Buhai Darius")};
-    images += {"credits", new ImageLabel({100, 230}, "resources/images/darius.jpeg", {.52,.52})};
+    images += {"credits", new ImageLabel({100, 230}, "resources/images/darius.jpeg", {.25,.25})};
     labels += {"credits", new Label({100, 530}, "Vlad Ciorica")};
-    images += {"credits", new ImageLabel({100, 600}, "resources/images/vlad.jpeg", {1.2,1.2})};
+    images += {"credits", new ImageLabel({100, 600}, "resources/images/vlad.jpeg", {1.25,1.25})};
     labels += {"credits", new Label({550, 300}, "Johnny")};
-    images += {"credits", new ImageLabel({550, 370}, "resources/images/johnny.jpeg", {1.2,1.2})};
+    images += {"credits", new ImageLabel({550, 370}, "resources/images/johnny.jpeg", {1.25,1.25})};
     labels += {"credits", new Label({100, screenHeight-120}, "@ All rights reserved", 30)};
 }
 
@@ -136,7 +136,6 @@ void Draw::digestAction(RenderWindow* window, Event event){
 
     if(table.isPlayingAgainstAi() != playAgainstAi)
         table.togglePlayAgainstAi();
-
 
     /** Load determined cursor */
     Cursor cursor;

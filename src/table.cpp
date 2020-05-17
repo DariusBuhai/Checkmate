@@ -6,6 +6,7 @@
 
 #include "../include/piece.h"
 #include "../include/table.h"
+#include "../include/exception.h"
 
 #if defined(_WIN32)
     #include "pieces.cpp"
@@ -168,7 +169,7 @@ void Table::drawIndicators(RenderWindow *window, SizeType s, std::pair<int,int> 
     for(int i=0;i<8;i++){
         Text l;
         Font font;
-        if (!font.loadFromFile("resources/sansation.ttf")) throw EXIT_FAILURE;
+        if (!font.loadFromFile("resources/sansation.ttf")) throw Exception("Error: Cannot load font!");
         l.setString(string(1, '1'+(7-i)));
         l.setFont(font);
         l.setCharacterSize(40);
@@ -182,7 +183,7 @@ void Table::drawIndicators(RenderWindow *window, SizeType s, std::pair<int,int> 
     for(int j=0;j<8;j++){
         Text l;
         Font font;
-        if (!font.loadFromFile("resources/sansation.ttf")) throw EXIT_FAILURE;
+        if (!font.loadFromFile("resources/sansation.ttf")) throw Exception("Error: Cannot load font!");
         l.setString(string(1, 'A'+j));
         l.setFont(font);
         l.setCharacterSize(40);
@@ -212,8 +213,8 @@ void Table::drawGrid(RenderWindow *window, SizeType s, std::pair<int,int> p){
     if(mousePressing){
         try{
             hoveringSquare = determineGridPosition(selectedPieceCurrentLocation);
-        } catch (...) {
-            //cout<<"Not hovering any square!\n";
+        } catch (Exception &e) {
+            //std::cerr<<e.what()<<'\n';
         }
     }
 
@@ -286,7 +287,7 @@ pair<int, int> Table::determineGridPosition(std::pair<int,int> pos) const{
         r.first = (int) (pos.first - p.first) / (s.width/8);
         r.second = (int) (pos.second - p.second) / (s.height/8);
     }else{
-        throw EXIT_FAILURE;
+        throw Exception("Warning: Pressed outside the table");
     }
 
     return r;
@@ -304,7 +305,7 @@ void Table::drawPiece(RenderWindow* window, Piece* piece) const{
     Texture piece_img;
 
     pair<double, double> origin = {-110,-50}, scale = {.3,.3};
-    if (!piece_img.loadFromFile(piece->getImage())) throw EXIT_FAILURE;
+    if (!piece_img.loadFromFile(piece->getImage())) throw Exception("Error: Cannot load image!");
 
     Sprite item;
     item.setScale(scale.first, scale.second);
@@ -353,15 +354,15 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
             if(!checkMate && !staleMate){
                 pair<int, int> grid_position = this->determineGridPosition(std::pair<int,int>(event.mouseButton.x, event.mouseButton.y));
                 if(grid_position==this->selectedSquare){
-                    /// Needs to be fixed
+                    /// Deprecated for drag&drop to work better
                     //resetFuturePositions();
                     //resetSelectedSquare();
                 }else{
                     updateSelectedSquare(grid_position);
                 }
             }
-        }catch (int e){
-            cout<<"Pressed outside the table"<<'\n';
+        }catch (Exception &e){
+            //std::cerr<<e.what()<<'\n';
         }
         if(!mousePressing)
             mousePressingTimeout.restart();
@@ -371,8 +372,8 @@ void Table::digestAction(Event event, sf::RenderWindow* window){
         try{
             pair<int, int> grid_position = this->determineGridPosition(std::pair<int,int>(selectedPieceCurrentLocation.first, selectedPieceCurrentLocation.second));
             updateSelectedSquare(grid_position);
-        } catch (int e) {
-            ///cout<<"Moved piece outside the table"<<'\n';
+        } catch (Exception &e) {
+            //std::cerr<<e.what()<<'\n';
         }
         mousePressing = false;
         resetSelectedPieceLocation();
@@ -426,7 +427,7 @@ void Table::resetGame() {
     checkMate = false;
     staleMate = false;
     rules.resetGame();
-    brain->restart_game();
+    brain->restartGame();
     resetSelectedSquare();
     resetShowingBestMove();
     resetFuturePositions();

@@ -350,9 +350,7 @@ std::vector<std::pair<int, int>> Rules::getFuturePositions(Piece* pcs, std::pair
     saveBoard(aux_board);
 
     if (dynamic_cast<Pawn*>(board[player][pos.first][pos.second]))
-    {
         return getFuturePawn(pcs);
-    }
     else
     {
         if (dynamic_cast<King*>(board[player][pos.first][pos.second]))

@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include "exception.h"
 
 STARTUPINFO sti = {0};
 SECURITY_ATTRIBUTES sats = {0};
@@ -86,7 +87,22 @@ void CloseConnection()
 
 class StockFish
 {
-
+    void CloseConnection()
+    {
+        WriteFile(pipin_w, "quit\n", 5,&writ, NULL);
+        if(pipin_w != NULL)
+            CloseHandle(pipin_w);
+        if(pipin_r != NULL)
+            CloseHandle(pipin_r);
+        if(pipout_w != NULL)
+            CloseHandle(pipout_w);
+        if(pipout_r != NULL)
+            CloseHandle(pipout_r);
+        if(pi.hProcess != NULL)
+            CloseHandle(pi.hProcess);
+        if(pi.hThread != NULL)
+            CloseHandle(pi.hThread);
+    }
 
 public:
     static std::string getNextMove(const std::string position)
@@ -95,7 +111,8 @@ public:
         fout << position;
         fout.close();
 
-        system("python3 donotopen/stockfish_engine.py");
+        system("python3 donotopen/stockfish_engine.py &");
+        sleep(1);
 
         std::ifstream fin("donotopen/buffer.txt");
         std::string s;
@@ -103,7 +120,7 @@ public:
         fin.close();
 
         if(s.empty() || s.length()>5 || s.substr(0,4)==position.substr(0,4))
-            throw EXIT_FAILURE;
+            throw Exception("Error: Cannot use stockfish!");
 
         return s;
     }
