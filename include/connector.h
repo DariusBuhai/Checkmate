@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "exception.h"
 
 #if defined(_WIN32)
     #include <windows.h>
@@ -96,7 +97,7 @@
         fin.close();
 
         if(s.empty() || s.length()>5 || s.substr(0,4)==position.substr(0,4))
-            throw EXIT_FAILURE;
+            throw Exception("Error: Cannot use stockfish!");
 
         return s;
     }

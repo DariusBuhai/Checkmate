@@ -5,8 +5,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <exception>
 
 #include "piece.h"
+#include "exception.h"
 
 #if defined(_WIN32)
     #define ScreenWidth 1100
@@ -50,7 +52,7 @@ struct Evaluation{
     int eval;
 };
 
-class Utils{
+class Utils: public std::exception{
 public:
     static bool mouseInsideLimits(std::pair<int, int> location, std::pair<int, int> x, std::pair<int,int> y){
         y.first = ScreenHeight - y.first;
@@ -67,7 +69,8 @@ public:
         sf::Text text = sf::Text();
         text.setString(title);
         sf::Font font;
-        if (!font.loadFromFile("resources/sansation.ttf")) throw EXIT_FAILURE;
+        if (!font.loadFromFile("resources/sansation.ttf"))
+            throw Exception("Error: Cannot load font!");
         text.setFont(font);
         text.setCharacterSize(size);
         text.setFillColor(color);
