@@ -60,6 +60,7 @@ void Pieces::showGame()
 
 Pieces::~Pieces()
 {
+    showGame();
     /** Clear history and pieces */
     delete nullPiece;
     for(auto &piece: pieces)
