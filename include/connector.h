@@ -83,48 +83,29 @@ void CloseConnection()
 #include <fstream>
 #include <cstdlib>
 #include <assert.h>
+#include <unistd.h>
 #include <iostream>
+#include "exception.h"
 
-class StockFish
+std::string getNextMove(const std::string position)
 {
-    void CloseConnection()
-    {
-        WriteFile(pipin_w, "quit\n", 5,&writ, NULL);
-        if(pipin_w != NULL)
-            CloseHandle(pipin_w);
-        if(pipin_r != NULL)
-            CloseHandle(pipin_r);
-        if(pipout_w != NULL)
-            CloseHandle(pipout_w);
-        if(pipout_r != NULL)
-            CloseHandle(pipout_r);
-        if(pi.hProcess != NULL)
-            CloseHandle(pi.hProcess);
-        if(pi.hThread != NULL)
-            CloseHandle(pi.hThread);
-    }
+    std::ofstream fout("donotopen/buffer.txt");
+    fout << position;
+    fout.close();
 
-public:
-    static std::string getNextMove(const std::string position)
-    {
-        std::ofstream fout("donotopen/buffer.txt");
-        fout << position;
-        fout.close();
+    system("python3 donotopen/stockfish_engine.py &");
+    sleep(1);
 
-        system("python3 donotopen/stockfish_engine.py &");
-        sleep(1);
+    std::ifstream fin("donotopen/buffer.txt");
+    std::string s;
+    fin >> s;
+    fin.close();
 
-        std::ifstream fin("donotopen/buffer.txt");
-        std::string s;
-        fin >> s;
-        fin.close();
+    if(s.empty() || s.length()>5 || s.substr(0,4)==position.substr(0,4))
+        throw Exception("Error: Cannot use stockfish!");
 
-        if(s.empty() || s.length()>5 || s.substr(0,4)==position.substr(0,4))
-            throw Exception("Error: Cannot use stockfish!");
+    return s;
+}
 
-        return s;
-    }
-
-};
 #endif
 #endif //CONNECTOR_H
