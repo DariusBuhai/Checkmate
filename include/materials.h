@@ -59,6 +59,7 @@ class Container{
 public:
 
     ~Container(){
+        delete darkMode;
         for(auto child: childs)
             delete (&child)->second;
         childs.clear();
@@ -77,6 +78,7 @@ public:
     }
 
     void setDarkMode(bool* _darkMode){
+        delete this->darkMode;
         this->darkMode = _darkMode;
     }
 

@@ -30,6 +30,7 @@ Brain::Brain(Rules* _rules, bool *_playAgainstStockFish)
 #if defined(_WIN32)
     ConnectToEngine("stockfish/stockfish_windows.exe");
 #endif
+    delete playAgainstStockFish;
     this->rules = _rules;
     this->playAgainstStockFish = _playAgainstStockFish;
 

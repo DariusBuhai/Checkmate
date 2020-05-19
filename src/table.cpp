@@ -23,7 +23,6 @@ Table::~Table(){
     delete brain;
     delete darkMode;
     delete cursorHand;
-    
 };
 
 void Table::initComponents(){
@@ -35,10 +34,12 @@ void Table::initComponents(){
 
 /** Setters */
 void Table::setCursorHand(bool* _cursorHand){
+    delete cursorHand;
     cursorHand = std::move(_cursorHand);
 }
 
 void Table::setDarkMode(bool* _darkMode){
+    delete darkMode;
     darkMode = std::move(_darkMode);
 }
 
