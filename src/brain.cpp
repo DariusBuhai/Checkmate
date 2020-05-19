@@ -141,20 +141,18 @@ bool Brain::isOkToMove(Piece* piece, std::pair<int,int> position)
     board[piece -> getPlayer()][position.first][position.second] = piece;
     board[piece -> getPlayer()][piece -> getPos().first][piece -> getPos().second] = nullPiece;
 
-    Evaluation evalProtect = evalProtected(piece,position);
-    Evaluation evalAttack = evalAttacked(piece,position);
-
     board[piece -> getPlayer()][position.first][position.second] = nullPiece;
     board[piece -> getPlayer()][piece -> getPos().first][piece -> getPos().second] = piece;
+
+    /*Evaluation evalProtect = evalProtected(piece,position);
+    Evaluation evalAttack = evalAttacked(piece,position);
     if(evalAttack.nr_pieces <= evalProtect.nr_pieces && evalAttack.eval <= evalProtect.eval)
         return true;
-    return false;
+    return false;*/
     ///init statement
-    /*
     if(auto evalProtect = evalProtected(piece,position), evalAttack = evalAttacked(piece,position);evalAttack.nr_pieces <= evalProtect.nr_pieces && evalAttack.eval <= evalProtect.eval)
         return true;
     return false;
-    */
 
 }
 
