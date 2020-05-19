@@ -55,8 +55,12 @@ template <class T>
 class Container{
     std::vector<std::pair<std::string, T>> childs;
     bool* darkMode = new bool(false);
+    //bool* auxDarkMode;
     double screenWidth, screenHeight;
 public:
+    Container(){
+        //auxDarkMode = darkMode;
+    }
 
     ~Container(){
         delete darkMode;
@@ -78,8 +82,8 @@ public:
     }
 
     void setDarkMode(bool* _darkMode){
-        delete this->darkMode;
-        this->darkMode = _darkMode;
+        //delete this->darkMode;
+        *(this-> darkMode) = *_darkMode;
     }
 
     std::vector<T> operator[](std::string category){

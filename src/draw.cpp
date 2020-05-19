@@ -138,9 +138,11 @@ void Draw::digestAction(RenderWindow* window, Event event){
         table.togglePlayAgainstAi();
 
     /** Load determined cursor */
+    /*
     Cursor cursor;
-    cursor.loadFromSystem(cursorHand ? Cursor::Hand : Cursor::Arrow);
+    cursor.loadFromSystem(Cursor::Hand : Cursor::Arrow);
     window->setMouseCursor(cursor);
+    */
 }
 
 void Draw::updateFrame(RenderWindow* window)
