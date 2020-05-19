@@ -1,5 +1,5 @@
-# Checkmate
-## Machine learning project in cpp
+# Ai Chess
+## Chess game, that uses stockfish
 
 ### Dependencies:
  - For graphics:
