@@ -21,6 +21,9 @@ Table::Table(){
 
 Table::~Table(){
     delete brain;
+    delete darkMode;
+    delete cursorHand;
+    
 };
 
 void Table::initComponents(){
