@@ -37,9 +37,10 @@ Brain::Brain(Rules* _rules, bool *_playAgainstStockFish)
 }
 Brain::~Brain()
 {
-#if defined(_WIN32)
-    CloseConnection();
-#endif
+    delete playAgainstStockFish;
+    #if defined(_WIN32)
+        CloseConnection();
+    #endif
 }
 
 void Brain::initializeEvaluation()
@@ -155,7 +156,6 @@ bool Brain::isOkToMove(Piece* piece, std::pair<int,int> position)
         return true;
     return false;
     */
-
 }
 
 bool Brain::canCheck(Piece* piece, std::pair<int,int> position)

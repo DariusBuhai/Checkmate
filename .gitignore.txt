@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-  
-=======
->>>>>>> e1ee19efff2fd2aa0e0bedb4671b4a3b91aa53fd
 .idea
 TestSFML.cbp
 CMakeLists.txt
