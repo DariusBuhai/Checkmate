@@ -59,6 +59,7 @@
 		<Unit filename="include/draw.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="include/exception.h" />
 		<Unit filename="include/materials.h" />
 		<Unit filename="include/piece.h">
 			<Option target="&lt;{~None~}&gt;" />

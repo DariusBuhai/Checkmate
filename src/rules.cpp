@@ -180,9 +180,8 @@ std::vector<std::pair<int, int>> Rules::getFuturePawn(Piece* pcs)
                 {
                     if((misc.to.first == pos.first + 1 || misc.to.first == pos.first - 1) && (misc.to.second == pos.second))
                     {
-                        std::cout<<"Pionul curent se afla la " << pos.first + 1 << " " << 8 - pos.second << '\n';
-                        std::cout<<"Pionul advers se afla la " << misc.to.first + 1 << " " << 8 - misc.to.second << '\n';
-                        std::cout<<"ANA ARE MERE \n";
+                        ///std::cout<<"Pionul curent se afla la " << pos.first + 1 << " " << 8 - pos.second << '\n';
+                        ///std::cout<<"Pionul advers se afla la " << misc.to.first + 1 << " " << 8 - misc.to.second << '\n';
                         if(misc.to.first == pos.first + 1)
                         {
                             posx = pos.first + 1;

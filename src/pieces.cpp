@@ -49,10 +49,18 @@ void Pieces::showGame()
         if(nr_moves % 2 == 0)
             {
                 std::cout<<nr_moves / 2<<". ";
-                std::cout<<char((m.piece->getType()[0]) - 32)<< char(m.to.first +97) << 8 - m.to.second <<" ";
+                if( char((m.piece->getType()[0]) - 32) == 'K' && char((m.piece->getType()[1]) - 32) == 'N')
+                    std::cout<<"N"<< char(m.to.first +97) << 8 - m.to.second <<" ";
+                else
+                    std::cout<<char((m.piece->getType()[0]) - 32)<< char(m.to.first +97) << 8 - m.to.second <<" ";
             }
         else
-             std::cout<<char((m.piece->getType()[0]) - 32)<< char(m.to.first +97) << 8 - m.to.second << '\n';
+            {
+                if( char((m.piece->getType()[0]) - 32) == 'K' && char((m.piece->getType()[1]) - 32) == 'N')
+                    std::cout<<"N"<< char(m.to.first +97) << 8 - m.to.second <<'\n';
+                else
+                    std::cout<<char((m.piece->getType()[0]) - 32)<< char(m.to.first +97) << 8 - m.to.second <<'\n';
+            }
         nr_moves++;
     }
 }

@@ -573,7 +573,7 @@
 	"../include/exception.h"
 	"pieces.cpp"
 
-1589718962 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\src\rules.cpp
+1589877192 source:c:\facultate\anul 1 semestrul 2\poo\testsfml\src\rules.cpp
 	"../include/rules.h"
 	"../include/table.h"
 	"../include/utils.h"
@@ -581,7 +581,7 @@
 	<vector>
 	<iostream>
 
-1589718962 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\pieces.cpp
+1589878020 c:\facultate\anul 1 semestrul 2\poo\testsfml\src\pieces.cpp
 	<iostream>
 	<vector>
 	<utility>
@@ -656,7 +656,7 @@
 	<iostream>
 	<string>
 
-1589718962 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\connector.h
+1589794553 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\connector.h
 	<windows.h>
 	<stdio.h>
 	<iostream>
@@ -666,7 +666,9 @@
 	<fstream>
 	<cstdlib>
 	<assert.h>
+	<unistd.h>
 	<iostream>
+	"exception.h"
 
 1589718962 c:\facultate\anul 1 semestrul 2\poo\testsfml\include\exception.h
 	<exception>
