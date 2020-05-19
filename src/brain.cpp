@@ -37,9 +37,10 @@ Brain::Brain(Rules* _rules, bool *_playAgainstStockFish)
 }
 Brain::~Brain()
 {
-#if defined(_WIN32)
-    CloseConnection();
-#endif
+    delete playAgainstStockFish;
+    #if defined(_WIN32)
+        CloseConnection();
+    #endif
 }
 
 void Brain::initializeEvaluation()
